@@ -16,6 +16,8 @@
 \usepackage{float}
 \usepackage{minted}
 \usepackage{pdfpages}
+\usepackage{tikz}
+\usetikzlibrary{tikzmark}
 
 
 %\usepackage{lmodern}
@@ -109,9 +111,9 @@ Slurry Density & $104.84 \frac{lbm}{ft^{3}}$\\
 	\begin{tabular}{|l|l|}
 		\hline
 		\textbf{Variables}                       & \textbf{Design Variables}                \\
-		Average flow velocity (V)                & Average flow velocity (V)                \\
-		Internal pipe diameter (D)               & Internal pipe diameter (D)               \\
-		Average particle size after grinding (d) & Average particle size after grinding (d) \\
+		Average flow velocity (V) \tikzmark{a}   & \tikzmark{d} Average flow velocity (V)   \\
+		Internal pipe diameter (D) \tikzmark{b}  & \tikzmark{e}Internal pipe diameter (D)               \\
+		Average particle size after grinding (d)\tikzmark{c} & \tikzmark{f}Average particle size after grinding (d) \\
 		length of pipeline (w)                   &                                          \\
 		Limestone flowrate (W)                   &                                          \\
 		Average lump size before grinding (a)    &                                          \\
@@ -121,9 +123,9 @@ Slurry Density & $104.84 \frac{lbm}{ft^{3}}$\\
 		Limestone density ($\gamma$)             &                                          \\
 		\hline
 		\textbf{Analysis Functions}              & \textbf{Design Functions}                \\
-		Volumetric slurry concentration (c)      & Minimize cost                            \\
-		Water flow rate ($Q_w$)                  & $V \geq 1.1 * V\_c  $                    \\
-		Density of slurry ($\rho$)               &                                          \\
+		Volumetric slurry concentration (c)      & \tikzmark{i}Minimize cost                \\
+		Water flow rate ($Q_w$)                  &  s.t.                                    \\
+		Density of slurry ($\rho$)               &  \tikzmark{j}$V \geq 1.1 * V\_c$         \\
 		Limestone flowrate (volumetric) ($Q_l$)  &                                          \\
 		Slurry flow rate (Q)                     &                                          \\
 		Grinding Power ($P_g$)                   &                                          \\
@@ -136,10 +138,18 @@ Slurry Density & $104.84 \frac{lbm}{ft^{3}}$\\
 		Slurry density ($\rho$)                  &                                          \\
 		Pipe pressure drop ($\delta p$)          &                                          \\
 		Pumping power ($P_f$)                    &                                          \\
-		Critical velocity ($V_c$)                &                                          \\
-		Cost (C)                                 &                                          \\
+		Critical velocity ($V_c$) \tikzmark{g}   &                                          \\
+		Cost (C) \tikzmark{h}                    &                                          \\
 		\hline
 	\end{tabular}
+	\begin{tikzpicture}[overlay, remember picture, yshift=.25\baselineskip, shorten >=.5pt, shorten <=.5pt]
+		\draw [->] ([yshift=3pt]{pic cs:a}) to ([yshift=3pt]{pic cs:d});
+		\draw [->] ([yshift=3pt]{pic cs:b}) to ([yshift=3pt]{pic cs:e});
+		\draw [->] ([yshift=3pt]{pic cs:c}) to ([yshift=3pt]{pic cs:f});
+		\draw [->] ([yshift=3pt]{pic cs:g}) to ([yshift=3pt]{pic cs:i});
+		\draw [->] ([yshift=3pt]{pic cs:h}) to ([yshift=3pt]{pic cs:j});
+	\end{tikzpicture}
+	
 \end{center}
 \subsection{Model Validation}
 The curve fit was performed in the statistical package JMP. It is a third order fit of the log of both $C_d$ and $C_dR_p^2$ data that was provided in the problem statement.  The $R^2$ value of the fit is exceptionally high at 0.9999 which suggests that the data is very well approximated by the fit.
