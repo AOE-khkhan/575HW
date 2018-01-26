@@ -80,15 +80,15 @@ title('Total Cost Contour Plot');
 xlabel('Partical Size(ft)');
 ylabel('Pipe Diameter(ft)');
 hold on;
+y1=get(gca,'ylim');
 contour(partSize, pipeDiam, c1, [0, 0], 'b')
 contour(partSize, pipeDiam, c2, [0, 0], 'r')
 plot([0.0005, 0.0005], y1, 'g')
 contour(partSize, pipeDiam, c1, [-1, -1], 'b--')
 contour(partSize, pipeDiam, c2, [-.1, -.1], 'r--')
 plot([0.0007, 0.0007], y1, 'g--')
-y1=get(gca,'ylim');
 
-plot(0.0005, 0.1816, 'r*')
+plot(0.0005, 0.1816, 'r*', 'linewidth', 6)
 
 legend('Total Cost', 'Critical Velocity Limit', 'Volumetric Concentration Limit',...
       'Partical Size Limit', 'Critical Velocity Feasible Region',...

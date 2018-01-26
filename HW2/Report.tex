@@ -14,8 +14,10 @@
 \usepackage{doi} % allow correct hypderlinking of DOIs
 \usepackage[normalem]{ulem}
 \usepackage{float}
+\usepackage{minted}
+\usepackage{pdfpages}
 
-%\usepackage{minted} % for code highlighting
+
 %\usepackage{lmodern}
 
 \useunder{\uline}{\ul}{}
@@ -28,11 +30,11 @@
 % put in \date{} if you don't want a date to appear, or enter a specific date, otherwise default is today's date.
 \maketitle
 \begin{centering}
-\section*{Summary}
+\section{Summary}
 
 \end{centering}
 \subsection{Design variable values}
-The optimal cost was found to be \$400,140.
+The optimal cost was found to be \textbf{\$400,140}.
 The determined optimum values for the design variables are as follows:
 
 \begin{table}[H]
@@ -51,158 +53,158 @@ Volumetric Concentration & $0.4$\\
 Slurry Density & $104.84 \frac{lbm}{ft^{3}}$\\
 
 \hline
+
 \end{tabular}
 \end{table}
-
-\subsection{Design function values}
-\begin{table}[H]
-\centering
-\caption{Values of design functions at optimum}
-\label{my-label}
-\begin{tabular}{ll}
-\hline
-\textbf{Design Function}                       & \textbf{Value} \\
-\hline\\
-Maximize $F_{0}$                               & $6.4541 lbs$                    \\
-$h_{S} + 0.05 \leq h_{def}$                    & $0.60 in \leq 0.60 in$          \\
-$\tau_{a} \leq \frac{s_{e}}{s_{f}}$            & $18352 psi \leq 30000 psi$      \\
-$\tau_{a} + \tau_{m} \leq \frac{s_{y}}{s_{f}}$ & $70576 psi \leq 70576psi$       \\
-$4 \geq \frac{D}{d} \leq 16$                   & $4 in \leq 9.359 in \leq 16 in$ \\
-$D + d \leq 0.75$                              & $0.75 in \leq 0.75in$           \\
-$\tau_{solid} \leq s_{y}$                      & $75165 psi \leq 105860 psi$     \\
-\hline  
-\end{tabular}
-\end{table}
-\subsection{Binding Constraints}
-The binding constraints are:
-\begin{itemize}
-    \item $h_{S} + 0.05 \leq h_{def}$
-    \item $D + d \leq 0.75$
-    \item $\tau_{a} + \tau_{m} \leq \frac{s_{y}}{s_{f}}$
-\end{itemize}
-
-
 \newpage
-\section{Setup}
-\subsection{Variable Mapping}
-\begin{table}[H]
-\centering
-\caption{My caption}
-\label{my-label}
-\begin{tabular}{l@{\hskip 2in}l}
-\underline{\textbf{Analysis Variables}} & \underline{\textbf{Design Variables}}                             \\
-Wire Diameter               & Wire Diameter                                           \\
-Coil Diameter               & Coil Diameter                                           \\
-Number of Coils             & Number of Coils                                         \\
-Free height                 & Free height                                             \\
-Preload Height              &                                                         \\
-Preload Deflection          &                                                         \\
-Shear Modulus               &                                                         \\
-Safety Factor               &                                                         \\
-Endurance Limit             &                                                         \\
-                            &                                                         \\
-\underline{\textbf{Analysis Functions}} & \underline{\textbf{Design Functions}}       \\
-Force                       & Maximize                                                \\
-Spring Stiffness            & Solid Height $\leq$ Deflected height                    \\
-Whal Factor                 & Alternating Stress $\leq \frac{s_{e}}{s_{f}}$           \\
-Solid Height                & Alternating and Mean Stress $\leq \frac{s_{y}}{s_{f}}$  \\
-Alternating Stress          & 4 $\leq$ Coil to Wire Ratio $\leq$ 16                   \\
-Mean Stress                 & Solid Stress $\leq s_{y}$                               \\
-Yield Strength              &                                                         \\
-Coil to Wire Ratio          &                                                         \\
-Spring Diameter             &                                                         \\
-Deflected Height            &                                                        
+
+\section{Procedure}
+\subsection{Equation Sequence}
+\begin{center}
+	\begin{tabular}{|l|l|}
+		\hline
+		Get values from optimizer (V, D, d) & Optimization code will set these variables \\ 
+		\hline
+		$Q = \pi * \frac{D^{2}}{4} * V$ & Volumetric flow rate \\ 
+		\hline
+		$Q_{l} = \frac{W}{\rho_{l}}$ & Lime volumetric flow rate \\ 
+		\hline
+		$Q_{w} = Q - Q_{l}$ & Water volumetric flow rate \\ 
+		\hline
+		$c = \frac{Q_{l}}{Q}$ & Volumetric concentration \\ 
+		\hline
+		$\rho = \rho_{w} + c * (\gamma - \rho_{w})$ & Slurry density \\ 
+		\hline
+		$C_{d}R_{p}^{2} = 4  g  \rho_{w}  d^{3}\left ( \frac{\gamma - \rho_{w}}{3\mu^{2}}\right )$ & Eqn (3) \\ 
+		\hline
+		$C_{d} = e^{-0.001 log(C_{d}R_{p}^{2})^3 + 0.0583 log(C_{d}R_{p}^{2})^2 - 1.1497 log(C_{d}R_{p}^{2}) + 6.4442}$ & Fit of empirical data \\ 
+		\hline
+		$R_w = \frac{\rho_w V D}{\mu}$ & Reynolds number \\ 
+		\hline
+		$\left\{\begin{matrix}f_w = \frac{0.3164}{R_w^{0.25}} \text{ \: if \:} R_w \leq 10^5\\f_w = 0.0032+0.221R_w^{-0.2377}\end{matrix}\right.$ & Water friction factor \\ 
+		\hline
+		$f = f_w \left [\frac{\rho_w}{\rho} + 150 c \frac{\rho_w}{\rho}\left (\frac{g D (S -1)}{V^2 \sqrt{C_d}} \right )^{1.5} \right ]$ & Friction factor \\ 
+		\hline
+		$\delta p = \frac{f \rho L V^2}{D 2 g_c}$  & Pressure loss due to friction \\
+		\hline 
+		$P_p = \delta p * Q$& Pump power required \\ 
+		\hline
+		$P_g = 218 W \left ( \frac{1}{\sqrt{d}} - \frac{1}{\sqrt{a}} \right )$& Power grind required \\ 
+		\hline
+		$HP_p = \frac{P_g}{550}$& Horsepower to pump  \\ 
+		\hline
+		$HP_g = \frac{P_g}{550}$& Horsepower to grind \\ 
+		\hline
+		$C_p = 300 HP_g + 200 HP_g$& Purchase cost of system \\ 
+		\hline
+		$C_o = (0.07 HP_g + 0.05 HP_p) * 8 * 300 *\left ( \frac{1.07^7 - 1}{0.07 * 1.07^7} \right)$& Operational cost of system \\ 
+		\hline
+		$C = C_p + C_o$& Total system cost \\ 
+		\hline
+		
+	\end{tabular} 
+\end{center}
+\subsection{Mapping Table}
+\begin{center}
+	\begin{tabular}{|l|l|}
+		\hline
+		\textbf{Variables}                       & \textbf{Design Variables}                \\
+		Average flow velocity (V)                & Average flow velocity (V)                \\
+		Internal pipe diameter (D)               & Internal pipe diameter (D)               \\
+		Average particle size after grinding (d) & Average particle size after grinding (d) \\
+		length of pipeline (w)                   &                                          \\
+		Limestone flowrate (W)                   &                                          \\
+		Average lump size before grinding (a)    &                                          \\
+		Gravity (g)                              &                                          \\
+		Density of water ($\rho_w$)              &                                          \\
+		Viscosity of water ($\mu$)               &                                          \\
+		Limestone density ($\gamma$)             &                                          \\
+		\hline
+		\textbf{Analysis Functions}              & \textbf{Design Functions}                \\
+		Volumetric slurry concentration (c)      & Minimize cost                            \\
+		Water flow rate ($Q_w$)                  & $V \geq 1.1 * V\_c  $                    \\
+		Density of slurry ($\rho$)               &                                          \\
+		Limestone flowrate (volumetric) ($Q_l$)  &                                          \\
+		Slurry flow rate (Q)                     &                                          \\
+		Grinding Power ($P_g$)                   &                                          \\
+		Friction factor (f)                      &                                          \\
+		Water friction factor ($f_w$)            &                                          \\
+		Average drag coefficient ($C_d$)         &                                          \\
+		Limestone specific gravity (S)           &                                          \\
+		Reynolds number ($R_w$)                  &                                          \\
+		$C_dR_p$                                 &                                          \\
+		Slurry density ($\rho$)                  &                                          \\
+		Pipe pressure drop ($\delta p$)          &                                          \\
+		Pumping power ($P_f$)                    &                                          \\
+		Critical velocity ($V_c$)                &                                          \\
+		Cost (C)                                 &                                          \\
+		\hline
+	\end{tabular}
+\end{center}
+\subsection{Model Validation}
+The curve fit was performed in the statistical package JMP. It is a third order fit of the log of both $C_d$ and $C_dR_p^2$ data that was provided in the problem statement.  The $R^2$ value of the fit is exceptionally high at 0.9999 which suggests that the data is very well approximated by the fit.
+
+
+\section{Results and Discussion}
+\subsection{Optimum Values}
+\begin{center}
+\begin{tabular}{|l|l|}
+	\hline
+	\textbf{Variable/Function}               & \textbf{Value at optimum} \\
+	Average flow velocity (V)                & 7.2599                    \\
+	Internal pipe diameter (D)               & 0.1816                    \\
+	\cellcolor{yellow}Average particle size after grinding (d) & 0.0005                    \\
+	length of pipeline (w)                   & 79200                     \\
+	Limestone flowrate (W)                   & 12.67                     \\
+	Average lump size before grinding (a)    & 0.01                      \\
+	Gravity (g)                              & 32.17                     \\
+	Density of water ($\rho_w$)              & 62.4                      \\
+	Viscosity of water ($\mu$)               & 0.0007392                 \\
+	Limestone density ($\gamma$)             & 168.5                     \\
+	\cellcolor{yellow}Volumetric slurry concentration (c)      & 0.4                       \\
+	Water flow rate ($Q_w$)                  & 0.1128                    \\
+	Density of slurry ($\rho$)               & 104.84                    \\
+	Limestone flowrate (volumetric) ($Q_l$)  & 0.0752                    \\
+	Slurry flow rate (Q)                     & 0.188                     \\
+	Grinding Power ($P_g$)                   & 95902                     \\
+	Friction factor (f)                      & 0.0175                    \\
+	Water friction factor ($f_w$)            & 0.0173                    \\
+	Average drag coefficient ($C_d$)         & 13.3093                   \\
+	Limestone specific gravity (S)           & 2.7003                    \\
+	Reynolds number ($R_w$)                  & 111280                    \\
+	$C_dR_p$                                 & 64.9645                   \\
+	Pipe pressure drop ($\delta p$)          & 656410                    \\
+	Pumping power ($P_f$)                    & 123390                    \\
+	Critical velocity ($V_c$)                & 6.5999                    \\
+	Pumping HP ($HP_p$)						 & 224.35					 \\
+	Grinding HP ($HP_g$)					 & 174.37					 \\
+	Cost (C)                                 & 400140                    \\
+	\hline
 \end{tabular}
-\end{table}
+\end{center}
+\subsection{Optimum and Design Space}
+A slice of the design space is shown in figure \ref{fig:plotzoomed}.  As can be seen in the figure the feasible design space is rather small in comparison to the total design space. It occupies a small triangular section of the space and shows that the optimum is heavily constrained. The optimum, marked with a red star in the figure is a constrained optimum and could be enhanced by relaxing the constraints on the volumetric concentration and the critical velocity, however it is unlikely that these constraints can be relaxed as they are governed by physical phenomena.  The constraint is most likely a global optimum of the design space due to the somewhat simple nature of the contour lines.
 
-
-\section{Results}
-\subsection{Optimum values of variables and functions}
-\begin{table}[H]
-    \centering
-    \caption{Optimum Values of Variables and Functions (binding functions are highlighted)}
-    \label{tab:optimums}
-    \begin{tabular}{ll}
-    \hline
-        \textbf{Variable/Function} & \textbf{Value}\\
-    \hline
-        Wire Diameter & 0.0724 in \\
-        Coil Diameter & 0.6776 in \\
-        Number Coils  & 0.5928    \\
-        Free Height   & 1.3691   \\
-        Preload Height & 1.0 in\\
-        $\delta_{0}$ & 0.4 in\\
-        $h_{def}$ & 0.6 in\\
-        \cellcolor[HTML]{FFFE65}{\color[HTML]{333333}$h_{s}$} & 0.55in\\
-        $F_{0}$ & 6.454 lbs\\
-        k & 17.4853 lbs/in\\
-        K & 1.1561\\
-        $\tau_{max}$ & 70576 psi\\
-        $\tau_{min}$ & 33871 psi\\
-        $\tau_{a}$ & 18353 psi\\
-        $\tau_{m}$ & 52224 psi\\
-        \cellcolor[HTML]{FFFE65}{\color[HTML]{333333}$\tau_{a} + \tau_{m}$} & 70576 psi\\
-        $\frac{S_{e}}{S_{f}}$ & 30000 psi\\
-        $\frac{S_{y}}{S_{f}}$ & 70576 psi\\
-        $\frac{D}{d}$ & 9.3539\\
-        \cellcolor[HTML]{FFFE65}{\color[HTML]{333333}$D + d$} & 0.75\\
-    \hline
-    \end{tabular}
-\end{table}
-
-
-\subsection{Starting points and obtained values}
-
-\begin{table}[H]
-\centering
-\caption{Optimized Values from Given Starting Point}
-\label{tab:tries}
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{l|llll|llll}
-      & \multicolumn{4}{c}{{\textbf{Initial Values}}}             & \multicolumn{4}{c}{{\textbf{Optimized Values}}}           \\
-      \hline
-Trial & Wire Diameter & Coil Diameter & Number of Coils & Free Height & Wire Diameter & Coil Diameter & Number of Coils & Free Height \\
-\hline
-1     & 0.04735309758 & 0.2632045077  & 13.47275949     & 1.525959964 & 0.07243674785 & 0.6775631377  & 7.592829475     & 1.369115417 \\
-2     & 0.07681530634 & 0.6400386081  & 12.94948955     & 1.594751247 & 0.07243674785 & 0.6775631377  & 7.592829475     & 1.369115417 \\
-3     & 0.1842667961  & 0.2857953622  & 15.87240389     & 1.778356185 & 0.07243674785 & 0.6775631377  & 7.592829475     & 1.369115417 \\
-4     & 0.08228471093 & 0.4690840665  & 4.289522923     & 1.148555107 & 0.07243674785 & 0.6775631377  & 7.592829475     & 1.369115417 \\
-5     & 0.1108515351  & 0.6064586996  & 18.87818163     & 1.216915588 & 0.07243674785 & 0.6775631377  & 7.592829475     & 1.369115417 \\
-6     & 0.1180764956  & 0.4051039167  & 3.202335182     & 1.40341038  & 0.07243674785 & 0.6775631377  & 7.592829475     & 1.369115417 \\
-7     & 0.04081463856 & 0.6162849514  & 8.290655715     & 1.575679822 & 0.07243674785 & 0.6775631377  & 7.592829475     & 1.369115417 \\
-8     & 0.0414732586  & 0.4912882619  & 7.470511837     & 1.688671189 & 0.07243674785 & 0.6775631377  & 7.592829475     & 1.369115417 \\
-9     & 0.1409507556  & 0.5862985353  & 10.65920717     & 1.17543924  & 0.07243674785 & 0.6775631377  & 7.592829475     & 1.369115417 \\
-10    & 0.05350562406 & 0.693669285   & 5.590426322     & 1.84323528  & 0.07243674785 & 0.6775631377  & 7.592829475     & 1.369115417 \\
-\hline
-\end{tabular}%
-}
-\end{table}
-
-
-\subsection{Design space contour plot}
+\subsection{Contour Plot}
 \begin{figure}[H]
-    \centering
-    \includegraphics[width=3.in]{PlotBig.pdf}
-    \caption{Contour plot showing the design space}
-    \label{fig:big}
+	\centering
+	\includegraphics[width=0.9\linewidth]{PlotBig}
+	\caption{Plot of the design space}
+	\label{fig:plotzoomed}
 \end{figure}
 
-\subsection{Feasible design space contour plot}
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=3.in]{PlotZoomed.pdf}
-    \caption{Contour plot showing the feasible design space}
-    \label{fig:close}
-\end{figure}
-
-\section{Discussion}
-As can be seen in figure \ref{fig:big} the design space for this problem is quite restricted.  There are several contraints and the feasible design space is quite small compared to the total design space, at least when viewed on a contour plot of wire diameter and spring diameter.  Due to the fact that the contours shown in Figure \ref{fig:big} are quite linear and that the various initial values tried all converged to the same value as shown in Table \ref{tab:tries} I conclude that we have found a global optimum for the spring given the applied constraints.  It is also of interest that the optimum appears to be bound by three constraints, meaning that if we wanted to increase the increase the rate of the spring by only changing the spring or wire diameter we would need to either relax the alternating and mean stress constraint(ie. find a stronger material), or we would need to relax both the solid height and spring size constraints.  It is important to remember that Figures \ref{fig:big} and \ref{fig:close} are only showing a portion of the design space and other options should also be considered
-
+\subsection{Other Observations}
+It is of interest that this model is constrained so tightly considering the relatively few number of constraints that exist in the problem, however all of the constraints shown in figure \ref{fig:plotzoomed} contribute to constraining the optimum value of the problem.  As mentioned above the optimum could be enhanced through the relaxation of the critical velocity and volumetric concentration limits, however this would likely lead to clogging issues in the system and is not recommendable.  It is also important to not that this contour plot only shows three (two varied with one held constant) of a total 6 possible dimensions of the problem.  To further understand the design space it would be necessary to create several similar plots of the other variables.
 
 \section{Appendix}
 
 \subsection{Matlab files}
 \subsubsection{Optmization code}
+\inputminted[xleftmargin=20pt,linenos]{matlab}{Opt.m}
+\subsubsection{ObjCon Function}
+\inputminted[xleftmargin=20pt,linenos]{matlab}{objcon.m}
 \subsubsection{Plotting Code}
+\inputminted[xleftmargin=20pt,linenos]{matlab}{contourPlot.m}
+
+\includepdf[pages=-, pagecommand={}]{HW2Slurry.pdf}
 \end{document}
-\textbf{}

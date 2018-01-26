@@ -1,0 +1,48 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{function}\PYG{+w}{ }[xopt, fopt, exitflag, output] \PYG{p}{=}\PYG{+w}{ }\PYG{n+nf}{Opt}\PYG{p}{()}
+
+\PYG{+w}{    }\PYG{c}{\PYGZpc{} \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}Starting point and bounds\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}}
+    \PYG{c}{\PYGZpc{} design variables vel, pipeDiam, particleSize}
+    \PYG{n}{n\PYGZus{}params} \PYG{p}{=} \PYG{l+m+mi}{3}\PYG{p}{;}
+    \PYG{n}{n\PYGZus{}tries} \PYG{p}{=} \PYG{l+m+mi}{1}\PYG{p}{;}
+    \PYG{n}{x0} \PYG{p}{=} \PYG{n+nb}{zeros}\PYG{p}{(}\PYG{n}{n\PYGZus{}tries}\PYG{p}{,} \PYG{n}{n\PYGZus{}params}\PYG{p}{);}
+    \PYG{n}{ub} \PYG{p}{=} \PYG{p}{[}\PYG{l+m+mi}{100}\PYG{p}{,} \PYG{l+m+mf}{0.5}\PYG{p}{,} \PYG{l+m+mf}{0.01}\PYG{p}{];}
+    \PYG{n}{lb} \PYG{p}{=} \PYG{p}{[}\PYG{l+m+mf}{0.01}\PYG{p}{,} \PYG{l+m+mf}{0.01}\PYG{p}{,} \PYG{l+m+mf}{0.0005}\PYG{p}{];}
+    \PYG{k}{for} \PYG{n+nb}{i}\PYG{p}{=}\PYG{l+m+mi}{1}\PYG{p}{:}\PYG{n}{n\PYGZus{}tries}
+        \PYG{k}{for} \PYG{n+nb}{j} \PYG{p}{=} \PYG{l+m+mi}{1}\PYG{p}{:}\PYG{n}{n\PYGZus{}params}
+            \PYG{n}{x0}\PYG{p}{(}\PYG{n+nb}{i}\PYG{p}{,} \PYG{n+nb}{j}\PYG{p}{)} \PYG{p}{=} \PYG{n}{lb}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n+nb}{j}\PYG{p}{)} \PYG{o}{+} \PYG{p}{(}\PYG{n}{ub}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n+nb}{j}\PYG{p}{)} \PYG{o}{\PYGZhy{}} \PYG{n}{lb}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n+nb}{j}\PYG{p}{))} \PYG{o}{*} \PYG{n+nb}{rand}\PYG{p}{();}
+        \PYG{k}{end}
+    \PYG{k}{end}
+\PYG{c}{\PYGZpc{}     x0}
+
+    \PYG{c}{\PYGZpc{} \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}Linear constraints\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}}
+    \PYG{n}{A} \PYG{p}{=} \PYG{p}{[];}
+    \PYG{n}{b} \PYG{p}{=} \PYG{p}{[];}
+    \PYG{n}{Aeq} \PYG{p}{=} \PYG{p}{[];}
+    \PYG{n}{beq} \PYG{p}{=} \PYG{p}{[];}
+
+    \PYG{c}{\PYGZpc{} \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}Objective and Non\PYGZhy{}linear Constraints\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}}
+    
+
+    \PYG{c}{\PYGZpc{} \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}Call fmincon\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}}
+    \PYG{n}{options} \PYG{p}{=} \PYG{n}{optimoptions}\PYG{p}{(@}\PYG{n}{fmincon}\PYG{p}{,} \PYG{l+s}{\PYGZsq{}display\PYGZsq{}}\PYG{p}{,} \PYG{l+s}{\PYGZsq{}iter\PYGZhy{}detailed\PYGZsq{}}\PYG{p}{);}
+    \PYG{n}{opts} \PYG{p}{=} \PYG{n+nb}{zeros}\PYG{p}{(}\PYG{n}{n\PYGZus{}tries}\PYG{p}{,} \PYG{n}{n\PYGZus{}params}\PYG{p}{);}
+    \PYG{k}{for} \PYG{n+nb}{i} \PYG{p}{=} \PYG{l+m+mi}{1}\PYG{p}{:}\PYG{n}{n\PYGZus{}tries}
+        \PYG{n}{x1} \PYG{p}{=} \PYG{n}{x0}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{p}{:)}
+        \PYG{p}{[}\PYG{n}{xopt}\PYG{p}{,} \PYG{n}{fopt}\PYG{p}{,} \PYG{n}{exitflag}\PYG{p}{,} \PYG{n}{output}\PYG{p}{]} \PYG{p}{=} \PYG{n}{fmincon}\PYG{p}{(@}\PYG{n}{obj}\PYG{p}{,} \PYG{n}{x1}\PYG{p}{,} \PYG{n}{A}\PYG{p}{,} \PYG{n}{b}\PYG{p}{,} \PYG{n}{Aeq}\PYG{p}{,} \PYG{n}{beq}\PYG{p}{,} \PYG{n}{lb}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,:),} \PYG{n}{ub}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,:),} \PYG{p}{@}\PYG{n}{con}\PYG{p}{,} \PYG{n}{options}\PYG{p}{);}
+        \PYG{n}{opts}\PYG{p}{(}\PYG{n+nb}{i}\PYG{p}{,} \PYG{p}{:)} \PYG{p}{=} \PYG{n}{xopt}\PYG{p}{;}
+        \PYG{n}{fopt}
+    \PYG{k}{end}
+    \PYG{n}{x0}
+    \PYG{n}{opts}
+
+
+    \PYG{c}{\PYGZpc{} \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}Separate obj/con (do not change)\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}}
+\PYG{k}{    function}\PYG{+w}{ }[f] \PYG{p}{=}\PYG{+w}{ }\PYG{n+nf}{obj}\PYG{p}{(}x\PYG{p}{)}
+\PYG{+w}{            }\PYG{p}{[}\PYG{n}{f}\PYG{p}{,} \PYG{o}{\PYGZti{}}\PYG{p}{,} \PYG{o}{\PYGZti{}}\PYG{p}{]} \PYG{p}{=} \PYG{n}{objcon}\PYG{p}{(}\PYG{n}{x}\PYG{p}{);}
+    \PYG{k}{end}
+\PYG{k}{    function}\PYG{+w}{ }[c, ceq] \PYG{p}{=}\PYG{+w}{ }\PYG{n+nf}{con}\PYG{p}{(}x\PYG{p}{)}
+\PYG{+w}{            }\PYG{p}{[}\PYG{o}{\PYGZti{}}\PYG{p}{,} \PYG{n}{c}\PYG{p}{,} \PYG{n}{ceq}\PYG{p}{]} \PYG{p}{=} \PYG{n}{objcon}\PYG{p}{(}\PYG{n}{x}\PYG{p}{);}
+    \PYG{k}{end}
+\PYG{k}{end}
+\end{Verbatim}

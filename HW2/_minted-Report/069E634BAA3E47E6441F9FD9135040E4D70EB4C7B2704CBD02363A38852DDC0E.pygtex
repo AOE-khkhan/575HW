@@ -1,0 +1,103 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c}{\PYGZpc{} extract design variables}
+\PYG{n}{vel} \PYG{p}{=} \PYG{l+m+mf}{7.2599}\PYG{p}{;} \PYG{c}{\PYGZpc{} ft/s}
+\PYG{p}{[}\PYG{n}{partSize}\PYG{p}{,} \PYG{n}{pipeDiam}\PYG{p}{]} \PYG{p}{=} \PYG{n+nb}{meshgrid}\PYG{p}{(}\PYG{l+m+mf}{0.0004}\PYG{p}{:}\PYG{l+m+mf}{0.001}\PYG{p}{:}\PYG{l+m+mf}{0.01}\PYG{p}{,} \PYG{l+m+mf}{0.01}\PYG{p}{:}\PYG{l+m+mf}{0.001}\PYG{p}{:}\PYG{l+m+mf}{0.5}\PYG{p}{);}
+
+\PYG{c}{\PYGZpc{} constants}
+\PYG{n}{pipeLen} \PYG{p}{=} \PYG{l+m+mi}{15} \PYG{o}{.*} \PYG{l+m+mi}{5280}\PYG{p}{;} \PYG{c}{\PYGZpc{} ft}
+\PYG{n}{wLime} \PYG{p}{=} \PYG{l+m+mf}{12.67}\PYG{p}{;} \PYG{c}{\PYGZpc{} lbm/s}
+\PYG{n}{partSizePre} \PYG{p}{=} \PYG{l+m+mf}{0.01}\PYG{p}{;} \PYG{c}{\PYGZpc{} ft}
+\PYG{n}{grav} \PYG{p}{=} \PYG{l+m+mf}{32.17}\PYG{p}{;} \PYG{c}{\PYGZpc{} ft/s\PYGZca{}2}
+\PYG{n}{rhoWater} \PYG{p}{=} \PYG{l+m+mf}{62.4}\PYG{p}{;} \PYG{c}{\PYGZpc{} lbm/ft\PYGZca{}3}
+\PYG{n}{rhoLime} \PYG{p}{=} \PYG{l+m+mf}{168.5}\PYG{p}{;} \PYG{c}{\PYGZpc{} lbm/ft\PYGZca{}3}
+\PYG{n}{SGLime} \PYG{p}{=} \PYG{n}{rhoLime} \PYG{o}{./} \PYG{n}{rhoWater}\PYG{p}{;}
+\PYG{n}{muWater} \PYG{p}{=} \PYG{l+m+mf}{0.0007392}\PYG{p}{;} \PYG{c}{\PYGZpc{}lbm/(ft\PYGZhy{}sec)}
+\PYG{n}{hrPerDay} \PYG{p}{=} \PYG{l+m+mi}{8}\PYG{p}{;}
+\PYG{n}{dayPerYear} \PYG{p}{=} \PYG{l+m+mi}{300}\PYG{p}{;}
+\PYG{n}{yrsLife} \PYG{p}{=} \PYG{l+m+mi}{7}\PYG{p}{;}
+
+\PYG{c}{\PYGZpc{} calculate other design variables}
+\PYG{n}{volFlow} \PYG{p}{=} \PYG{n+nb}{pi} \PYG{o}{.*} \PYG{p}{(}\PYG{n}{pipeDiam}\PYG{o}{.\PYGZca{}}\PYG{l+m+mi}{2} \PYG{o}{./} \PYG{l+m+mi}{4}\PYG{p}{)} \PYG{o}{.*} \PYG{n}{vel}\PYG{p}{;}
+\PYG{n}{volFlowLime} \PYG{p}{=} \PYG{n}{wLime} \PYG{o}{./} \PYG{n}{rhoLime}\PYG{p}{;}
+\PYG{n}{volFlowWater} \PYG{p}{=} \PYG{n}{volFlow} \PYG{o}{\PYGZhy{}} \PYG{n}{volFlowLime}\PYG{p}{;}
+\PYG{n}{volCons} \PYG{p}{=} \PYG{n}{volFlowLime} \PYG{o}{./} \PYG{n}{volFlow}\PYG{p}{;}
+\PYG{n}{rhoSlurry} \PYG{p}{=} \PYG{n}{rhoWater} \PYG{o}{+} \PYG{n}{volCons} \PYG{o}{.*} \PYG{p}{(}\PYG{n}{rhoLime} \PYG{o}{\PYGZhy{}} \PYG{n}{rhoWater}\PYG{p}{);}
+
+\PYG{c}{\PYGZpc{} analysis functions}
+\PYG{n}{cdrp} \PYG{p}{=} \PYG{l+m+mi}{4} \PYG{o}{.*} \PYG{n}{grav} \PYG{o}{.*} \PYG{n}{rhoWater} \PYG{o}{.*} \PYG{n}{partSize}\PYG{o}{.\PYGZca{}}\PYG{l+m+mi}{3} \PYG{o}{.*} \PYG{p}{((}\PYG{n}{rhoLime} \PYG{o}{\PYGZhy{}} \PYG{n}{rhoWater}\PYG{p}{)} \PYG{c}{...}
+    \PYG{o}{./} \PYG{p}{(}\PYG{l+m+mi}{3} \PYG{o}{.*} \PYG{n}{muWater}\PYG{o}{.\PYGZca{}}\PYG{l+m+mi}{2}\PYG{p}{));}
+\PYG{c}{\PYGZpc{} cd = 1.9116946 + 571.81334 .* (1/cdrp);}
+\PYG{n}{cd} \PYG{p}{=} \PYG{n+nb}{exp}\PYG{p}{(}\PYG{o}{\PYGZhy{}}\PYG{p}{.}\PYG{l+m+mf}{001.}\PYG{o}{*}\PYG{n+nb}{log}\PYG{p}{(}\PYG{n}{cdrp}\PYG{p}{)}\PYG{o}{.\PYGZca{}}\PYG{l+m+mi}{3}\PYG{o}{+}\PYG{p}{.}\PYG{l+m+mf}{0583.}\PYG{o}{*}\PYG{n+nb}{log}\PYG{p}{(}\PYG{n}{cdrp}\PYG{p}{)}\PYG{o}{.\PYGZca{}}\PYG{l+m+mi}{2}\PYG{o}{\PYGZhy{}}\PYG{l+m+mf}{1.1497}\PYG{o}{.*}\PYG{n+nb}{log}\PYG{p}{(}\PYG{n}{cdrp}\PYG{p}{)}\PYG{o}{+}\PYG{l+m+mf}{6.4442}\PYG{p}{);}
+\PYG{n}{reynolds} \PYG{p}{=} \PYG{p}{(}\PYG{n}{rhoWater} \PYG{o}{.*} \PYG{n}{vel} \PYG{o}{.*} \PYG{n}{pipeDiam}\PYG{p}{)} \PYG{o}{./} \PYG{n}{muWater}\PYG{p}{;}
+\PYG{n}{critVel} \PYG{p}{=} \PYG{p}{((}\PYG{l+m+mi}{40} \PYG{o}{.*} \PYG{n}{grav} \PYG{o}{.*} \PYG{n}{volCons} \PYG{o}{.*} \PYG{p}{(}\PYG{n}{SGLime} \PYG{o}{\PYGZhy{}} \PYG{l+m+mi}{1}\PYG{p}{)} \PYG{o}{.*} \PYG{n}{pipeDiam}\PYG{p}{)} \PYG{c}{...}
+    \PYG{o}{./} \PYG{n+nb}{sqrt}\PYG{p}{(}\PYG{n}{cd}\PYG{p}{))}\PYG{o}{.\PYGZca{}}\PYG{l+m+mf}{0.5}\PYG{p}{;}
+
+\PYG{k}{if} \PYG{n}{reynolds} \PYG{o}{\PYGZlt{}}\PYG{p}{=} \PYG{l+m+mi}{100000}
+  \PYG{n}{fricWater} \PYG{p}{=} \PYG{l+m+mf}{0.3164} \PYG{o}{./} \PYG{n}{reynolds}\PYG{o}{.\PYGZca{}}\PYG{l+m+mf}{0.25}\PYG{p}{;}
+\PYG{k}{else}
+  \PYG{n}{fricWater} \PYG{p}{=} \PYG{l+m+mf}{0.0032} \PYG{o}{+} \PYG{l+m+mf}{0.221} \PYG{o}{.*} \PYG{n}{reynolds}\PYG{o}{.\PYGZca{}\PYGZhy{}}\PYG{l+m+mf}{0.237}\PYG{p}{;}
+\PYG{k}{end}
+
+\PYG{n}{fricFact} \PYG{p}{=} \PYG{n}{fricWater} \PYG{o}{.*} \PYG{p}{((}\PYG{n}{rhoWater} \PYG{o}{./} \PYG{n}{rhoSlurry}\PYG{p}{)} \PYG{o}{+} \PYG{l+m+mi}{150} \PYG{o}{.*} \PYG{n}{volCons} \PYG{o}{.*}\PYG{c}{...}
+    \PYG{p}{(}\PYG{n}{rhoWater} \PYG{o}{./} \PYG{n}{rhoSlurry}\PYG{p}{)} \PYG{o}{.*} \PYG{p}{((}\PYG{n}{grav} \PYG{o}{.*} \PYG{n}{pipeDiam} \PYG{o}{.*} \PYG{p}{(}\PYG{n}{SGLime} \PYG{o}{\PYGZhy{}} \PYG{l+m+mi}{1}\PYG{p}{))} \PYG{o}{./}\PYG{c}{...}
+    \PYG{p}{(}\PYG{n}{vel}\PYG{o}{.\PYGZca{}}\PYG{l+m+mi}{2} \PYG{o}{.*} \PYG{n+nb}{sqrt}\PYG{p}{(}\PYG{n}{cd}\PYG{p}{)))}\PYG{o}{.\PYGZca{}}\PYG{l+m+mf}{1.5}\PYG{p}{);}
+\PYG{n}{deltaP} \PYG{p}{=} \PYG{p}{(}\PYG{n}{fricFact} \PYG{o}{.*} \PYG{n}{rhoSlurry} \PYG{o}{.*} \PYG{n}{pipeLen} \PYG{o}{.*} \PYG{n}{vel}\PYG{o}{.\PYGZca{}}\PYG{l+m+mi}{2}\PYG{p}{)} \PYG{o}{./}\PYG{c}{...}
+    \PYG{p}{(}\PYG{n}{pipeDiam} \PYG{o}{.*} \PYG{l+m+mi}{2} \PYG{o}{.*} \PYG{n}{grav}\PYG{p}{);}
+\PYG{n}{powerPump} \PYG{p}{=} \PYG{n}{deltaP} \PYG{o}{.*} \PYG{n}{volFlow}\PYG{p}{;}
+\PYG{n}{powerGrind} \PYG{p}{=} \PYG{l+m+mi}{218} \PYG{o}{.*} \PYG{n}{wLime} \PYG{o}{.*} \PYG{p}{((}\PYG{l+m+mf}{1.}\PYG{o}{/}\PYG{n+nb}{sqrt}\PYG{p}{(}\PYG{n}{partSize}\PYG{p}{))} \PYG{o}{\PYGZhy{}} \PYG{p}{(}\PYG{l+m+mf}{1.}\PYG{o}{/}\PYG{n+nb}{sqrt}\PYG{p}{(}\PYG{n}{partSizePre}\PYG{p}{)));}
+\PYG{n}{hpPump} \PYG{p}{=} \PYG{n}{powerPump} \PYG{o}{./} \PYG{l+m+mi}{550}\PYG{p}{;}
+\PYG{n}{hpGrind} \PYG{p}{=} \PYG{n}{powerGrind} \PYG{o}{./} \PYG{l+m+mi}{550}\PYG{p}{;}
+
+\PYG{n}{purchaseCost} \PYG{p}{=} \PYG{l+m+mi}{300} \PYG{o}{.*} \PYG{n}{hpGrind} \PYG{o}{+} \PYG{l+m+mi}{200} \PYG{o}{.*} \PYG{n}{hpPump}\PYG{p}{;}
+\PYG{n}{yearlyPowerCost} \PYG{p}{=} \PYG{p}{(}\PYG{l+m+mf}{0.07} \PYG{o}{.*} \PYG{n}{hpGrind} \PYG{o}{+} \PYG{l+m+mf}{0.05} \PYG{o}{.*} \PYG{n}{hpPump}\PYG{p}{)} \PYG{o}{.*} \PYG{n}{hrPerDay} \PYG{o}{.*} \PYG{n}{dayPerYear}\PYG{p}{;}
+\PYG{n}{totPowerCost} \PYG{p}{=} \PYG{n}{yearlyPowerCost} \PYG{o}{.*} \PYG{p}{((}\PYG{l+m+mf}{1.07}\PYG{o}{.\PYGZca{}}\PYG{n}{yrsLife} \PYG{o}{\PYGZhy{}} \PYG{l+m+mi}{1}\PYG{p}{)} \PYG{o}{./} \PYG{p}{(}\PYG{l+m+mf}{0.07} \PYG{o}{.*} \PYG{l+m+mf}{1.07}\PYG{o}{.\PYGZca{}}\PYG{l+m+mi}{7}\PYG{p}{));}
+\PYG{n}{totCost} \PYG{p}{=} \PYG{n}{purchaseCost} \PYG{o}{+} \PYG{n}{totPowerCost}\PYG{p}{;}
+\PYG{n}{totHP} \PYG{p}{=} \PYG{n}{hpPump} \PYG{o}{+} \PYG{n}{hpGrind}\PYG{p}{;}
+
+\PYG{c}{\PYGZpc{} 0bjective function}
+\PYG{n}{f} \PYG{p}{=} \PYG{n}{totCost}\PYG{p}{;}
+
+\PYG{c}{\PYGZpc{} constraints}
+\PYG{n}{c1} \PYG{p}{=} \PYG{o}{\PYGZhy{}}\PYG{n}{vel} \PYG{o}{+} \PYG{n}{critVel} \PYG{o}{.*} \PYG{l+m+mf}{1.1}\PYG{p}{;}
+\PYG{n}{c2} \PYG{p}{=} \PYG{n}{volCons} \PYG{o}{\PYGZhy{}} \PYG{l+m+mf}{0.4}\PYG{p}{;}
+
+
+\PYG{c}{\PYGZpc{} constants}
+\PYG{n+nb}{pi} \PYG{p}{=} \PYG{l+m+mf}{3.14159}\PYG{p}{;}
+\PYG{n}{del\PYGZus{}0} \PYG{p}{=} \PYG{l+m+mf}{0.4}\PYG{p}{;} \PYG{c}{\PYGZpc{}(in)}
+\PYG{n}{h\PYGZus{}0} \PYG{p}{=} \PYG{l+m+mi}{1}\PYG{p}{;} \PYG{c}{\PYGZpc{}(in)}
+\PYG{n}{h\PYGZus{}def} \PYG{p}{=} \PYG{n}{h\PYGZus{}0} \PYG{o}{\PYGZhy{}} \PYG{n}{del\PYGZus{}0}\PYG{p}{;} \PYG{c}{\PYGZpc{}(in)}
+\PYG{n}{G} \PYG{p}{=} \PYG{l+m+mi}{12000000}\PYG{p}{;} \PYG{c}{\PYGZpc{}(psi)}
+\PYG{n}{sf} \PYG{p}{=} \PYG{l+m+mf}{1.5}\PYG{p}{;}
+\PYG{n}{se} \PYG{p}{=} \PYG{l+m+mi}{45000}\PYG{p}{;} \PYG{c}{\PYGZpc{}(psi)}
+\PYG{n}{Q} \PYG{p}{=} \PYG{l+m+mi}{150000}\PYG{p}{;} \PYG{c}{\PYGZpc{}(psi)}
+\PYG{n}{w} \PYG{p}{=} \PYG{l+m+mf}{0.18}\PYG{p}{;}
+
+
+\PYG{n}{fig} \PYG{p}{=} \PYG{n}{figure}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{)}
+\PYG{p}{[}\PYG{n}{C}\PYG{p}{,}\PYG{n}{h}\PYG{p}{]} \PYG{p}{=} \PYG{n}{contour}\PYG{p}{(}\PYG{n}{partSize}\PYG{p}{,} \PYG{n}{pipeDiam}\PYG{p}{,} \PYG{n}{f}\PYG{p}{,} \PYG{l+m+mi}{10} \PYG{p}{,} \PYG{l+s}{\PYGZsq{}k\PYGZsq{}}\PYG{p}{);}
+\PYG{n}{clabel}\PYG{p}{(}\PYG{n}{C}\PYG{p}{,}\PYG{n}{h}\PYG{p}{,}\PYG{l+s}{\PYGZsq{}Labelspacing\PYGZsq{}}\PYG{p}{,}\PYG{l+m+mi}{500}\PYG{p}{);}
+\PYG{n}{title}\PYG{p}{(}\PYG{l+s}{\PYGZsq{}Total Cost Contour Plot\PYGZsq{}}\PYG{p}{);}
+\PYG{n}{xlabel}\PYG{p}{(}\PYG{l+s}{\PYGZsq{}Partical Size(ft)\PYGZsq{}}\PYG{p}{);}
+\PYG{n}{ylabel}\PYG{p}{(}\PYG{l+s}{\PYGZsq{}Pipe Diameter(ft)\PYGZsq{}}\PYG{p}{);}
+\PYG{n}{hold} \PYG{n}{on}\PYG{p}{;}
+\PYG{n}{y1}\PYG{p}{=}\PYG{n}{get}\PYG{p}{(}\PYG{n}{gca}\PYG{p}{,}\PYG{l+s}{\PYGZsq{}ylim\PYGZsq{}}\PYG{p}{);}
+\PYG{n}{contour}\PYG{p}{(}\PYG{n}{partSize}\PYG{p}{,} \PYG{n}{pipeDiam}\PYG{p}{,} \PYG{n}{c1}\PYG{p}{,} \PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{],} \PYG{l+s}{\PYGZsq{}b\PYGZsq{}}\PYG{p}{)}
+\PYG{n}{contour}\PYG{p}{(}\PYG{n}{partSize}\PYG{p}{,} \PYG{n}{pipeDiam}\PYG{p}{,} \PYG{n}{c2}\PYG{p}{,} \PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{],} \PYG{l+s}{\PYGZsq{}r\PYGZsq{}}\PYG{p}{)}
+\PYG{n}{plot}\PYG{p}{([}\PYG{l+m+mf}{0.0005}\PYG{p}{,} \PYG{l+m+mf}{0.0005}\PYG{p}{],} \PYG{n}{y1}\PYG{p}{,} \PYG{l+s}{\PYGZsq{}g\PYGZsq{}}\PYG{p}{)}
+\PYG{n}{contour}\PYG{p}{(}\PYG{n}{partSize}\PYG{p}{,} \PYG{n}{pipeDiam}\PYG{p}{,} \PYG{n}{c1}\PYG{p}{,} \PYG{p}{[}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{],} \PYG{l+s}{\PYGZsq{}b\PYGZhy{}\PYGZhy{}\PYGZsq{}}\PYG{p}{)}
+\PYG{n}{contour}\PYG{p}{(}\PYG{n}{partSize}\PYG{p}{,} \PYG{n}{pipeDiam}\PYG{p}{,} \PYG{n}{c2}\PYG{p}{,} \PYG{p}{[}\PYG{o}{\PYGZhy{}}\PYG{p}{.}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{o}{\PYGZhy{}}\PYG{p}{.}\PYG{l+m+mi}{1}\PYG{p}{],} \PYG{l+s}{\PYGZsq{}r\PYGZhy{}\PYGZhy{}\PYGZsq{}}\PYG{p}{)}
+\PYG{n}{plot}\PYG{p}{([}\PYG{l+m+mf}{0.0007}\PYG{p}{,} \PYG{l+m+mf}{0.0007}\PYG{p}{],} \PYG{n}{y1}\PYG{p}{,} \PYG{l+s}{\PYGZsq{}g\PYGZhy{}\PYGZhy{}\PYGZsq{}}\PYG{p}{)}
+
+\PYG{n}{plot}\PYG{p}{(}\PYG{l+m+mf}{0.0005}\PYG{p}{,} \PYG{l+m+mf}{0.1816}\PYG{p}{,} \PYG{l+s}{\PYGZsq{}r*\PYGZsq{}}\PYG{p}{,} \PYG{l+s}{\PYGZsq{}linewidth\PYGZsq{}}\PYG{p}{,} \PYG{l+m+mi}{6}\PYG{p}{)}
+
+\PYG{n}{legend}\PYG{p}{(}\PYG{l+s}{\PYGZsq{}Total Cost\PYGZsq{}}\PYG{p}{,} \PYG{l+s}{\PYGZsq{}Critical Velocity Limit\PYGZsq{}}\PYG{p}{,} \PYG{l+s}{\PYGZsq{}Volumetric Concentration Limit\PYGZsq{}}\PYG{p}{,}\PYG{c}{...}
+      \PYG{l+s}{\PYGZsq{}Partical Size Limit\PYGZsq{}}\PYG{p}{,} \PYG{l+s}{\PYGZsq{}Critical Velocity Feasible Region\PYGZsq{}}\PYG{p}{,}\PYG{c}{...}
+      \PYG{l+s}{\PYGZsq{}Volumetric Concentration Feasible Region\PYGZsq{}}\PYG{p}{,} \PYG{l+s}{\PYGZsq{}Partical Size Feasible Region\PYGZsq{}}\PYG{p}{,}\PYG{c}{...}
+      \PYG{l+s}{\PYGZsq{}Optimal Solution\PYGZsq{}}\PYG{p}{,} \PYG{l+s}{\PYGZsq{}Location\PYGZsq{}}\PYG{p}{,} \PYG{l+s}{\PYGZsq{}NorthEast\PYGZsq{}}\PYG{p}{)}
+  
+\PYG{n}{set}\PYG{p}{(}\PYG{n}{fig}\PYG{p}{,}\PYG{l+s}{\PYGZsq{}Units\PYGZsq{}}\PYG{p}{,}\PYG{l+s}{\PYGZsq{}Inches\PYGZsq{}}\PYG{p}{);}
+\PYG{n}{pos} \PYG{p}{=} \PYG{n}{get}\PYG{p}{(}\PYG{n}{fig}\PYG{p}{,}\PYG{l+s}{\PYGZsq{}Position\PYGZsq{}}\PYG{p}{);}
+\PYG{n}{set}\PYG{p}{(}\PYG{n}{fig}\PYG{p}{,}\PYG{l+s}{\PYGZsq{}PaperPositionMode\PYGZsq{}}\PYG{p}{,}\PYG{l+s}{\PYGZsq{}Auto\PYGZsq{}}\PYG{p}{,}\PYG{l+s}{\PYGZsq{}PaperUnits\PYGZsq{}}\PYG{p}{,}\PYG{l+s}{\PYGZsq{}Inches\PYGZsq{}}\PYG{p}{,}\PYG{l+s}{\PYGZsq{}PaperSize\PYGZsq{}}\PYG{p}{,[}\PYG{n}{pos}\PYG{p}{(}\PYG{l+m+mi}{3}\PYG{p}{),} \PYG{n}{pos}\PYG{p}{(}\PYG{l+m+mi}{4}\PYG{p}{)])}
+\PYG{n}{print}\PYG{p}{(}\PYG{n}{fig}\PYG{p}{,} \PYG{l+s}{\PYGZsq{}\PYGZhy{}dpdf\PYGZsq{}}\PYG{p}{,} \PYG{l+s}{\PYGZsq{}test.pdf\PYGZsq{}}\PYG{p}{);}
+\end{Verbatim}
