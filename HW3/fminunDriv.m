@@ -9,13 +9,13 @@ function [] = fminunDriv()
     algoflag = 1; % 1=steepest descent; 2=conjugate gradient; 3=BFGS quasi-Newton
     stoptol = 1.e-3; % stopping tolerance, all gradient elements must be < stoptol
 
-    
+
     % ---------- call fminun----------------
     [xopt, fopt, exitflag] = fminun(@obj, @gradobj, x0, stoptol, algoflag);
-   
+
     xopt
     fopt
-    
+
     nobj
     ngrad
 end
@@ -24,6 +24,7 @@ end
  function [f] = obj(x)
     global nobj
     %example function
+    %min of 9.21739 as [-0.673913, 0.304348]T
     f = 12 + 6*x(1) - 5*x(2) + 4*x(1)^2 -2*x(1)*x(2) + 6*x(2)^2;
     nobj = nobj +1;
  end
@@ -36,5 +37,3 @@ end
     grad(2,1) = -5 - 2*x(1) + 12*x(2);
     ngrad = ngrad + 1;
  end
-
-    
