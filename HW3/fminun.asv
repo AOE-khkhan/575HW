@@ -34,13 +34,8 @@ function [xopt, fopt, exitflag] = fminun(obj, gradobj, x0, stoptol, algoflag)
     while (minVal >= lastStepVal)
       iterTestStep = iterTestStep * 2;
       % calculate at guessed testStep
-      xTest = x + iterTestStep * s;
+      xTest = xTest + iterTestStep * s;
       fTest = obj(xTest);
-      if(fTest >= f)
-        disp("Step size to big, recalculating");
-        iterTestStep = iterTestStep / 10;
-        continue;
-      end
       % add it to the stored list
       alphas(incrementer,1) = iterTestStep;
       alphas(incrementer,2) = fTest;
@@ -50,36 +45,10 @@ function [xopt, fopt, exitflag] = fminun(obj, gradobj, x0, stoptol, algoflag)
       incrementer = incrementer + 1;
       alphaOpt = iterTestStep;
     end
-    % take the half step between the last two
-    iterTestStep = (alphas(end, 1) + alphas(end-1, 1)) / 2;
-    xTest = x + iterTestStep * s;
-    fTest = obj(xTest);
-    % store the values
-    alphas(end + 1, 1) = iterTestStep;
-    alphas(end, 2) = fTest;
-    % keep the last four values
-    alphas = alphas(end-3 : end, :);
-    % find the smallest row
-    alphas = sortrows(alphas, 2);
-    alpha2 = alphas(1,1);
-    f2 = alphas(1,2);
-    if (alphas(2,1) < alphas(3,1))
-      alpha1 = alphas(2,1);
-      alpha3 = alphas(3,1);
-      f1 = alphas(2,2);
-      f3 = alphas(3,2);
-    else
-      alpha3 = alphas(2,1);
-      alpha1 = alphas(3,1);
-      f3 = alphas(2,2);
-      f1 = alphas(3,2);
-    end
-
-    deltaAlpha = alpha2 - alpha1;
-    alphaPrime = alpha2 + ((deltaAlpha * (f1 - f2)) / (2 * (f1 - 2 * f2 + f3)))
+    %     alphas
 
     % take a step
-    xnew = x + alphaPrime*s;
+    xnew = x + alphaOpt*s;
     fnew = obj(xnew);
     grad = gradobj(xnew)
     f = fnew;
