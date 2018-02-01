@@ -1,0 +1,52 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{function}\PYG{+w}{ }[xopt, fopt, exitflag] \PYG{p}{=}\PYG{+w}{ }\PYG{n+nf}{fminun}\PYG{p}{(}obj, gradobj, x0, stoptol, algoflag\PYG{p}{)}
+
+\PYG{+w}{  }\PYG{c}{\PYGZpc{} get function and gradient at starting point}
+  \PYG{p}{[}\PYG{n}{n}\PYG{p}{,}\PYG{o}{\PYGZti{}}\PYG{p}{]} \PYG{p}{=} \PYG{n+nb}{size}\PYG{p}{(}\PYG{n}{x0}\PYG{p}{);} \PYG{c}{\PYGZpc{} get number of variables}
+  \PYG{n}{f} \PYG{p}{=} \PYG{n}{obj}\PYG{p}{(}\PYG{n}{x0}\PYG{p}{);} \PYG{c}{\PYGZpc{} get the value of the function at x0}
+  \PYG{n}{grad} \PYG{p}{=} \PYG{n}{gradobj}\PYG{p}{(}\PYG{n}{x0}\PYG{p}{);}
+  \PYG{n}{x} \PYG{p}{=} \PYG{n}{x0}\PYG{p}{;}
+  \PYG{c}{\PYGZpc{}set starting step length}
+  \PYG{n}{alpha} \PYG{p}{=} \PYG{l+m+mf}{0.05}\PYG{p}{;}
+
+  \PYG{k}{while} \PYG{p}{(}\PYG{n}{all}\PYG{p}{(}\PYG{n}{grad}\PYG{p}{(:)} \PYG{o}{\PYGZgt{}} \PYG{n}{stoptol}\PYG{p}{))}
+
+    \PYG{k}{if} \PYG{p}{(}\PYG{n}{algoflag} \PYG{o}{==} \PYG{l+m+mi}{1}\PYG{p}{)}     \PYG{c}{\PYGZpc{} steepest descent}
+      \PYG{n}{s} \PYG{p}{=} \PYG{n}{srchsd}\PYG{p}{(}\PYG{n}{grad}\PYG{p}{);}
+    \PYG{k}{end}
+
+    \PYG{k}{if} \PYG{p}{(}\PYG{n}{algoflag} \PYG{o}{==} \PYG{l+m+mi}{2}\PYG{p}{)}
+      \PYG{c}{\PYGZpc{} use conjugate gradient method}
+    \PYG{k}{end}
+
+    \PYG{k}{if} \PYG{p}{(}\PYG{n}{algoflag} \PYG{o}{==} \PYG{l+m+mi}{3}\PYG{p}{)}
+      \PYG{c}{\PYGZpc{} use quasi\PYGZhy{}Newton method}
+    \PYG{k}{end}
+
+    \PYG{c}{\PYGZpc{} find the proper alpha level}
+    \PYG{n}{minVal} \PYG{p}{=} \PYG{n+nb}{inf}\PYG{p}{;}
+    \PYG{n}{lastStepVal} \PYG{p}{=} \PYG{o}{\PYGZhy{}}\PYG{n+nb}{inf}\PYG{p}{;}
+    \PYG{k}{while} \PYG{p}{(}\PYG{n}{minVal} \PYG{o}{\PYGZgt{}}\PYG{p}{=} \PYG{n}{lastStepVal}\PYG{p}{)}
+
+    \PYG{k}{end}
+
+    \PYG{n}{alphaOpt} \PYG{p}{=} \PYG{n}{alpha}\PYG{p}{;}
+    \PYG{c}{\PYGZpc{} take a step}
+    \PYG{n}{xnew} \PYG{p}{=} \PYG{n}{x} \PYG{o}{+} \PYG{n}{alphaOpt}\PYG{o}{*}\PYG{n}{s}\PYG{p}{;}
+    \PYG{n}{fnew} \PYG{p}{=} \PYG{n}{obj}\PYG{p}{(}\PYG{n}{xnew}\PYG{p}{);}
+    \PYG{n}{grad} \PYG{p}{=} \PYG{n}{gradobj}\PYG{p}{(}\PYG{n}{xnew}\PYG{p}{);}
+    \PYG{n}{f} \PYG{p}{=} \PYG{n}{fnew}
+    \PYG{n}{x} \PYG{p}{=} \PYG{n}{xnew}
+
+  \PYG{k}{end}
+  \PYG{n}{xopt} \PYG{p}{=} \PYG{n}{xnew}\PYG{p}{;}
+  \PYG{n}{fopt} \PYG{p}{=} \PYG{n}{fnew}\PYG{p}{;}
+  \PYG{n}{exitflag} \PYG{p}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+\PYG{k}{end}
+
+\PYG{c}{\PYGZpc{} get steepest descent search direction as a column vector}
+\PYG{k}{function}\PYG{+w}{ }[s] \PYG{p}{=}\PYG{+w}{ }\PYG{n+nf}{srchsd}\PYG{p}{(}grad\PYG{p}{)}
+\PYG{+w}{  }\PYG{n}{mag} \PYG{p}{=} \PYG{n+nb}{sqrt}\PYG{p}{(}\PYG{n}{grad}\PYG{o}{\PYGZsq{}*}\PYG{n}{grad}\PYG{p}{);}
+  \PYG{n}{s} \PYG{p}{=} \PYG{o}{\PYGZhy{}}\PYG{n}{grad}\PYG{o}{/}\PYG{n}{mag}\PYG{p}{;}
+\PYG{k}{end}
+\end{Verbatim}
