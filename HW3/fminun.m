@@ -27,7 +27,7 @@ function [xopt, fopt, exitflag] = fminun(obj, gradobj, x0, stoptol, algoflag)
     minVal = f;
     lastStepVal = f;
     alphas = [0, f];
-    testStep = 0.00001;
+    testStep = 1;
     xTest = x;
     incrementer = 2;
     iterTestStep = testStep;
@@ -60,7 +60,7 @@ function [xopt, fopt, exitflag] = fminun(obj, gradobj, x0, stoptol, algoflag)
     fTest = obj(xTest);
     % store the values of the intermediate step
     alphas(end + 1, :) = alphas(end, :);
-    alphas(end - 1, :) = [iterTestStep, fTest];
+    alphas(end - 1, :) = [iterTestStep, fTest]
     % find the index of the minimum function value
     [minVal, minIdx] = min(alphas(:,2));
     % get the three alpha and function values
@@ -70,9 +70,10 @@ function [xopt, fopt, exitflag] = fminun(obj, gradobj, x0, stoptol, algoflag)
     f1 = alphas(minIdx - 1, 2);
     alpha3 = alphas(minIdx + 1, 1);
     f3 = alphas(minIdx + 1, 2);
+    [alpha1, alpha2, alpha3]
     % calculate the optimum alpha value
     deltaAlpha = alpha2 - alpha1;
-    alphaPrime = alpha2 + ((deltaAlpha * (f1 - f2)) / (2 * (f1 - 2 * f2 + f3)));
+    alphaPrime = alpha2 + ((deltaAlpha * (f1 - f2)) / (2 * (f1 - 2 * f2 + f3)))
 
     % take a step
     xnew = x + alphaPrime*s;
