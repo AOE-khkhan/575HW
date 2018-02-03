@@ -1,5 +1,6 @@
 \BOOKMARK [1][-]{section.1}{1 Program Description}{}% 1
 \BOOKMARK [1][-]{section.2}{2 Testing Results}{}% 2
 \BOOKMARK [1][-]{section.3}{3 Matlab Code}{}% 3
-\BOOKMARK [2][-]{subsubsection.3.0.1}{3.0.1 Fminun Routine}{section.3}% 4
-\BOOKMARK [3][-]{subsubsection.3.0.2}{3.0.2 Driver}{subsubsection.3.0.1}% 5
+\BOOKMARK [2][-]{subsection.3.1}{3.1 Fminun Routine}{section.3}% 4
+\BOOKMARK [2][-]{subsection.3.2}{3.2 Alpha\137star line search}{section.3}% 5
+\BOOKMARK [2][-]{subsection.3.3}{3.3 Driver}{section.3}% 6

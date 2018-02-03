@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6500 64-bit) (preloaded format=pdflatex 2018.1.24)  2 FEB 2018 13:21
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6500 64-bit) (preloaded format=pdflatex 2018.1.25)  2 FEB 2018 20:32
 entering extended mode
 **./Report.tex
 (Report.tex
@@ -886,162 +886,177 @@ Package: lscape 2000/10/22 v3.01 Landscape Pages (DPC)
 Package pdflscape Info: Auto-detected driver: pdftex on input line 81.
 )
 ABD: EveryShipout initializing macros
-
-Package hyperref Warning: Difference (2) between bookmark levels is greater 
-(hyperref)                than one, level fixed on input line 39.
-
 (_minted-Report/default-pyg-prefix.pygstyle) (_minted-Report/default.pygstyle)
 runsystem(pygmentize -l matlab -f latex -P commandprefix=PYG -F tokenmerge -o _
-minted-Report/12D37F6551D071B159D6F250158EC844B01F9C7AC09F7460EB78D673850EEAF3.
+minted-Report/A389D967C44FEE2A4EC21B9C7FE71348B01F9C7AC09F7460EB78D673850EEAF3.
 pygtex fminun.m)...executed.
 
 
-(_minted-Report/12D37F6551D071B159D6F250158EC844B01F9C7AC09F7460EB78D673850EEAF
+(_minted-Report/A389D967C44FEE2A4EC21B9C7FE71348B01F9C7AC09F7460EB78D673850EEAF
 3.pygtex
 LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <10> not available
 (Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 2.
  [1
 
-{C:/Users/Landon/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}] [2])
-(_minted-Report/8DA9F034E3018C239E23496083E53C16D6F365762B0C226013DB76DC6972410
-3.pygtex [3])
-<HW3Unconstrained.pdf, id=49, pagebox=cropbox, 614.295pt x 794.97pt>
-File: HW3Unconstrained.pdf Graphic file (type pdf)
-<use HW3Unconstrained.pdf>
-Package pdftex.def Info: HW3Unconstrained.pdf  used on input line 44. on input 
-line 44.
-Package pdftex.def Info: Requested size: 614.29349pt x 794.96806pt on input lin
-e 44.
-File: HW3Unconstrained.pdf Graphic file (type pdf)
-<use HW3Unconstrained.pdf>
-Package pdftex.def Info: HW3Unconstrained.pdf  used on input line 44. on input 
-line 44.
-Package pdftex.def Info: Requested size: 614.29349pt x 794.96806pt on input lin
-e 44.
-<HW3Unconstrained.pdf, id=52, page=1, pagebox=cropbox, 614.295pt x 794.97pt>
-File: HW3Unconstrained.pdf Graphic file (type pdf)
-<use HW3Unconstrained.pdf, page 1>
-Package pdftex.def Info: HW3Unconstrained.pdf , page1 used on input line 44. on
- input line 44.
-Package pdftex.def Info: Requested size: 614.29349pt x 794.96806pt on input lin
-e 44.
-File: HW3Unconstrained.pdf Graphic file (type pdf)
-<use HW3Unconstrained.pdf, page 1>
-Package pdftex.def Info: HW3Unconstrained.pdf , page1 used on input line 44. on
- input line 44.
-Package pdftex.def Info: Requested size: 614.58406pt x 795.3441pt on input line
- 44.
- [4]
-File: HW3Unconstrained.pdf Graphic file (type pdf)
-<use HW3Unconstrained.pdf, page 1>
-Package pdftex.def Info: HW3Unconstrained.pdf , page1 used on input line 44. on
- input line 44.
-Package pdftex.def Info: Requested size: 614.58406pt x 795.3441pt on input line
- 44.
-File: HW3Unconstrained.pdf Graphic file (type pdf)
-<use HW3Unconstrained.pdf, page 1>
-Package pdftex.def Info: HW3Unconstrained.pdf , page1 used on input line 44. on
- input line 44.
-Package pdftex.def Info: Requested size: 614.58406pt x 795.3441pt on input line
- 44.
-File: HW3Unconstrained.pdf Graphic file (type pdf)
-<use HW3Unconstrained.pdf, page 1>
-Package pdftex.def Info: HW3Unconstrained.pdf , page1 used on input line 44. on
- input line 44.
-Package pdftex.def Info: Requested size: 614.58406pt x 795.3441pt on input line
- 44.
- [5 <./HW3Unconstrained.pdf>]
-<HW3Unconstrained.pdf, id=131, page=2, pagebox=cropbox, 614.295pt x 794.97pt>
-File: HW3Unconstrained.pdf Graphic file (type pdf)
-<use HW3Unconstrained.pdf, page 2>
-Package pdftex.def Info: HW3Unconstrained.pdf , page2 used on input line 44. on
- input line 44.
-Package pdftex.def Info: Requested size: 614.58406pt x 795.3441pt on input line
- 44.
-File: HW3Unconstrained.pdf Graphic file (type pdf)
-<use HW3Unconstrained.pdf, page 2>
-Package pdftex.def Info: HW3Unconstrained.pdf , page2 used on input line 44. on
- input line 44.
-Package pdftex.def Info: Requested size: 614.58406pt x 795.3441pt on input line
- 44.
-File: HW3Unconstrained.pdf Graphic file (type pdf)
-<use HW3Unconstrained.pdf, page 2>
-Package pdftex.def Info: HW3Unconstrained.pdf , page2 used on input line 44. on
- input line 44.
-Package pdftex.def Info: Requested size: 614.58406pt x 795.3441pt on input line
- 44.
- [6 <./HW3Unconstrained.pdf>]
-<HW3Unconstrained.pdf, id=140, page=3, pagebox=cropbox, 614.295pt x 794.97pt>
-File: HW3Unconstrained.pdf Graphic file (type pdf)
-<use HW3Unconstrained.pdf, page 3>
-Package pdftex.def Info: HW3Unconstrained.pdf , page3 used on input line 44. on
- input line 44.
-Package pdftex.def Info: Requested size: 614.58406pt x 795.3441pt on input line
- 44.
-File: HW3Unconstrained.pdf Graphic file (type pdf)
-<use HW3Unconstrained.pdf, page 3>
-Package pdftex.def Info: HW3Unconstrained.pdf , page3 used on input line 44. on
- input line 44.
-Package pdftex.def Info: Requested size: 614.58406pt x 795.3441pt on input line
- 44.
-File: HW3Unconstrained.pdf Graphic file (type pdf)
-<use HW3Unconstrained.pdf, page 3>
-Package pdftex.def Info: HW3Unconstrained.pdf , page3 used on input line 44. on
- input line 44.
-Package pdftex.def Info: Requested size: 614.58406pt x 795.3441pt on input line
- 44.
+{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}])
+runsystem(pygmentize -l matlab -f latex -P commandprefix=PYG -F tokenmerge -o _
+minted-Report/11681DCAA77A10F98A6D5D6A7A10422277640BF95FA6161D6F32431A07F27A07.
+pygtex aPrime.m)...executed.
 
-[7 <./HW3Unconstrained.pdf>]
-<HW3Unconstrained.pdf, id=154, page=4, pagebox=cropbox, 614.295pt x 794.97pt>
+
+(_minted-Report/11681DCAA77A10F98A6D5D6A7A10422277640BF95FA6161D6F32431A07F27A0
+7.pygtex [2])
+runsystem(pygmentize -l matlab -f latex -P commandprefix=PYG -F tokenmerge -o _
+minted-Report/5C7DBA46C6183AFA6D17081D69D53E7BD6F365762B0C226013DB76DC69724103.
+pygtex fminunDriv.m)...executed.
+
+
+(_minted-Report/5C7DBA46C6183AFA6D17081D69D53E7BD6F365762B0C226013DB76DC6972410
+3.pygtex [3] [4])
+<HW3Unconstrained.pdf, id=56, pagebox=cropbox, 614.295pt x 794.97pt>
+File: HW3Unconstrained.pdf Graphic file (type pdf)
+<use HW3Unconstrained.pdf>
+Package pdftex.def Info: HW3Unconstrained.pdf  used on input line 46. on input 
+line 46.
+Package pdftex.def Info: Requested size: 614.29349pt x 794.96806pt on input lin
+e 46.
+File: HW3Unconstrained.pdf Graphic file (type pdf)
+<use HW3Unconstrained.pdf>
+Package pdftex.def Info: HW3Unconstrained.pdf  used on input line 46. on input 
+line 46.
+Package pdftex.def Info: Requested size: 614.29349pt x 794.96806pt on input lin
+e 46.
+<HW3Unconstrained.pdf, id=59, page=1, pagebox=cropbox, 614.295pt x 794.97pt>
+File: HW3Unconstrained.pdf Graphic file (type pdf)
+<use HW3Unconstrained.pdf, page 1>
+Package pdftex.def Info: HW3Unconstrained.pdf , page1 used on input line 46. on
+ input line 46.
+Package pdftex.def Info: Requested size: 614.29349pt x 794.96806pt on input lin
+e 46.
+File: HW3Unconstrained.pdf Graphic file (type pdf)
+<use HW3Unconstrained.pdf, page 1>
+Package pdftex.def Info: HW3Unconstrained.pdf , page1 used on input line 46. on
+ input line 46.
+Package pdftex.def Info: Requested size: 614.58406pt x 795.3441pt on input line
+ 46.
+ [5]
+File: HW3Unconstrained.pdf Graphic file (type pdf)
+<use HW3Unconstrained.pdf, page 1>
+Package pdftex.def Info: HW3Unconstrained.pdf , page1 used on input line 46. on
+ input line 46.
+Package pdftex.def Info: Requested size: 614.58406pt x 795.3441pt on input line
+ 46.
+File: HW3Unconstrained.pdf Graphic file (type pdf)
+<use HW3Unconstrained.pdf, page 1>
+Package pdftex.def Info: HW3Unconstrained.pdf , page1 used on input line 46. on
+ input line 46.
+Package pdftex.def Info: Requested size: 614.58406pt x 795.3441pt on input line
+ 46.
+File: HW3Unconstrained.pdf Graphic file (type pdf)
+<use HW3Unconstrained.pdf, page 1>
+Package pdftex.def Info: HW3Unconstrained.pdf , page1 used on input line 46. on
+ input line 46.
+Package pdftex.def Info: Requested size: 614.58406pt x 795.3441pt on input line
+ 46.
+ [6 <./HW3Unconstrained.pdf>]
+<HW3Unconstrained.pdf, id=138, page=2, pagebox=cropbox, 614.295pt x 794.97pt>
+File: HW3Unconstrained.pdf Graphic file (type pdf)
+<use HW3Unconstrained.pdf, page 2>
+Package pdftex.def Info: HW3Unconstrained.pdf , page2 used on input line 46. on
+ input line 46.
+Package pdftex.def Info: Requested size: 614.58406pt x 795.3441pt on input line
+ 46.
+File: HW3Unconstrained.pdf Graphic file (type pdf)
+<use HW3Unconstrained.pdf, page 2>
+Package pdftex.def Info: HW3Unconstrained.pdf , page2 used on input line 46. on
+ input line 46.
+Package pdftex.def Info: Requested size: 614.58406pt x 795.3441pt on input line
+ 46.
+File: HW3Unconstrained.pdf Graphic file (type pdf)
+<use HW3Unconstrained.pdf, page 2>
+Package pdftex.def Info: HW3Unconstrained.pdf , page2 used on input line 46. on
+ input line 46.
+Package pdftex.def Info: Requested size: 614.58406pt x 795.3441pt on input line
+ 46.
+ [7 <./HW3Unconstrained.pdf>]
+<HW3Unconstrained.pdf, id=148, page=3, pagebox=cropbox, 614.295pt x 794.97pt>
+File: HW3Unconstrained.pdf Graphic file (type pdf)
+<use HW3Unconstrained.pdf, page 3>
+Package pdftex.def Info: HW3Unconstrained.pdf , page3 used on input line 46. on
+ input line 46.
+Package pdftex.def Info: Requested size: 614.58406pt x 795.3441pt on input line
+ 46.
+File: HW3Unconstrained.pdf Graphic file (type pdf)
+<use HW3Unconstrained.pdf, page 3>
+Package pdftex.def Info: HW3Unconstrained.pdf , page3 used on input line 46. on
+ input line 46.
+Package pdftex.def Info: Requested size: 614.58406pt x 795.3441pt on input line
+ 46.
+File: HW3Unconstrained.pdf Graphic file (type pdf)
+<use HW3Unconstrained.pdf, page 3>
+Package pdftex.def Info: HW3Unconstrained.pdf , page3 used on input line 46. on
+ input line 46.
+Package pdftex.def Info: Requested size: 614.58406pt x 795.3441pt on input line
+ 46.
+[8 <./HW3Unconstrained.pdf>]
+<HW3Unconstrained.pdf, id=161, page=4, pagebox=cropbox, 614.295pt x 794.97pt>
 File: HW3Unconstrained.pdf Graphic file (type pdf)
 <use HW3Unconstrained.pdf, page 4>
-Package pdftex.def Info: HW3Unconstrained.pdf , page4 used on input line 44. on
- input line 44.
+Package pdftex.def Info: HW3Unconstrained.pdf , page4 used on input line 46. on
+ input line 46.
 Package pdftex.def Info: Requested size: 614.58406pt x 795.3441pt on input line
- 44.
+ 46.
 File: HW3Unconstrained.pdf Graphic file (type pdf)
 <use HW3Unconstrained.pdf, page 4>
-Package pdftex.def Info: HW3Unconstrained.pdf , page4 used on input line 44. on
- input line 44.
+Package pdftex.def Info: HW3Unconstrained.pdf , page4 used on input line 46. on
+ input line 46.
 Package pdftex.def Info: Requested size: 614.58406pt x 795.3441pt on input line
- 44.
+ 46.
 File: HW3Unconstrained.pdf Graphic file (type pdf)
 <use HW3Unconstrained.pdf, page 4>
-Package pdftex.def Info: HW3Unconstrained.pdf , page4 used on input line 44. on
- input line 44.
+Package pdftex.def Info: HW3Unconstrained.pdf , page4 used on input line 46. on
+ input line 46.
 Package pdftex.def Info: Requested size: 614.58406pt x 795.3441pt on input line
- 44.
- [8 <./HW3Unconstrained.pdf>]
-runsystem(del _minted-Report\F975B71F5D1648CDD9D7D038A6E0155BB01F9C7AC09F7460EB
+ 46.
+ [9 <./HW3Unconstrained.pdf>]
+runsystem(del _minted-Report\D40D3CDA8A13666484A90A70B8BDD4DCB01F9C7AC09F7460EB
 78D673850EEAF3.pygtex)...executed.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 45.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 45.
+runsystem(del _minted-Report\085EDAE21A2CD942F76A78D72D0A6BC377640BF95FA6161D6F
+32431A07F27A07.pygtex)...executed.
+
+runsystem(del _minted-Report\96A9F76E234F7A73A58B86FB840FD573D6F365762B0C226013
+DB76DC69724103.pygtex)...executed.
+
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 47.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 47.
  (Report.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 45.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 45.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 47.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 47.
 Package rerunfilecheck Info: File `Report.out' has not changed.
-(rerunfilecheck)             Checksum: 0065BDF71B3D13DB8E7F071BF9CBA57E;311.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 45.
+(rerunfilecheck)             Checksum: B91CC5626F6121FDB8F3F1B68FA83A00;366.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 47.
  ) 
 Here is how much of TeX's memory you used:
- 22027 strings out of 493312
- 419350 string characters out of 3138896
+ 22035 strings out of 493312
+ 419806 string characters out of 3138896
  556752 words of memory out of 3000000
- 25176 multiletter control sequences out of 15000+200000
- 9158 words of font info for 35 fonts, out of 3000000 for 9000
+ 25178 multiletter control sequences out of 15000+200000
+ 9157 words of font info for 35 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  55i,18n,54p,960b,553s stack positions out of 5000i,500n,10000p,200000b,50000s
-<C:/WINDOWS/Fonts/cmbx10.pfb><C:/WINDOWS/Fonts/cmbx12.pfb><C:/Program Files/M
-iKTeX 2.9/fonts/type1/public/amsfonts/cm/cmitt10.pfb><C:/WINDOWS/Fonts/cmmi10.p
-fb><C:/WINDOWS/Fonts/cmr10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/
-amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/
-cm/cmr17.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr5.p
-fb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Pro
-gram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on Report.pdf (8 pages, 584429 bytes).
+<C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Pr
+ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmitt10.pfb><C:/Program F
+iles/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiK
+TeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX 2.9/f
+onts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type
+1/public/amsfonts/cm/cmr17.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/
+amsfonts/cm/cmr5.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/c
+m/cmr7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt10.p
+fb>
+Output written on Report.pdf (9 pages, 578124 bytes).
 PDF statistics:
- 208 PDF objects out of 1000 (max. 8388607)
- 14 named destinations out of 1000 (max. 500000)
- 88 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 212 PDF objects out of 1000 (max. 8388607)
+ 16 named destinations out of 1000 (max. 500000)
+ 96 words of extra memory for PDF output out of 10000 (max. 10000000)
 

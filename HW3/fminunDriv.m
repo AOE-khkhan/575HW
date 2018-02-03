@@ -7,7 +7,8 @@ function [] = fminunDriv()
     ngrad = 0.; % counter for gradient evaluations
     x0 = [1.; 1.]; % starting point, set to be column vector
     x1 = [10; 10; 10]; % starting point for function 1
-    algoflag = 1; % 1=steepest descent; 2=conjugate gradient; 3=BFGS quasi-Newton
+    xRosen = [-1.5; 1];
+    algoflag = 2; % 1=steepest descent; 2=conjugate gradient; 3=BFGS quasi-Newton
     stoptol = 1.e-3; % stopping tolerance, all gradient elements must be < stoptol
 
 
