@@ -1,0 +1,110 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{function}\PYG{+w}{ }[xopt, fopt, exitflag] \PYG{p}{=}\PYG{+w}{ }\PYG{n+nf}{fminun}\PYG{p}{(}obj, gradobj, x0, stoptol, algoflag\PYG{p}{)}
+
+\PYG{+w}{  }\PYG{c}{\PYGZpc{} get function and gradient at starting point}
+  \PYG{k}{global} \PYG{n}{nobj}\PYG{p}{;}
+  \PYG{p}{[}\PYG{n}{n}\PYG{p}{,}\PYG{o}{\PYGZti{}}\PYG{p}{]} \PYG{p}{=} \PYG{n+nb}{size}\PYG{p}{(}\PYG{n}{x0}\PYG{p}{);} \PYG{c}{\PYGZpc{} get number of variables}
+  \PYG{n}{f} \PYG{p}{=} \PYG{n}{obj}\PYG{p}{(}\PYG{n}{x0}\PYG{p}{);} \PYG{c}{\PYGZpc{} get the value of the function at x0}
+  \PYG{n}{grad} \PYG{p}{=} \PYG{n}{gradobj}\PYG{p}{(}\PYG{n}{x0}\PYG{p}{);}
+  \PYG{n}{x} \PYG{p}{=} \PYG{n}{x0}\PYG{p}{;}
+  \PYG{n}{fOld} \PYG{p}{=} \PYG{n+nb}{inf}\PYG{p}{;}
+  \PYG{n}{xOld} \PYG{p}{=} \PYG{n+nb}{zeros}\PYG{p}{(}\PYG{n}{n}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{);}
+  \PYG{c}{\PYGZpc{}set starting step length}
+  \PYG{n}{alpha} \PYG{p}{=} \PYG{l+m+mf}{0.0005}\PYG{p}{;}
+  \PYG{n}{incrementCounter} \PYG{p}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+  \PYG{n}{gradOld} \PYG{p}{=} \PYG{n+nb}{ones}\PYG{p}{(}\PYG{n}{n}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{);}
+  \PYG{n}{sOld} \PYG{p}{=} \PYG{n+nb}{zeros}\PYG{p}{(}\PYG{n}{n}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{);}
+  \PYG{n}{N} \PYG{p}{=} \PYG{n+nb}{eye}\PYG{p}{(}\PYG{n}{n}\PYG{p}{);}
+  \PYG{n}{saveMat} \PYG{p}{=} \PYG{n}{table}\PYG{p}{;}
+
+
+  \PYG{k}{while} \PYG{p}{(}\PYG{n}{any}\PYG{p}{(}\PYG{n+nb}{abs}\PYG{p}{(}\PYG{n}{grad}\PYG{p}{(:))} \PYG{o}{\PYGZgt{}} \PYG{n}{stoptol}\PYG{p}{))}
+    \PYG{n}{incrementCounter} \PYG{p}{=} \PYG{n}{incrementCounter} \PYG{o}{+} \PYG{l+m+mi}{1}
+    \PYG{k}{if} \PYG{p}{(}\PYG{n}{nobj} \PYG{o}{\PYGZgt{}} \PYG{l+m+mi}{500}\PYG{p}{)}
+      \PYG{n}{xopt} \PYG{p}{=} \PYG{n+nb}{nan}\PYG{p}{;}
+      \PYG{n}{fopt} \PYG{p}{=} \PYG{n+nb}{nan}\PYG{p}{;}
+      \PYG{n}{exitflag} \PYG{p}{=} \PYG{l+m+mi}{1}
+      \PYG{k}{return}
+    \PYG{k}{end}
+
+    \PYG{k}{if} \PYG{p}{(}\PYG{n}{algoflag} \PYG{o}{==} \PYG{l+m+mi}{1}\PYG{p}{)}     \PYG{c}{\PYGZpc{} steepest descent}
+      \PYG{n}{s} \PYG{p}{=} \PYG{n}{srchsd}\PYG{p}{(}\PYG{n}{grad}\PYG{p}{);}
+      \PYG{c}{\PYGZpc{} find the proper alpha level}
+      \PYG{c}{\PYGZpc{} function [alphaPrime] = aPrime(obj, gradobj, s, f, x)}
+      \PYG{n}{alphaPrime} \PYG{p}{=} \PYG{n}{aPrime}\PYG{p}{(}\PYG{n}{obj}\PYG{p}{,} \PYG{n}{gradobj}\PYG{p}{,} \PYG{n}{s}\PYG{p}{,} \PYG{n}{f}\PYG{p}{,} \PYG{n}{x}\PYG{p}{);}
+
+    \PYG{k}{end}
+
+    \PYG{k}{if} \PYG{p}{(}\PYG{n}{algoflag} \PYG{o}{==} \PYG{l+m+mi}{2}\PYG{p}{)}
+      \PYG{c}{\PYGZpc{} use conjugate gradient method}
+      \PYG{c}{\PYGZpc{} check that it\PYGZsq{}s not the first round / we wont divide by 0}
+      \PYG{k}{if} \PYG{p}{(}\PYG{n}{gradOld}\PYG{o}{\PYGZsq{}} \PYG{o}{*} \PYG{n}{gradOld} \PYG{o}{==} \PYG{l+m+mi}{0}\PYG{p}{)}
+        \PYG{n}{sMessy} \PYG{p}{=} \PYG{o}{\PYGZhy{}}\PYG{n}{grad}\PYG{p}{;}
+      \PYG{k}{else}
+        \PYG{c}{\PYGZpc{} calculate the beta term}
+        \PYG{n}{betaCorrection} \PYG{p}{=} \PYG{p}{(}\PYG{n}{grad}\PYG{o}{\PYGZsq{}} \PYG{o}{*} \PYG{n}{grad}\PYG{p}{)} \PYG{o}{/} \PYG{p}{(}\PYG{n}{gradOld}\PYG{o}{\PYGZsq{}} \PYG{o}{*} \PYG{n}{gradOld}\PYG{p}{);}
+        \PYG{n}{sMessy} \PYG{p}{=} \PYG{o}{\PYGZhy{}}\PYG{n}{grad} \PYG{o}{+} \PYG{n}{betaCorrection} \PYG{o}{*} \PYG{n}{sOld}\PYG{p}{;}
+        \PYG{n}{sOld} \PYG{p}{=} \PYG{n}{sMessy}\PYG{p}{;}
+        \PYG{c}{\PYGZpc{} normalize the s vector}
+        \PYG{n}{s} \PYG{p}{=} \PYG{n}{sMessy} \PYG{o}{/} \PYG{n}{norm}\PYG{p}{(}\PYG{n}{sMessy}\PYG{p}{);}
+        \PYG{n}{alphaPrime} \PYG{p}{=} \PYG{n}{aPrime}\PYG{p}{(}\PYG{n}{obj}\PYG{p}{,} \PYG{n}{gradobj}\PYG{p}{,} \PYG{n}{s}\PYG{p}{,} \PYG{n}{f}\PYG{p}{,} \PYG{n}{x}\PYG{p}{);}
+      \PYG{k}{end}
+
+    \PYG{k}{end}
+
+    \PYG{k}{if} \PYG{p}{(}\PYG{n}{algoflag} \PYG{o}{==} \PYG{l+m+mi}{3}\PYG{p}{)}
+      \PYG{c}{\PYGZpc{} use quasi\PYGZhy{}Newton method}
+      \PYG{n}{gammaK} \PYG{p}{=} \PYG{n}{grad} \PYG{o}{\PYGZhy{}} \PYG{n}{gradOld}\PYG{p}{;}
+      \PYG{n}{deltaX} \PYG{p}{=} \PYG{n}{x} \PYG{o}{\PYGZhy{}} \PYG{n}{xOld}\PYG{p}{;}
+      \PYG{k}{if} \PYG{p}{(}\PYG{n}{incrementCounter} \PYG{o}{\PYGZgt{}} \PYG{l+m+mi}{1} \PYG{o}{\PYGZam{}} \PYG{n}{deltaX}\PYG{o}{\PYGZsq{}} \PYG{o}{*} \PYG{n}{gammaK} \PYG{o}{\PYGZgt{}} \PYG{l+m+mi}{0}\PYG{p}{)}
+        \PYG{n}{t1} \PYG{p}{=} \PYG{l+m+mi}{1} \PYG{o}{+} \PYG{p}{((}\PYG{n}{gammaK}\PYG{o}{\PYGZsq{}} \PYG{o}{*} \PYG{n}{N} \PYG{o}{*} \PYG{n}{gammaK}\PYG{p}{)} \PYG{o}{/} \PYG{p}{(}\PYG{n}{deltaX}\PYG{o}{\PYGZsq{}} \PYG{o}{*} \PYG{n}{gammaK}\PYG{p}{));}
+        \PYG{n}{t2} \PYG{p}{=} \PYG{p}{(}\PYG{n}{deltaX} \PYG{o}{*} \PYG{n}{deltaX}\PYG{o}{\PYGZsq{}}\PYG{p}{)} \PYG{o}{/} \PYG{p}{(}\PYG{n}{deltaX}\PYG{o}{\PYGZsq{}} \PYG{o}{*} \PYG{n}{gammaK}\PYG{p}{);}
+        \PYG{n}{t3} \PYG{p}{=} \PYG{p}{(}\PYG{n}{deltaX} \PYG{o}{*} \PYG{n}{gammaK}\PYG{o}{\PYGZsq{}} \PYG{o}{*} \PYG{n}{N} \PYG{o}{+} \PYG{n}{N} \PYG{o}{*} \PYG{n}{gammaK} \PYG{o}{*} \PYG{n}{deltaX}\PYG{o}{\PYGZsq{}}\PYG{p}{)} \PYG{o}{/} \PYG{p}{(}\PYG{n}{deltaX}\PYG{o}{\PYGZsq{}} \PYG{o}{*} \PYG{n}{gammaK}\PYG{p}{);}
+        \PYG{n}{N} \PYG{p}{=} \PYG{n}{N} \PYG{o}{+} \PYG{n}{t1} \PYG{o}{*} \PYG{n}{t2} \PYG{o}{\PYGZhy{}} \PYG{n}{t3}
+      \PYG{k}{end}
+      \PYG{n}{s} \PYG{p}{=} \PYG{o}{\PYGZhy{}}\PYG{n}{N} \PYG{o}{*} \PYG{n}{grad}\PYG{p}{;}
+      \PYG{n}{s} \PYG{p}{=} \PYG{n}{s} \PYG{o}{/} \PYG{n}{norm}\PYG{p}{(}\PYG{n}{s}\PYG{p}{);}
+      \PYG{n}{alphaPrime} \PYG{p}{=} \PYG{n}{aPrime}\PYG{p}{(}\PYG{n}{obj}\PYG{p}{,} \PYG{n}{gradobj}\PYG{p}{,} \PYG{n}{s}\PYG{p}{,} \PYG{n}{f}\PYG{p}{,} \PYG{n}{x}\PYG{p}{);}
+
+    \PYG{k}{end}
+
+
+    \PYG{c}{\PYGZpc{} take a step}
+    \PYG{n}{xnew} \PYG{p}{=} \PYG{n}{x} \PYG{o}{+} \PYG{n}{alphaPrime}\PYG{o}{*}\PYG{n}{s}\PYG{p}{;}
+    \PYG{n}{fnew} \PYG{p}{=} \PYG{n}{obj}\PYG{p}{(}\PYG{n}{xnew}\PYG{p}{);}
+    \PYG{n}{gradOld} \PYG{p}{=} \PYG{n}{grad}\PYG{p}{;}
+    \PYG{n}{grad} \PYG{p}{=} \PYG{n}{gradobj}\PYG{p}{(}\PYG{n}{xnew}\PYG{p}{);}
+    \PYG{n}{fOld} \PYG{p}{=} \PYG{n}{f}\PYG{p}{;}
+    \PYG{n}{xOld} \PYG{p}{=} \PYG{n}{x}\PYG{p}{;}
+    \PYG{n}{f} \PYG{p}{=} \PYG{n}{fnew}\PYG{p}{;}
+    \PYG{n}{x} \PYG{p}{=} \PYG{n}{xnew}\PYG{p}{;}
+    \PYG{n}{newRow} \PYG{p}{=} \PYG{p}{\PYGZob{}}\PYG{n}{xOld}\PYG{o}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{fnew}\PYG{p}{,} \PYG{n}{s}\PYG{o}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{alphaPrime}\PYG{p}{,} \PYG{n}{nobj}\PYG{p}{\PYGZcb{};}
+    \PYG{n}{saveMat} \PYG{p}{=} \PYG{p}{[}\PYG{n}{saveMat}\PYG{p}{;} \PYG{n}{newRow}\PYG{p}{];}
+
+
+  \PYG{k}{end}
+  \PYG{n}{grad}
+  \PYG{n}{xopt} \PYG{p}{=} \PYG{n}{xnew}\PYG{p}{;}
+  \PYG{n}{fopt} \PYG{p}{=} \PYG{n}{fnew}\PYG{p}{;}
+  \PYG{n}{exitflag} \PYG{p}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+  \PYG{c}{\PYGZpc{} saveMat.Properties.VariableNames = \PYGZob{}\PYGZsq{}Starting\PYGZus{}Point\PYGZsq{}, \PYGZsq{}Function\PYGZus{}Value\PYGZsq{}, ...}
+  \PYG{c}{\PYGZpc{}     \PYGZsq{}Search\PYGZus{}Direction\PYGZsq{}, \PYGZsq{}Step\PYGZus{}Length\PYGZsq{}, \PYGZsq{}Number\PYGZus{}of\PYGZus{}Objective\PYGZus{}Evaluations\PYGZsq{}\PYGZcb{};}
+  \PYG{c}{\PYGZpc{} toSave = table2array(saveMat);}
+  \PYG{c}{\PYGZpc{} fout = fopen(sprintf(\PYGZsq{}output\PYGZpc{}d.csv\PYGZsq{}, algoflag),\PYGZsq{}w\PYGZsq{});}
+  \PYG{c}{\PYGZpc{} fprintf(fout, \PYGZsq{}\PYGZpc{}s, \PYGZpc{}s, \PYGZpc{}s, \PYGZpc{}s, \PYGZpc{}s, \PYGZpc{}s, \PYGZpc{}s, \PYGZpc{}s, \PYGZpc{}s\PYGZbs{}r\PYGZbs{}n\PYGZsq{}...}
+  \PYG{c}{\PYGZpc{} , \PYGZsq{}\PYGZdl{}Starting\PYGZus{}x\PYGZdl{}\PYGZsq{}, \PYGZsq{}\PYGZdl{}Starting\PYGZus{}y\PYGZdl{}\PYGZsq{}, \PYGZsq{}\PYGZdl{}Starting\PYGZus{}z\PYGZdl{}\PYGZsq{}, \PYGZsq{}Function Val\PYGZsq{}, ...}
+  \PYG{c}{\PYGZpc{}  \PYGZsq{}\PYGZdl{}Search Direction\PYGZus{}x\PYGZdl{}\PYGZsq{}, \PYGZsq{}\PYGZdl{}Search Direction\PYGZus{}y\PYGZdl{}\PYGZsq{}, \PYGZsq{}\PYGZdl{}Search Direction\PYGZus{}z\PYGZdl{}\PYGZsq{}, ...}
+  \PYG{c}{\PYGZpc{}  \PYGZsq{}Step Length\PYGZsq{}, \PYGZsq{}Number of Objective Evaluations\PYGZsq{});}
+  \PYG{c}{\PYGZpc{} fprintf(fout, \PYGZsq{}\PYGZpc{}8.6f, \PYGZpc{}8.6f, \PYGZpc{}8.6f, \PYGZpc{}8.6f, \PYGZpc{}8.6f, \PYGZpc{}8.6f, \PYGZpc{}8.6f, \PYGZpc{}8.6f, \PYGZpc{}8.6f   \PYGZbs{}r\PYGZbs{}n\PYGZsq{}, toSave\PYGZsq{});}
+  \PYG{c}{\PYGZpc{} fclose(fout);}
+  \PYG{c}{\PYGZpc{} writetable(saveMat, sprintf(\PYGZsq{}output\PYGZpc{}d.csv\PYGZsq{}, algoflag), \PYGZsq{}precision\PYGZsq{}, \PYGZsq{}\PYGZpc{}10.4f\PYGZsq{});}
+  \PYG{c}{\PYGZpc{} write the matrix to a file}
+
+\PYG{k}{end}
+
+\PYG{c}{\PYGZpc{} get steepest descent search direction as a column vector}
+\PYG{k}{function}\PYG{+w}{ }[s] \PYG{p}{=}\PYG{+w}{ }\PYG{n+nf}{srchsd}\PYG{p}{(}grad\PYG{p}{)}
+\PYG{+w}{  }\PYG{n}{mag} \PYG{p}{=} \PYG{n+nb}{sqrt}\PYG{p}{(}\PYG{n}{grad}\PYG{o}{\PYGZsq{}*}\PYG{n}{grad}\PYG{p}{);}
+  \PYG{n}{s} \PYG{p}{=} \PYG{o}{\PYGZhy{}}\PYG{n}{grad}\PYG{o}{/}\PYG{n}{mag}\PYG{p}{;}
+\PYG{k}{end}
+\end{Verbatim}

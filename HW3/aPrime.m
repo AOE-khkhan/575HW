@@ -2,7 +2,7 @@ function [alphaPrime] = aPrime(obj, gradobj, s, f, x)
   minVal = f;
   lastStepVal = f;
   alphas = [0, f];
-  testStep = 0.1;
+  testStep = 2.1;
   xTest = x;
   incrementer = 2;
   iterTestStep = testStep;
@@ -49,7 +49,7 @@ function [alphaPrime] = aPrime(obj, gradobj, s, f, x)
   % calculate the optimum alpha value
   deltaAlpha = alpha2 - alpha1;
   alphaPrime = (f1 * (alpha2^2 - alpha3^2) + f2 * (alpha3^2 - alpha1^2) ...
-        + f3 * (alpha1^2 - alpha2^2)) / (2 * (f1 * ...
-        (alpha2 - alpha3) + f2 * (alpha3 - alpha1) + ...
-        f3 * (alpha1 - alpha2)));
+  + f3 * (alpha1^2 - alpha2^2)) / (2 * (f1 * ...
+  (alpha2 - alpha3) + f2 * (alpha3 - alpha1) + ...
+  f3 * (alpha1 - alpha2)));
 end

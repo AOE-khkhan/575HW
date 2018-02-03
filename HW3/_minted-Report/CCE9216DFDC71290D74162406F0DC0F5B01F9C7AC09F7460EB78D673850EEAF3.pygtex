@@ -89,16 +89,14 @@
   \PYG{n}{exitflag} \PYG{p}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
   \PYG{c}{\PYGZpc{} saveMat.Properties.VariableNames = \PYGZob{}\PYGZsq{}Starting\PYGZus{}Point\PYGZsq{}, \PYGZsq{}Function\PYGZus{}Value\PYGZsq{}, ...}
   \PYG{c}{\PYGZpc{}     \PYGZsq{}Search\PYGZus{}Direction\PYGZsq{}, \PYGZsq{}Step\PYGZus{}Length\PYGZsq{}, \PYGZsq{}Number\PYGZus{}of\PYGZus{}Objective\PYGZus{}Evaluations\PYGZsq{}\PYGZcb{};}
+
   \PYG{n}{toSave} \PYG{p}{=} \PYG{n}{table2array}\PYG{p}{(}\PYG{n}{saveMat}\PYG{p}{);}
-  \PYG{n}{fout} \PYG{p}{=} \PYG{n}{fopen}\PYG{p}{(}\PYG{n}{sprintf}\PYG{p}{(}\PYG{l+s}{\PYGZsq{}output\PYGZpc{}d.csv\PYGZsq{}}\PYG{p}{,} \PYG{n}{algoflag}\PYG{p}{),}\PYG{l+s}{\PYGZsq{}w\PYGZsq{}}\PYG{p}{);}
-  \PYG{n}{fprintf}\PYG{p}{(}\PYG{n}{fout}\PYG{p}{,} \PYG{l+s}{\PYGZsq{}\PYGZpc{}s, \PYGZpc{}s, \PYGZpc{}s, \PYGZpc{}s, \PYGZpc{}s, \PYGZpc{}s, \PYGZpc{}s, \PYGZpc{}s, \PYGZpc{}s\PYGZbs{}r\PYGZbs{}n\PYGZsq{}}\PYG{c}{...}
-  \PYG{p}{,} \PYG{l+s}{\PYGZsq{}\PYGZdl{}Starting\PYGZus{}x\PYGZdl{}\PYGZsq{}}\PYG{p}{,} \PYG{l+s}{\PYGZsq{}\PYGZdl{}Starting\PYGZus{}y\PYGZdl{}\PYGZsq{}}\PYG{p}{,} \PYG{l+s}{\PYGZsq{}\PYGZdl{}Starting\PYGZus{}z\PYGZdl{}\PYGZsq{}}\PYG{p}{,} \PYG{l+s}{\PYGZsq{}Function Val\PYGZsq{}}\PYG{p}{,} \PYG{c}{...}
-   \PYG{l+s}{\PYGZsq{}\PYGZdl{}Search Direction\PYGZus{}x\PYGZdl{}\PYGZsq{}}\PYG{p}{,} \PYG{l+s}{\PYGZsq{}\PYGZdl{}Search Direction\PYGZus{}y\PYGZdl{}\PYGZsq{}}\PYG{p}{,} \PYG{l+s}{\PYGZsq{}\PYGZdl{}Search Direction\PYGZus{}z\PYGZdl{}\PYGZsq{}}\PYG{p}{,} \PYG{c}{...}
-   \PYG{l+s}{\PYGZsq{}Step Length\PYGZsq{}}\PYG{p}{,} \PYG{l+s}{\PYGZsq{}Number of Objective Evaluations\PYGZsq{}}\PYG{p}{);}
-  \PYG{n}{fprintf}\PYG{p}{(}\PYG{n}{fout}\PYG{p}{,} \PYG{l+s}{\PYGZsq{}\PYGZpc{}8.6f, \PYGZpc{}8.6f, \PYGZpc{}8.6f, \PYGZpc{}8.6f, \PYGZpc{}8.6f, \PYGZpc{}8.6f, \PYGZpc{}8.6f, \PYGZpc{}8.6f, \PYGZpc{}8.6f \PYGZbs{}r\PYGZbs{}n\PYGZsq{}}\PYG{p}{,} \PYG{n}{toSave}\PYG{o}{\PYGZsq{}}\PYG{p}{);}
-  \PYG{n}{fclose}\PYG{p}{(}\PYG{n}{fout}\PYG{p}{);}
-  \PYG{c}{\PYGZpc{} writetable(saveMat, sprintf(\PYGZsq{}output\PYGZpc{}d.csv\PYGZsq{}, algoflag), \PYGZsq{}precision\PYGZsq{}, \PYGZsq{}\PYGZpc{}10.4f\PYGZsq{});}
-  \PYG{c}{\PYGZpc{} write the matrix to a file}
+  \PYG{c}{\PYGZpc{} fout = fopen(sprintf(\PYGZsq{}output\PYGZpc{}d.csv\PYGZsq{}, algoflag),\PYGZsq{}w\PYGZsq{});}
+  \PYG{c}{\PYGZpc{} fprintf(fout, \PYGZsq{}\PYGZpc{}s, \PYGZpc{}s, \PYGZpc{}s, \PYGZpc{}s, \PYGZpc{}s, \PYGZpc{}s, \PYGZpc{}s, \PYGZpc{}s, \PYGZpc{}s\PYGZbs{}r\PYGZbs{}n\PYGZsq{}...}
+  \PYG{c}{\PYGZpc{} , \PYGZsq{}a\PYGZsq{}, \PYGZsq{}b\PYGZsq{}, \PYGZsq{}c\PYGZsq{}, \PYGZsq{}d\PYGZsq{}, \PYGZsq{}e\PYGZsq{}, \PYGZsq{}f\PYGZsq{}, \PYGZsq{}g\PYGZsq{}, \PYGZsq{}h\PYGZsq{}, \PYGZsq{}i\PYGZsq{});}
+  \PYG{c}{\PYGZpc{} fprintf(fout, \PYGZsq{}\PYGZpc{}8.6f, \PYGZpc{}8.6f, \PYGZpc{}8.6f, \PYGZpc{}8.6f, \PYGZpc{}8.6f, \PYGZpc{}8.6f, \PYGZpc{}8.6f, \PYGZpc{}8.6f, \PYGZpc{}8.6f   \PYGZbs{}r\PYGZbs{}n\PYGZsq{}...}
+  \PYG{c}{\PYGZpc{} , toSave\PYGZsq{});}
+  \PYG{c}{\PYGZpc{} fclose(fout);}
 
 \PYG{k}{end}
 
