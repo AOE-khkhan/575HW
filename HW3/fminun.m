@@ -8,8 +8,10 @@ function [xopt, fopt, exitflag] = fminun(obj, gradobj, x0, stoptol, algoflag)
   x = x0;
   %set starting step length
   alpha = 0.0005;
+  incrementCounter = 0;
 
   while (any(abs(grad(:)) > stoptol))
+    incrementCounter = incrementCounter + 1
 
     if (algoflag == 1)     % steepest descent
       s = srchsd(grad);
@@ -27,22 +29,23 @@ function [xopt, fopt, exitflag] = fminun(obj, gradobj, x0, stoptol, algoflag)
     minVal = f;
     lastStepVal = f;
     alphas = [0, f];
-    testStep = 1;
+    testStep = 3.1;
     xTest = x;
     incrementer = 2;
     iterTestStep = testStep;
     while (minVal >= lastStepVal)
-      iterTestStep = iterTestStep * 2;
       % calculate at guessed testStep
       xTest = x + iterTestStep * s;
       fTest = obj(xTest);
       if(fTest >= f & incrementer < 3)
         disp("Step size to big, recalculating");
+        f
+        fTest
         minVal = f;
         lastStepVal = f;
         iterTestStep = iterTestStep / 10;
         alphas = [0, f];
-        incrementer = 1;
+        incrementer = 2;
         continue;
       end
       % add it to the stored list
@@ -53,6 +56,7 @@ function [xopt, fopt, exitflag] = fminun(obj, gradobj, x0, stoptol, algoflag)
       lastStepVal = fTest;
       incrementer = incrementer + 1;
       alphaOpt = iterTestStep;
+      iterTestStep = iterTestStep * 2;
     end
     % take the half step between the last two steps
     iterTestStep = (alphas(end, 1) + alphas(end-1, 1)) / 2;
@@ -73,7 +77,11 @@ function [xopt, fopt, exitflag] = fminun(obj, gradobj, x0, stoptol, algoflag)
     [alpha1, alpha2, alpha3]
     % calculate the optimum alpha value
     deltaAlpha = alpha2 - alpha1;
-    alphaPrime = alpha2 + ((deltaAlpha * (f1 - f2)) / (2 * (f1 - 2 * f2 + f3)))
+    alphaPrime = (f1 * (alpha2^2 - alpha3^2) + f2 * (alpha3^2 - alpha1^2) ...
+                  + f3 * (alpha1^2 - alpha2^2)) / (2 * (f1 * ...
+                  (alpha2 - alpha3) + f2 * (alpha3 - alpha1) + ...
+                  f3 * (alpha1 - alpha2)))
+
 
     % take a step
     xnew = x + alphaPrime*s;
