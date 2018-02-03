@@ -8,12 +8,12 @@ function [] = fminunDriv()
     x = [1.; 1.]; % starting point, set to be column vector
     x1 = [10; 10; 10]; % starting point for function 1
     xRosen = [-1.5; 1];
-    algoflag = 1; % 1=steepest descent; 2=conjugate gradient; 3=BFGS quasi-Newton
+    algoflag = 3; % 1=steepest descent; 2=conjugate gradient; 3=BFGS quasi-Newton
     stoptol = 1.e-5; % stopping tolerance, all gradient elements must be < stoptol
 
 
     % ---------- call fminun----------------
-    [xopt, fopt, exitflag] = fminun(@obj1, @gradobj1, x1, stoptol, algoflag);
+    [xopt, fopt, exitflag] = fminunPlot(@objRosen, @gradobjRosen, xRosen, stoptol, algoflag);
 
     xopt
     fopt
@@ -61,14 +61,14 @@ end
  % function 1 to be optimized on the homework
  function [f] = objRosen(x)
    global nobj
-   f = 100 .* (x(2) - x(1).^2).^2 + (1-x(1)).^2;
+   f = 100 .* (x(2,:,:) - x(1,:,:).^2).^2 + (1-x(1,:,:)).^2;
    nobj = nobj + 1;
  end
 
  % gradient of function 1
  function [grad] = gradobjRosen(x)
    global ngrad
-   grad(1,1) = 2 .* (200 .* x(1).^3 - 200 .* x(1) .* x(2) + x(1) - 1);
-   grad(2,1) = 200 .* (x(2) - x(1).^2);
+   grad(1,1) = 2 .* (200 .* x(1,:,:).^3 - 200 .* x(1,:,:) .* x(2,:,:) + x(1,:,:) - 1);
+   grad(2,1) = 200 .* (x(2,:,:) - x(1,:,:).^2);
    ngrad = ngrad + 1;
  end

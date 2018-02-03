@@ -1,8 +1,25 @@
 
-function [xopt, fopt, exitflag] = fminun(obj, gradobj, x0, stoptol, algoflag)
+function [xopt, fopt, exitflag] = fminunPlot(obj, gradobj, x0, stoptol, algoflag)
 
   % get function and gradient at starting point
   global nobj;
+  [x1, x2] = meshgrid(-2.:0.01:2., -2.:0.01:2.25);
+  xMesh = [];
+  xMesh(1,:,:) = x1;
+  xMesh(2,:,:) = x2;
+  fMesh = obj(xMesh);
+  [~, width, height] = size(fMesh);
+  fMesh = reshape(fMesh, [width, height]);
+  fig = figure(1);
+  cntrList = [2, 15, 35, 70, 150, 200, 300, 400, 600, 1000, 2000];
+  [c, h] = contour(x1, x2, fMesh, cntrList, 'k');
+  clabel(c, h, 'Labelspacing', 500);
+  hold on;
+  posHist = x0';
+  title('Function progression');
+  xlabel('x1');
+  ylabel('x2');
+
   [n,~] = size(x0); % get number of variables
   f = obj(x0); % get the value of the function at x0
   grad = gradobj(x0);
@@ -20,12 +37,6 @@ function [xopt, fopt, exitflag] = fminun(obj, gradobj, x0, stoptol, algoflag)
 
   while (any(abs(grad(:)) > stoptol))
     incrementCounter = incrementCounter + 1
-    if (nobj > 500)
-      xopt = nan;
-      fopt = nan;
-      exitflag = 1
-      return
-    end
 
     if (algoflag == 1)     % steepest descent
       s = srchsd(grad);
@@ -78,28 +89,25 @@ function [xopt, fopt, exitflag] = fminun(obj, gradobj, x0, stoptol, algoflag)
     xOld = x;
     f = fnew;
     x = xnew;
-    newRow = {xOld', fnew, s', alphaPrime, nobj};
+    newRow = {xOld, f, s, alphaPrime, nobj};
     saveMat = [saveMat; newRow];
-
+    posHist(end+1, :) = x';
 
   end
+  plot(posHist(:,1), posHist(:,2), 'b-*');
+  legend('Function countours', 'Algorithm Progression', 'Location', 'SouthEast');
   grad
   xopt = xnew;
   fopt = fnew;
   exitflag = 0;
-  % saveMat.Properties.VariableNames = {'Starting_Point', 'Function_Value', ...
-  %     'Search_Direction', 'Step_Length', 'Number_of_Objective_Evaluations'};
-  toSave = table2array(saveMat);
-  fout = fopen(sprintf('output%d.csv', algoflag),'w');
-  fprintf(fout, '%s, %s, %s, %s, %s, %s, %s, %s, %s\r\n'...
-  , '$Starting_x$', '$Starting_y$', '$Starting_z$', 'Function Val', ...
-   '$Search Direction_x$', '$Search Direction_y$', '$Search Direction_z$', ...
-   'Step Length', 'Number of Objective Evaluations');
-  fprintf(fout, '%8.6f, %8.6f, %8.6f, %8.6f, %8.6f, %8.6f, %8.6f, %8.6f, %8.6f \r\n', toSave');
-  fclose(fout);
-  % writetable(saveMat, sprintf('output%d.csv', algoflag), 'precision', '%10.4f');
-  % write the matrix to a file
+  saveMat.Properties.VariableNames = {'Starting_Point', 'Function_Value', ...
+  'Search_Direction', 'Step_Length', 'Number_of_Objective_Evaluations'};
 
+  set(fig,'Units','Inches');
+  pos = get(fig,'Position');
+  set(fig,'PaperPositionMode','Auto','PaperUnits','Inches','PaperSize',[pos(3), pos(4)])
+  print(fig, '-dpdf', sprintf('progression%d.pdf', algoflag));
+  % writetable(saveMat, sprintf('output%d.csv', algoflag));
 end
 
 % get steepest descent search direction as a column vector

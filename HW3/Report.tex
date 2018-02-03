@@ -17,13 +17,14 @@
 \usepackage{minted}
 \usepackage{pdfpages}
 \usepackage{tikz}
+\usepackage{csvsimple}
 \usetikzlibrary{tikzmark}
 
 
 %\usepackage{lmodern}
 
 \useunder{\uline}{\ul}{}
-\newcommand{\test}{Here is the test text to display}
+\newcommand{\wide}{0.9\linewidth}
 
 
 \begin{document}
@@ -37,17 +38,39 @@
 \subsection{Function 1 Results}
 % Steepest descent data
 
+\csvautotabular{output1.csv}
+
 % Conjugate gradient data
+\csvautotabular{output2.csv}
 
 % BFGS quasi-Newton data
+\csvautotabular{output3.csv}
 
 % table of obj evals and gradient evals for each method
 \subsection{Rosenbrock Function Results}
 % plot for steepest descent
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\wide]{progression1.pdf}
+  \caption{Progression of steepest descent algorithm}
+  \label{fig:steepest}
+\end{figure}
 
 % plot for conjugate gradient
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\wide]{progression2.pdf}
+	\caption{Progression of conjugate gradient algorithm}
+	\label{fig:steepest}
+\end{figure}
 
 % plot for quasi-Newton
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\wide]{progression3.pdf}
+	\caption{Progression of quasi-Newton algorithm}
+	\label{fig:steepest}
+\end{figure}
 
 % table of obj and gradient evals for each method
 
@@ -55,11 +78,11 @@
 \section{Matlab Code}
 
 \subsection{Fminun Routine}
-\inputminted[xleftmargin=20pt,linenos]{matlab}{fminun.m}
-\subsection{Alpha\_star line search}
-\inputminted[xleftmargin=20pt, linenos]{matlab}{aPrime.m}
+\inputminted[xleftmargin=10pt,linenos]{matlab}{fminun.m}
+\subsection{Alpha* line search}
+\inputminted[xleftmargin=10pt, linenos]{matlab}{aPrime.m}
 \subsection{Driver}
-\inputminted[xleftmargin=20pt,linenos]{matlab}{fminunDriv.m}
+\inputminted[xleftmargin=10pt,linenos]{matlab}{fminunDriv.m}
 
 \includepdf[pages=-, pagecommand={}]{HW3Unconstrained.pdf}
 \end{document}

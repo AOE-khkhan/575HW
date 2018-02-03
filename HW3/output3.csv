@@ -1,0 +1,4 @@
+$Starting_x$, $Starting_y$, $Starting_z$, Function Val, $Search Direction_x$, $Search Direction_y$, $Search Direction_z$, Step Length, Number of Objective Evaluations
+10.0000, 10.0000, 10.0000, 154.3438, -0.9943, 0.0641, -0.0855, 7.8185, 11.0000 
+2.2263, 10.5015, 9.3313, -14.3999, -0.1593, -0.5491, -0.8204, 18.6589, 22.0000 
+-0.7467, 0.2560, -5.9770, -22.3889, 0.0564, 0.6460, -0.7612, 3.3874, 31.0000 
