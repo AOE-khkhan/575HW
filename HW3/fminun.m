@@ -6,11 +6,14 @@ function [xopt, fopt, exitflag] = fminun(obj, gradobj, x0, stoptol, algoflag)
   f = obj(x0); % get the value of the function at x0
   grad = gradobj(x0);
   x = x0;
+  fOld = inf;
+  xOld = zeros(n, 1);
   %set starting step length
   alpha = 0.0005;
   incrementCounter = 0;
   gradOld = ones(n,1);
   sOld = zeros(n,1);
+  N = eye(n);
 
   while (any(abs(grad(:)) > stoptol))
     incrementCounter = incrementCounter + 1
@@ -42,6 +45,18 @@ function [xopt, fopt, exitflag] = fminun(obj, gradobj, x0, stoptol, algoflag)
 
     if (algoflag == 3)
       % use quasi-Newton method
+      gammaK = grad - gradOld;
+      deltaX = x - xOld;
+      if (incrementCounter > 1 & deltaX' * gammaK > 0)
+        t1 = 1 + ((gammaK' * N * gammaK) / (deltaX' * gammaK));
+        t2 = (deltaX * deltaX') / (deltaX' * gammaK);
+        t3 = (deltaX * gammaK' * N + N * gammaK * deltaX') / (deltaX' * gammaK);
+        N = N + t1 * t2 - t3
+      end
+      s = -N * grad;
+      s = s / norm(s);
+      alphaPrime = aPrime(obj, gradobj, s, f, x);
+
     end
 
 
@@ -50,6 +65,8 @@ function [xopt, fopt, exitflag] = fminun(obj, gradobj, x0, stoptol, algoflag)
     fnew = obj(xnew);
     gradOld = grad;
     grad = gradobj(xnew);
+    fOld = f;
+    xOld = x;
     f = fnew;
     x = xnew;
 
