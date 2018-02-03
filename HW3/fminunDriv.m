@@ -9,11 +9,11 @@ function [] = fminunDriv()
     x1 = [10; 10; 10]; % starting point for function 1
     xRosen = [-1.5; 1];
     algoflag = 3; % 1=steepest descent; 2=conjugate gradient; 3=BFGS quasi-Newton
-    stoptol = 1.e-3; % stopping tolerance, all gradient elements must be < stoptol
+    stoptol = 1.e-5; % stopping tolerance, all gradient elements must be < stoptol
 
 
     % ---------- call fminun----------------
-    [xopt, fopt, exitflag] = fminun(@obj1, @gradobj1, x1, stoptol, algoflag);
+    [xopt, fopt, exitflag] = fminun(@objRosen, @gradobjRosen, xRosen, stoptol, algoflag);
 
     xopt
     fopt
@@ -72,4 +72,3 @@ end
    grad(2,1) = 200 * (x(2) - x(1)^2);
    ngrad = ngrad + 1;
  end
- 

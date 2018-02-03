@@ -2,6 +2,7 @@
 function [xopt, fopt, exitflag] = fminun(obj, gradobj, x0, stoptol, algoflag)
 
   % get function and gradient at starting point
+  global nobj;
   [n,~] = size(x0); % get number of variables
   f = obj(x0); % get the value of the function at x0
   grad = gradobj(x0);
@@ -14,6 +15,8 @@ function [xopt, fopt, exitflag] = fminun(obj, gradobj, x0, stoptol, algoflag)
   gradOld = ones(n,1);
   sOld = zeros(n,1);
   N = eye(n);
+  saveMat = table;
+
 
   while (any(abs(grad(:)) > stoptol))
     incrementCounter = incrementCounter + 1
@@ -69,12 +72,17 @@ function [xopt, fopt, exitflag] = fminun(obj, gradobj, x0, stoptol, algoflag)
     xOld = x;
     f = fnew;
     x = xnew;
+    newRow = {xOld, f, s, alphaPrime, nobj};
+    saveMat = [saveMat; newRow];
 
   end
   grad
   xopt = xnew;
   fopt = fnew;
   exitflag = 0;
+  saveMat.Properties.VariableNames = {'Starting_Point', 'Function_Value', ...
+      'Search_Direction', 'Step_Length', 'Number_of_Objective_Evaluations'};
+  % writetable(saveMat, sprintf('output%d.csv', algoflag));
 end
 
 % get steepest descent search direction as a column vector
