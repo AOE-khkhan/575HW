@@ -91,12 +91,12 @@ function [xopt, fopt, exitflag] = fminun(obj, gradobj, x0, stoptol, algoflag)
   %     'Search_Direction', 'Step_Length', 'Number_of_Objective_Evaluations'};
 
   toSave = table2array(saveMat);
-  % fout = fopen(sprintf('output%d.csv', algoflag),'w');
-  % fprintf(fout, '%s, %s, %s, %s, %s, %s, %s, %s, %s\r\n'...
-  % , 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i');
-  % fprintf(fout, '%8.6f, %8.6f, %8.6f, %8.6f, %8.6f, %8.6f, %8.6f, %8.6f, %8.6f   \r\n'...
-  % , toSave');
-  % fclose(fout);
+  fout = fopen(sprintf('output%d.csv', algoflag),'w');
+  fprintf(fout, '%s, %s, %s, %s, %s, %s, %s, %s, %s\r\n'...
+  , 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i');
+  fprintf(fout, '%8.6f, %8.6f, %8.6f, %8.6f, %8.6f, %8.6f, %8.6f, %8.6f, %8.6f   \r\n'...
+  , toSave');
+  fclose(fout);
 
 end
 

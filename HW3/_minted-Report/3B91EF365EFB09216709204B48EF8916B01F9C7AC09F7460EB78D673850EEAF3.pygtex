@@ -91,12 +91,12 @@
   \PYG{c}{\PYGZpc{}     \PYGZsq{}Search\PYGZus{}Direction\PYGZsq{}, \PYGZsq{}Step\PYGZus{}Length\PYGZsq{}, \PYGZsq{}Number\PYGZus{}of\PYGZus{}Objective\PYGZus{}Evaluations\PYGZsq{}\PYGZcb{};}
 
   \PYG{n}{toSave} \PYG{p}{=} \PYG{n}{table2array}\PYG{p}{(}\PYG{n}{saveMat}\PYG{p}{);}
-  \PYG{c}{\PYGZpc{} fout = fopen(sprintf(\PYGZsq{}output\PYGZpc{}d.csv\PYGZsq{}, algoflag),\PYGZsq{}w\PYGZsq{});}
-  \PYG{c}{\PYGZpc{} fprintf(fout, \PYGZsq{}\PYGZpc{}s, \PYGZpc{}s, \PYGZpc{}s, \PYGZpc{}s, \PYGZpc{}s, \PYGZpc{}s, \PYGZpc{}s, \PYGZpc{}s, \PYGZpc{}s\PYGZbs{}r\PYGZbs{}n\PYGZsq{}...}
-  \PYG{c}{\PYGZpc{} , \PYGZsq{}a\PYGZsq{}, \PYGZsq{}b\PYGZsq{}, \PYGZsq{}c\PYGZsq{}, \PYGZsq{}d\PYGZsq{}, \PYGZsq{}e\PYGZsq{}, \PYGZsq{}f\PYGZsq{}, \PYGZsq{}g\PYGZsq{}, \PYGZsq{}h\PYGZsq{}, \PYGZsq{}i\PYGZsq{});}
-  \PYG{c}{\PYGZpc{} fprintf(fout, \PYGZsq{}\PYGZpc{}8.6f, \PYGZpc{}8.6f, \PYGZpc{}8.6f, \PYGZpc{}8.6f, \PYGZpc{}8.6f, \PYGZpc{}8.6f, \PYGZpc{}8.6f, \PYGZpc{}8.6f, \PYGZpc{}8.6f   \PYGZbs{}r\PYGZbs{}n\PYGZsq{}...}
-  \PYG{c}{\PYGZpc{} , toSave\PYGZsq{});}
-  \PYG{c}{\PYGZpc{} fclose(fout);}
+  \PYG{n}{fout} \PYG{p}{=} \PYG{n}{fopen}\PYG{p}{(}\PYG{n}{sprintf}\PYG{p}{(}\PYG{l+s}{\PYGZsq{}output\PYGZpc{}d.csv\PYGZsq{}}\PYG{p}{,} \PYG{n}{algoflag}\PYG{p}{),}\PYG{l+s}{\PYGZsq{}w\PYGZsq{}}\PYG{p}{);}
+  \PYG{n}{fprintf}\PYG{p}{(}\PYG{n}{fout}\PYG{p}{,} \PYG{l+s}{\PYGZsq{}\PYGZpc{}s, \PYGZpc{}s, \PYGZpc{}s, \PYGZpc{}s, \PYGZpc{}s, \PYGZpc{}s, \PYGZpc{}s, \PYGZpc{}s, \PYGZpc{}s\PYGZbs{}r\PYGZbs{}n\PYGZsq{}}\PYG{c}{...}
+  \PYG{p}{,} \PYG{l+s}{\PYGZsq{}a\PYGZsq{}}\PYG{p}{,} \PYG{l+s}{\PYGZsq{}b\PYGZsq{}}\PYG{p}{,} \PYG{l+s}{\PYGZsq{}c\PYGZsq{}}\PYG{p}{,} \PYG{l+s}{\PYGZsq{}d\PYGZsq{}}\PYG{p}{,} \PYG{l+s}{\PYGZsq{}e\PYGZsq{}}\PYG{p}{,} \PYG{l+s}{\PYGZsq{}f\PYGZsq{}}\PYG{p}{,} \PYG{l+s}{\PYGZsq{}g\PYGZsq{}}\PYG{p}{,} \PYG{l+s}{\PYGZsq{}h\PYGZsq{}}\PYG{p}{,} \PYG{l+s}{\PYGZsq{}i\PYGZsq{}}\PYG{p}{);}
+  \PYG{n}{fprintf}\PYG{p}{(}\PYG{n}{fout}\PYG{p}{,} \PYG{l+s}{\PYGZsq{}\PYGZpc{}8.6f, \PYGZpc{}8.6f, \PYGZpc{}8.6f, \PYGZpc{}8.6f, \PYGZpc{}8.6f, \PYGZpc{}8.6f, \PYGZpc{}8.6f, \PYGZpc{}8.6f, \PYGZpc{}8.6f   \PYGZbs{}r\PYGZbs{}n\PYGZsq{}}\PYG{c}{...}
+  \PYG{p}{,} \PYG{n}{toSave}\PYG{o}{\PYGZsq{}}\PYG{p}{);}
+  \PYG{n}{fclose}\PYG{p}{(}\PYG{n}{fout}\PYG{p}{);}
 
 \PYG{k}{end}
 
