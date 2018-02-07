@@ -19,6 +19,7 @@
 \usepackage{tikz}
 \usepackage{csvsimple}
 \usepackage{adjustbox, lipsum}
+\usepackage{setspace}
 \usetikzlibrary{tikzmark}
 
 \useunder{\uline}{\ul}{}
@@ -26,12 +27,43 @@
 
 
 \begin{document}
-
+\singlespacing
 \title{Unconstrained Optimization}
 \author{Landon Wright}
 % put in \date{} if you don't want a date to appear, or enter a specific date, otherwise default is today's date.
 \maketitle
 \section{Program Description}
+
+\subsection{Steepest Descent}
+The steepest descent method is the simplest of the optimization methods that are implemented here.  The search direction, $s$, is simply 
+\begin{equation}
+s = \nabla f(\textbf{x})
+\end{equation}
+Due to this the method is exceptionally simple to implement. It is however quite inefficient.  On both of the given equations it was the slowest to converge to the solution and required the highest number of function calls.  As a result it is an undesirable method.
+
+\subsection{Conjugate Gradient}
+The conjugate gradient method requires only a slight change to the steepest descent method for a large increase in efficiency.  The search direction is modified to become
+\begin{equation}
+s^{k+1} = - \nabla f^{k+1} + \beta^k s^k
+\end{equation}
+
+where
+\begin{equation}
+\beta^k = \frac{\left(\nabla f^{k+1}\right)^T \nabla f^{k+1}}{\left(\nabla f^{k}\right)^T \nabla f^{k}}
+\end{equation}
+
+This small change results in the method becoming one of conjugate directions which in turn makes the method significantly more powerful.  This is seen in the results of testing on the two given equations. The conjugate gradient method finds the optimum in fewer iterations and with less function calls.
+
+
+\subsection{Quasi-Newton}
+In testing done the Quasi-Newton method was shown to converge with the fewest number of iterations.  This is perhaps because it combines the far away efficiency of the steepest descent method with the power of conjugate gradient methods.  The result is a method the outperforms either of them on their own.  This power does come at the cost of additional complexity to implement.  The search direction is
+\begin{equation}
+s = -\textbf{N}\nabla f(\textbf{x})
+\end{equation}
+Which appears to be no more complicated than the other methods, however there is considerable complexity involved in determining \textbf{N} (For reference see equation 3.80 in the book).
+
+\subsection{Step size}
+The method of determining step size is the simple parabolic line search described in the book.  It is not the most efficient method, but it's simplicity is beneficial in ease of implementation.
 \section{Testing Results}
 \subsection{Function 1 Results}
 % Steepest descent data
