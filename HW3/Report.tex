@@ -76,7 +76,7 @@ The method of determining step size is the simple parabolic line search describe
   % \noindent\adjustbox{max width=\textwidth}{%
   & \bfseries Start-value & \bfseries Value & \bfseries Step-direction & \bfseries Step-len & \bfseries Function-calls
 	%\\\hline
-  \csvreader[head to column names]{output1.csv}{}%
+  \csvreader[head to column names, filter={\value{csvrow}<5}]{output1.csv}{}%
   {\\\thecsvrow &(\a, \b, \c)& \d & (\e, \f, \g) & \h & \i}
   \\\hline
 \end{tabular}}
@@ -178,8 +178,8 @@ The method of determining step size is the simple parabolic line search describe
 
 \subsection{Fminun Routine}
 \inputminted[xleftmargin=10pt,linenos]{matlab}{fminun.m}
-\subsection{Alpha* line search}
-\inputminted[xleftmargin=10pt, linenos]{matlab}{aPrime.m}
+%\subsection{Alpha* line search}
+%\inputminted[xleftmargin=10pt, linenos]{matlab}{aPrime.m}
 \subsection{Driver}
 \inputminted[xleftmargin=10pt,linenos]{matlab}{fminunDriv.m}
 

@@ -20,6 +20,7 @@ function [xopt, fopt, exitflag] = fminun(obj, gradobj, x0, stoptol, algoflag)
 
   while (any(abs(grad(:)) > stoptol))
     incrementCounter = incrementCounter + 1
+    % kill the run if there are more than 500 objective calls
     if (nobj > 500)
       xopt = nan;
       fopt = nan;
@@ -30,7 +31,6 @@ function [xopt, fopt, exitflag] = fminun(obj, gradobj, x0, stoptol, algoflag)
     if (algoflag == 1)     % steepest descent
       s = srchsd(grad);
       % find the proper alpha level
-      % function [alphaPrime] = aPrime(obj, gradobj, s, f, x)
       alphaPrime = aPrime(obj, gradobj, s, f, x);
 
     end
@@ -72,6 +72,7 @@ function [xopt, fopt, exitflag] = fminun(obj, gradobj, x0, stoptol, algoflag)
     % take a step
     xnew = x + alphaPrime*s;
     fnew = obj(xnew);
+    % update things
     gradOld = grad;
     grad = gradobj(xnew);
     fOld = f;
@@ -87,16 +88,13 @@ function [xopt, fopt, exitflag] = fminun(obj, gradobj, x0, stoptol, algoflag)
   xopt = xnew;
   fopt = fnew;
   exitflag = 0;
-  % saveMat.Properties.VariableNames = {'Starting_Point', 'Function_Value', ...
-  %     'Search_Direction', 'Step_Length', 'Number_of_Objective_Evaluations'};
-
-  toSave = table2array(saveMat);
-  fout = fopen(sprintf('output%d.csv', algoflag),'w');
-  fprintf(fout, '%s, %s, %s, %s, %s, %s, %s, %s, %s\r\n'...
-  , 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i');
-  fprintf(fout, '%8.6f, %8.6f, %8.6f, %8.6f, %8.6f, %8.6f, %8.6f, %8.6f, %8.6f   \r\n'...
-  , toSave');
-  fclose(fout);
+  % toSave = table2array(saveMat);
+  % fout = fopen(sprintf('output%d.csv', algoflag),'w');
+  % fprintf(fout, '%s, %s, %s, %s, %s, %s, %s, %s, %s\r\n'...
+  % , 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i');
+  % fprintf(fout, '%8.6f, %8.6f, %8.6f, %8.6f, %8.6f, %8.6f, %8.6f, %8.6f, %8.6f   \r\n'...
+  % , toSave');
+  % fclose(fout);
 
 end
 
@@ -104,4 +102,63 @@ end
 function [s] = srchsd(grad)
   mag = sqrt(grad'*grad);
   s = -grad/mag;
+end
+
+function [alphaPrime] = aPrime(obj, gradobj, s, f, x)
+  minVal = f;
+  lastStepVal = f;
+  alphas = [0, f];
+  testStep = 2.1;
+  xTest = x;
+  incrementer = 2;
+  iterTestStep = testStep;
+  while (minVal >= lastStepVal)
+    % calculate at guessed testStep
+    xTest = x + iterTestStep * s;
+    fTest = obj(xTest);
+
+    % here to handle the case of a test step that is too large
+    if(fTest >= f & incrementer < 3)
+      minVal = f;
+      lastStepVal = f;
+      iterTestStep = iterTestStep / 10;
+      alphas = [0, f];
+      incrementer = 2;
+      continue;
+    end
+
+    
+    % add it to the stored list
+    alphas(incrementer,1) = iterTestStep;
+    alphas(incrementer,2) = fTest;
+    % increment things for the next loop
+    minVal = min(minVal, fTest);
+    lastStepVal = fTest;
+    incrementer = incrementer + 1;
+    alphaOpt = iterTestStep;
+    iterTestStep = iterTestStep * 2;
+  end
+  % take the half step between the last two steps
+  iterTestStep = (alphas(end, 1) + alphas(end-1, 1)) / 2;
+  xTest = x + iterTestStep * s;
+  fTest = obj(xTest);
+  % store the values of the intermediate step
+  alphas(end + 1, :) = alphas(end, :);
+  alphas(end - 1, :) = [iterTestStep, fTest];
+  % find the index of the minimum function value
+  [minVal, minIdx] = min(alphas(:,2));
+  % get the three alpha and function values
+  alpha2 = alphas(minIdx, 1);
+  f2 = alphas(minIdx, 2);
+  alpha1 = alphas(minIdx - 1, 1);
+  f1 = alphas(minIdx - 1, 2);
+  alpha3 = alphas(minIdx + 1, 1);
+  f3 = alphas(minIdx + 1, 2);
+  [alpha1, alpha2, alpha3];
+  % calculate the optimum alpha value
+  deltaAlpha = alpha2 - alpha1;
+  alphaPrime = (f1 * (alpha2^2 - alpha3^2) + f2 * (alpha3^2 - alpha1^2) ...
+  + f3 * (alpha1^2 - alpha2^2)) / (2 * (f1 * ...
+  (alpha2 - alpha3) + f2 * (alpha3 - alpha1) + ...
+  f3 * (alpha1 - alpha2)));
 end

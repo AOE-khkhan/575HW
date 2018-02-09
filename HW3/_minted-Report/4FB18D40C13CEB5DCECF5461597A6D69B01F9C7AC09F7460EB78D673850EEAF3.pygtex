@@ -20,6 +20,7 @@
 
   \PYG{k}{while} \PYG{p}{(}\PYG{n}{any}\PYG{p}{(}\PYG{n+nb}{abs}\PYG{p}{(}\PYG{n}{grad}\PYG{p}{(:))} \PYG{o}{\PYGZgt{}} \PYG{n}{stoptol}\PYG{p}{))}
     \PYG{n}{incrementCounter} \PYG{p}{=} \PYG{n}{incrementCounter} \PYG{o}{+} \PYG{l+m+mi}{1}
+    \PYG{c}{\PYGZpc{} kill the run if there are more than 500 objective calls}
     \PYG{k}{if} \PYG{p}{(}\PYG{n}{nobj} \PYG{o}{\PYGZgt{}} \PYG{l+m+mi}{500}\PYG{p}{)}
       \PYG{n}{xopt} \PYG{p}{=} \PYG{n+nb}{nan}\PYG{p}{;}
       \PYG{n}{fopt} \PYG{p}{=} \PYG{n+nb}{nan}\PYG{p}{;}
@@ -30,7 +31,6 @@
     \PYG{k}{if} \PYG{p}{(}\PYG{n}{algoflag} \PYG{o}{==} \PYG{l+m+mi}{1}\PYG{p}{)}     \PYG{c}{\PYGZpc{} steepest descent}
       \PYG{n}{s} \PYG{p}{=} \PYG{n}{srchsd}\PYG{p}{(}\PYG{n}{grad}\PYG{p}{);}
       \PYG{c}{\PYGZpc{} find the proper alpha level}
-      \PYG{c}{\PYGZpc{} function [alphaPrime] = aPrime(obj, gradobj, s, f, x)}
       \PYG{n}{alphaPrime} \PYG{p}{=} \PYG{n}{aPrime}\PYG{p}{(}\PYG{n}{obj}\PYG{p}{,} \PYG{n}{gradobj}\PYG{p}{,} \PYG{n}{s}\PYG{p}{,} \PYG{n}{f}\PYG{p}{,} \PYG{n}{x}\PYG{p}{);}
 
     \PYG{k}{end}
@@ -72,6 +72,7 @@
     \PYG{c}{\PYGZpc{} take a step}
     \PYG{n}{xnew} \PYG{p}{=} \PYG{n}{x} \PYG{o}{+} \PYG{n}{alphaPrime}\PYG{o}{*}\PYG{n}{s}\PYG{p}{;}
     \PYG{n}{fnew} \PYG{p}{=} \PYG{n}{obj}\PYG{p}{(}\PYG{n}{xnew}\PYG{p}{);}
+    \PYG{c}{\PYGZpc{} update things}
     \PYG{n}{gradOld} \PYG{p}{=} \PYG{n}{grad}\PYG{p}{;}
     \PYG{n}{grad} \PYG{p}{=} \PYG{n}{gradobj}\PYG{p}{(}\PYG{n}{xnew}\PYG{p}{);}
     \PYG{n}{fOld} \PYG{p}{=} \PYG{n}{f}\PYG{p}{;}
@@ -87,16 +88,13 @@
   \PYG{n}{xopt} \PYG{p}{=} \PYG{n}{xnew}\PYG{p}{;}
   \PYG{n}{fopt} \PYG{p}{=} \PYG{n}{fnew}\PYG{p}{;}
   \PYG{n}{exitflag} \PYG{p}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
-  \PYG{c}{\PYGZpc{} saveMat.Properties.VariableNames = \PYGZob{}\PYGZsq{}Starting\PYGZus{}Point\PYGZsq{}, \PYGZsq{}Function\PYGZus{}Value\PYGZsq{}, ...}
-  \PYG{c}{\PYGZpc{}     \PYGZsq{}Search\PYGZus{}Direction\PYGZsq{}, \PYGZsq{}Step\PYGZus{}Length\PYGZsq{}, \PYGZsq{}Number\PYGZus{}of\PYGZus{}Objective\PYGZus{}Evaluations\PYGZsq{}\PYGZcb{};}
-
-  \PYG{n}{toSave} \PYG{p}{=} \PYG{n}{table2array}\PYG{p}{(}\PYG{n}{saveMat}\PYG{p}{);}
-  \PYG{n}{fout} \PYG{p}{=} \PYG{n}{fopen}\PYG{p}{(}\PYG{n}{sprintf}\PYG{p}{(}\PYG{l+s}{\PYGZsq{}output\PYGZpc{}d.csv\PYGZsq{}}\PYG{p}{,} \PYG{n}{algoflag}\PYG{p}{),}\PYG{l+s}{\PYGZsq{}w\PYGZsq{}}\PYG{p}{);}
-  \PYG{n}{fprintf}\PYG{p}{(}\PYG{n}{fout}\PYG{p}{,} \PYG{l+s}{\PYGZsq{}\PYGZpc{}s, \PYGZpc{}s, \PYGZpc{}s, \PYGZpc{}s, \PYGZpc{}s, \PYGZpc{}s, \PYGZpc{}s, \PYGZpc{}s, \PYGZpc{}s\PYGZbs{}r\PYGZbs{}n\PYGZsq{}}\PYG{c}{...}
-  \PYG{p}{,} \PYG{l+s}{\PYGZsq{}a\PYGZsq{}}\PYG{p}{,} \PYG{l+s}{\PYGZsq{}b\PYGZsq{}}\PYG{p}{,} \PYG{l+s}{\PYGZsq{}c\PYGZsq{}}\PYG{p}{,} \PYG{l+s}{\PYGZsq{}d\PYGZsq{}}\PYG{p}{,} \PYG{l+s}{\PYGZsq{}e\PYGZsq{}}\PYG{p}{,} \PYG{l+s}{\PYGZsq{}f\PYGZsq{}}\PYG{p}{,} \PYG{l+s}{\PYGZsq{}g\PYGZsq{}}\PYG{p}{,} \PYG{l+s}{\PYGZsq{}h\PYGZsq{}}\PYG{p}{,} \PYG{l+s}{\PYGZsq{}i\PYGZsq{}}\PYG{p}{);}
-  \PYG{n}{fprintf}\PYG{p}{(}\PYG{n}{fout}\PYG{p}{,} \PYG{l+s}{\PYGZsq{}\PYGZpc{}8.6f, \PYGZpc{}8.6f, \PYGZpc{}8.6f, \PYGZpc{}8.6f, \PYGZpc{}8.6f, \PYGZpc{}8.6f, \PYGZpc{}8.6f, \PYGZpc{}8.6f, \PYGZpc{}8.6f   \PYGZbs{}r\PYGZbs{}n\PYGZsq{}}\PYG{c}{...}
-  \PYG{p}{,} \PYG{n}{toSave}\PYG{o}{\PYGZsq{}}\PYG{p}{);}
-  \PYG{n}{fclose}\PYG{p}{(}\PYG{n}{fout}\PYG{p}{);}
+  \PYG{c}{\PYGZpc{} toSave = table2array(saveMat);}
+  \PYG{c}{\PYGZpc{} fout = fopen(sprintf(\PYGZsq{}output\PYGZpc{}d.csv\PYGZsq{}, algoflag),\PYGZsq{}w\PYGZsq{});}
+  \PYG{c}{\PYGZpc{} fprintf(fout, \PYGZsq{}\PYGZpc{}s, \PYGZpc{}s, \PYGZpc{}s, \PYGZpc{}s, \PYGZpc{}s, \PYGZpc{}s, \PYGZpc{}s, \PYGZpc{}s, \PYGZpc{}s\PYGZbs{}r\PYGZbs{}n\PYGZsq{}...}
+  \PYG{c}{\PYGZpc{} , \PYGZsq{}a\PYGZsq{}, \PYGZsq{}b\PYGZsq{}, \PYGZsq{}c\PYGZsq{}, \PYGZsq{}d\PYGZsq{}, \PYGZsq{}e\PYGZsq{}, \PYGZsq{}f\PYGZsq{}, \PYGZsq{}g\PYGZsq{}, \PYGZsq{}h\PYGZsq{}, \PYGZsq{}i\PYGZsq{});}
+  \PYG{c}{\PYGZpc{} fprintf(fout, \PYGZsq{}\PYGZpc{}8.6f, \PYGZpc{}8.6f, \PYGZpc{}8.6f, \PYGZpc{}8.6f, \PYGZpc{}8.6f, \PYGZpc{}8.6f, \PYGZpc{}8.6f, \PYGZpc{}8.6f, \PYGZpc{}8.6f   \PYGZbs{}r\PYGZbs{}n\PYGZsq{}...}
+  \PYG{c}{\PYGZpc{} , toSave\PYGZsq{});}
+  \PYG{c}{\PYGZpc{} fclose(fout);}
 
 \PYG{k}{end}
 
@@ -104,5 +102,64 @@
 \PYG{k}{function}\PYG{+w}{ }[s] \PYG{p}{=}\PYG{+w}{ }\PYG{n+nf}{srchsd}\PYG{p}{(}grad\PYG{p}{)}
 \PYG{+w}{  }\PYG{n}{mag} \PYG{p}{=} \PYG{n+nb}{sqrt}\PYG{p}{(}\PYG{n}{grad}\PYG{o}{\PYGZsq{}*}\PYG{n}{grad}\PYG{p}{);}
   \PYG{n}{s} \PYG{p}{=} \PYG{o}{\PYGZhy{}}\PYG{n}{grad}\PYG{o}{/}\PYG{n}{mag}\PYG{p}{;}
+\PYG{k}{end}
+
+\PYG{k}{function}\PYG{+w}{ }[alphaPrime] \PYG{p}{=}\PYG{+w}{ }\PYG{n+nf}{aPrime}\PYG{p}{(}obj, gradobj, s, f, x\PYG{p}{)}
+\PYG{+w}{  }\PYG{n}{minVal} \PYG{p}{=} \PYG{n}{f}\PYG{p}{;}
+  \PYG{n}{lastStepVal} \PYG{p}{=} \PYG{n}{f}\PYG{p}{;}
+  \PYG{n}{alphas} \PYG{p}{=} \PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{f}\PYG{p}{];}
+  \PYG{n}{testStep} \PYG{p}{=} \PYG{l+m+mf}{2.1}\PYG{p}{;}
+  \PYG{n}{xTest} \PYG{p}{=} \PYG{n}{x}\PYG{p}{;}
+  \PYG{n}{incrementer} \PYG{p}{=} \PYG{l+m+mi}{2}\PYG{p}{;}
+  \PYG{n}{iterTestStep} \PYG{p}{=} \PYG{n}{testStep}\PYG{p}{;}
+  \PYG{k}{while} \PYG{p}{(}\PYG{n}{minVal} \PYG{o}{\PYGZgt{}}\PYG{p}{=} \PYG{n}{lastStepVal}\PYG{p}{)}
+    \PYG{c}{\PYGZpc{} calculate at guessed testStep}
+    \PYG{n}{xTest} \PYG{p}{=} \PYG{n}{x} \PYG{o}{+} \PYG{n}{iterTestStep} \PYG{o}{*} \PYG{n}{s}\PYG{p}{;}
+    \PYG{n}{fTest} \PYG{p}{=} \PYG{n}{obj}\PYG{p}{(}\PYG{n}{xTest}\PYG{p}{);}
+
+    \PYG{c}{\PYGZpc{} here to handle the case of a test step that is too large}
+    \PYG{k}{if}\PYG{p}{(}\PYG{n}{fTest} \PYG{o}{\PYGZgt{}}\PYG{p}{=} \PYG{n}{f} \PYG{o}{\PYGZam{}} \PYG{n}{incrementer} \PYG{o}{\PYGZlt{}} \PYG{l+m+mi}{3}\PYG{p}{)}
+      \PYG{n}{minVal} \PYG{p}{=} \PYG{n}{f}\PYG{p}{;}
+      \PYG{n}{lastStepVal} \PYG{p}{=} \PYG{n}{f}\PYG{p}{;}
+      \PYG{n}{iterTestStep} \PYG{p}{=} \PYG{n}{iterTestStep} \PYG{o}{/} \PYG{l+m+mi}{10}\PYG{p}{;}
+      \PYG{n}{alphas} \PYG{p}{=} \PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{f}\PYG{p}{];}
+      \PYG{n}{incrementer} \PYG{p}{=} \PYG{l+m+mi}{2}\PYG{p}{;}
+      \PYG{k}{continue}\PYG{p}{;}
+    \PYG{k}{end}
+
+    
+    \PYG{c}{\PYGZpc{} add it to the stored list}
+    \PYG{n}{alphas}\PYG{p}{(}\PYG{n}{incrementer}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{)} \PYG{p}{=} \PYG{n}{iterTestStep}\PYG{p}{;}
+    \PYG{n}{alphas}\PYG{p}{(}\PYG{n}{incrementer}\PYG{p}{,}\PYG{l+m+mi}{2}\PYG{p}{)} \PYG{p}{=} \PYG{n}{fTest}\PYG{p}{;}
+    \PYG{c}{\PYGZpc{} increment things for the next loop}
+    \PYG{n}{minVal} \PYG{p}{=} \PYG{n}{min}\PYG{p}{(}\PYG{n}{minVal}\PYG{p}{,} \PYG{n}{fTest}\PYG{p}{);}
+    \PYG{n}{lastStepVal} \PYG{p}{=} \PYG{n}{fTest}\PYG{p}{;}
+    \PYG{n}{incrementer} \PYG{p}{=} \PYG{n}{incrementer} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{;}
+    \PYG{n}{alphaOpt} \PYG{p}{=} \PYG{n}{iterTestStep}\PYG{p}{;}
+    \PYG{n}{iterTestStep} \PYG{p}{=} \PYG{n}{iterTestStep} \PYG{o}{*} \PYG{l+m+mi}{2}\PYG{p}{;}
+  \PYG{k}{end}
+  \PYG{c}{\PYGZpc{} take the half step between the last two steps}
+  \PYG{n}{iterTestStep} \PYG{p}{=} \PYG{p}{(}\PYG{n}{alphas}\PYG{p}{(}\PYG{k}{end}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{)} \PYG{o}{+} \PYG{n}{alphas}\PYG{p}{(}\PYG{k}{end}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{))} \PYG{o}{/} \PYG{l+m+mi}{2}\PYG{p}{;}
+  \PYG{n}{xTest} \PYG{p}{=} \PYG{n}{x} \PYG{o}{+} \PYG{n}{iterTestStep} \PYG{o}{*} \PYG{n}{s}\PYG{p}{;}
+  \PYG{n}{fTest} \PYG{p}{=} \PYG{n}{obj}\PYG{p}{(}\PYG{n}{xTest}\PYG{p}{);}
+  \PYG{c}{\PYGZpc{} store the values of the intermediate step}
+  \PYG{n}{alphas}\PYG{p}{(}\PYG{k}{end} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{p}{:)} \PYG{p}{=} \PYG{n}{alphas}\PYG{p}{(}\PYG{k}{end}\PYG{p}{,} \PYG{p}{:);}
+  \PYG{n}{alphas}\PYG{p}{(}\PYG{k}{end} \PYG{o}{\PYGZhy{}} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{p}{:)} \PYG{p}{=} \PYG{p}{[}\PYG{n}{iterTestStep}\PYG{p}{,} \PYG{n}{fTest}\PYG{p}{];}
+  \PYG{c}{\PYGZpc{} find the index of the minimum function value}
+  \PYG{p}{[}\PYG{n}{minVal}\PYG{p}{,} \PYG{n}{minIdx}\PYG{p}{]} \PYG{p}{=} \PYG{n}{min}\PYG{p}{(}\PYG{n}{alphas}\PYG{p}{(:,}\PYG{l+m+mi}{2}\PYG{p}{));}
+  \PYG{c}{\PYGZpc{} get the three alpha and function values}
+  \PYG{n}{alpha2} \PYG{p}{=} \PYG{n}{alphas}\PYG{p}{(}\PYG{n}{minIdx}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{);}
+  \PYG{n}{f2} \PYG{p}{=} \PYG{n}{alphas}\PYG{p}{(}\PYG{n}{minIdx}\PYG{p}{,} \PYG{l+m+mi}{2}\PYG{p}{);}
+  \PYG{n}{alpha1} \PYG{p}{=} \PYG{n}{alphas}\PYG{p}{(}\PYG{n}{minIdx} \PYG{o}{\PYGZhy{}} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{);}
+  \PYG{n}{f1} \PYG{p}{=} \PYG{n}{alphas}\PYG{p}{(}\PYG{n}{minIdx} \PYG{o}{\PYGZhy{}} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{2}\PYG{p}{);}
+  \PYG{n}{alpha3} \PYG{p}{=} \PYG{n}{alphas}\PYG{p}{(}\PYG{n}{minIdx} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{);}
+  \PYG{n}{f3} \PYG{p}{=} \PYG{n}{alphas}\PYG{p}{(}\PYG{n}{minIdx} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{2}\PYG{p}{);}
+  \PYG{p}{[}\PYG{n}{alpha1}\PYG{p}{,} \PYG{n}{alpha2}\PYG{p}{,} \PYG{n}{alpha3}\PYG{p}{];}
+  \PYG{c}{\PYGZpc{} calculate the optimum alpha value}
+  \PYG{n}{deltaAlpha} \PYG{p}{=} \PYG{n}{alpha2} \PYG{o}{\PYGZhy{}} \PYG{n}{alpha1}\PYG{p}{;}
+  \PYG{n}{alphaPrime} \PYG{p}{=} \PYG{p}{(}\PYG{n}{f1} \PYG{o}{*} \PYG{p}{(}\PYG{n}{alpha2}\PYGZca{}\PYG{l+m+mi}{2} \PYG{o}{\PYGZhy{}} \PYG{n}{alpha3}\PYGZca{}\PYG{l+m+mi}{2}\PYG{p}{)} \PYG{o}{+} \PYG{n}{f2} \PYG{o}{*} \PYG{p}{(}\PYG{n}{alpha3}\PYGZca{}\PYG{l+m+mi}{2} \PYG{o}{\PYGZhy{}} \PYG{n}{alpha1}\PYGZca{}\PYG{l+m+mi}{2}\PYG{p}{)} \PYG{c}{...}
+  \PYG{o}{+} \PYG{n}{f3} \PYG{o}{*} \PYG{p}{(}\PYG{n}{alpha1}\PYGZca{}\PYG{l+m+mi}{2} \PYG{o}{\PYGZhy{}} \PYG{n}{alpha2}\PYGZca{}\PYG{l+m+mi}{2}\PYG{p}{))} \PYG{o}{/} \PYG{p}{(}\PYG{l+m+mi}{2} \PYG{o}{*} \PYG{p}{(}\PYG{n}{f1} \PYG{o}{*} \PYG{c}{...}
+  \PYG{p}{(}\PYG{n}{alpha2} \PYG{o}{\PYGZhy{}} \PYG{n}{alpha3}\PYG{p}{)} \PYG{o}{+} \PYG{n}{f2} \PYG{o}{*} \PYG{p}{(}\PYG{n}{alpha3} \PYG{o}{\PYGZhy{}} \PYG{n}{alpha1}\PYG{p}{)} \PYG{o}{+} \PYG{c}{...}
+  \PYG{n}{f3} \PYG{o}{*} \PYG{p}{(}\PYG{n}{alpha1} \PYG{o}{\PYGZhy{}} \PYG{n}{alpha2}\PYG{p}{)));}
 \PYG{k}{end}
 \end{Verbatim}
