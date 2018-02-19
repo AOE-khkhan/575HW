@@ -12,8 +12,13 @@
     beq = [];
     
     % ------------Call fmincon------------
-    tic;
-    options = optimoptions(@fmincon,'display','iter-detailed','Diagnostics','on');
+    Data
+    tic; 
+    options = optimoptions(@fmincon,'display','iter-detailed',...
+        'Diagnostics','on', 'SpecifyObjectiveGradient', true,...
+        'SpecifyConstraintGradient', true, 'CheckGradients', true,...
+        'FiniteDifferenceStepSize', fd_step, 'FiniteDifferenceType', ...
+        'central');
     [xopt, fopt, exitflag, output] = fmincon(@obj, x0, A, b, Aeq, beq, lb, ub, @con, options);  
     eltime = toc;
     eltime
@@ -51,9 +56,12 @@
     end
 
     % ------------Separate obj/con (do not change)------------
-    function [f] = obj(x) 
+    function [f, grad] = obj(x) 
         [f, ~, ~] = objcon(x);
+        grad = fd_obj_grad(@Truss, f, x);
     end
-    function [c, ceq] = con(x) 
+    function [c, ceq, grad, eqgrad] = con(x) 
         [~, c, ceq] = objcon(x);
+        eqgrad = [];
+        grad = cd_con_grad(@Truss, c, x);
     end
