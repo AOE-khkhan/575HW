@@ -22,4 +22,5 @@ Elem = [5 3 5.; 3 1 5.; 6 4 5.; 4 2 5.; 3 4 5.; 1 2 5; 5 4 5.; ...
 
 % step size for the differentiation methods
 fd_step = 0.00001;
-cd_step = 0.001;
+cd_step = 0.00001;
+cs_step = 0.00000001;

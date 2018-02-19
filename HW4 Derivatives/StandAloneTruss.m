@@ -6,16 +6,10 @@ Data;
 stress
 weight
 
-step_size = 0.01;
-[grad, stress_grad] = forward_difference(@Truss, ndof, nbc, nelem, E,...
-    dens, Node, force, bc, Elem, step_size);
-[gradc, sgradc] = forward_difference(@Truss, ndof, nbc, nelem, E, ...
-    dens, Node, force, bc, Elem, step_size);
+w_grad_fd = fd_obj_grad(@Truss, weight, Elem(:,3))
+w_grad_cd = cd_obj_grad(@Truss, weight, Elem(:,3))
+w_grad_cs = cs_obj_grad(@Truss, weight, Elem(:,3))
 
-grad
-% gradc
-stress_grad
-% sgradc
-
-% diff_grad = grad - gradc
-diff_sgrad = stress_grad - sgradc
+s_grad_fd = fd_con_grad(@Truss, stress', Elem(:,3))
+s_grad_cd = cd_con_grad(@Truss, stress, Elem(:,3))
+s_grad_cd = cs_con_grad(@Truss, stress, Elem(:,3))

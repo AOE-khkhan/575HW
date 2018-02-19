@@ -1,5 +1,6 @@
 function [weight, Stress] = Truss(ndof, nbc, nelem, E, dens, Node, force, bc, Elem)
 
+global nobj;
 volume = 0.;
 Kelem = zeros(nelem,4,4);
 Kglob = zeros(ndof,ndof);
@@ -102,7 +103,7 @@ for k = 1:nelem
    lq = [q(dof(1)); q(dof(2)); q(dof(3)); q(dof(4))];
    Stress(k) = E/Elem(k,4)*ltog*lq;
 end
-
+nobj = nobj + 1;
 weight = volume*dens;
 end
    
