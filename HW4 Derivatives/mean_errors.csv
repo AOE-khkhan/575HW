@@ -1,0 +1,4 @@
+,Mean Objective Gradient Error, Mean Constraint Gradient Error
+Forward Difference, -8.605e-07, 3.080e-05   
+Central Difference, 5.910e-11, -1.794e-08   
+Complex Step, 0.000e+00, 0.000e+00   

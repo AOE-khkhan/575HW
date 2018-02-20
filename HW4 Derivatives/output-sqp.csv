@@ -1,0 +1,4 @@
+ ,Mean Function Calls, Mean Iterations, Mean Time, St. Dev. Time, Mean Optimum Value, Stopping Criteria
+Forward Difference,  330.000,    6.000,    0.110,    0.007, 1593.181, Local minimum found that satisfies the constraints   
+Central Difference,  630.000,    6.000,    0.147,    0.006, 1593.181, Local minimum found that satisfies the constraints   
+Complex Step,  330.000,    6.000,    0.204,    0.005, 1593.181, Local minimum found that satisfies the constraints   
