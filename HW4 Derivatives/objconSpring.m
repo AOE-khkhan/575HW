@@ -36,7 +36,7 @@
 
         % constraints
 %         c = zeros(6, 1);
-        c = [];
+%         c = [];
         c(1) = h_s + 0.05 - h_def;
         c(2) = tau_a - se/sf;
         c(3) = tau_a + tau_m - sy/sf;

@@ -14,13 +14,13 @@
 \usepackage{cite} % handles multiple citations in one command better
 \usepackage{doi} % allow correct hypderlinking of DOIs
 \usepackage[normalem]{ulem}
-\usepackage{float}
-\usepackage{minted}
+%\usepackage{float}git pu
 \usepackage{pdfpages}
 \usepackage{tikz}
 \usepackage{csvsimple}
 \usepackage{adjustbox, lipsum}
 \usepackage{setspace}
+\usepackage{minted}
 \usetikzlibrary{tikzmark}
 
 \useunder{\uline}{\ul}{}
@@ -33,6 +33,20 @@
 \author{Landon Wright}
 % put in \date{} if you don't want a date to appear, or enter a specific date, otherwise default is today's date.
 \maketitle
+
+\section{Optimization methods}
+In order to determine which optimization method should be used in the evaluation of this problem a trail was run in order to determine the relative times and number of iterations for a certain method to converge to the optimal solution.  The results of this trail can be seen in Table \ref{tab:methods}.
+\begin{table}[h]
+	\begin{center}
+		\caption{Comparison of the four different optimization methods available from the fmincon function.}
+		\label{tab:methods}
+		\noindent\adjustbox{max width=\textwidth}{%
+			\csvautotabular{MethodComp.csv}}
+	\end{center}
+\end{table}
+
+As can be seen in the table the interior point method is by far the least efficient of the four options. It not only required the longest time to converge, but it also required more than three times the number of iterations.  The other three methods (sqp, sqp legacy, active set) showed very little difference.  While this trial suggests that active set is the fastest one trial is not sufficient data to make that conclusion.  Based on this finding the Sqp method was selected due to familiarity.
+
 
 \section{Scaling issues}
 % What do you learn here
@@ -152,8 +166,11 @@ methods.
 \section{Automatic Differentiation}
 \subsection{Method of implementation}
 % How does the method work?
-The code for the implementation of this method can be found in Section \ref{ADcode}
+The code for the implementation of this method can be found in Section \ref{ADcode}.  Automatic differentiation is a very simple to implement method if the class that overloads the operators is already created.  In this case the valder.m file was handed to us so the implementation was very straightforward.  The method works by overloading the operators of the mathematical functions that are used to calculate the objectives and constraints so that in addition to calculating the value they also calculate the derivatives of those values.  This requires a new class that stores both the value and the derivative as well as the overloaded functions.  Once again this class and methods were given to us so the implementation was very simple.  The only other thing that required is to initialize the starting point values as valder objects in place of ints, doubles, or floats.
+
 % How does AD differ from other methods?
+Automatic differentiation differs from other methods in that it provides exact derivatives. As a result it is the most accurate of the derivative methods examined.  It also allows you to calculate the gradients of your functions with very little modification to your source code.  In fact for the spring problem the only modification was the deletion of one line that preallocated the memory for the constraints. However because this allocated the memory for double objects it was removed to allow the constraint array to store valder objects.  Beyond that minor change, the objcon function for the spring was left unchanged.  This highlights just how versatile the automatic differentiation process is.  It should be noted that this is only possible because matlab is a weakly typed language the use of a strongly typed c++ would require more significant changes to ensure compatibility.
+
 
 % \begin{table}[H]
 % 	\caption{Quasi-Newton progression}
@@ -215,9 +232,8 @@ end
 \subsection{Forward Difference Implementation}\label{sec:cs_code}
 \inputminted[xleftmargin=10pt,linenos]{matlab}{cs_obj_grad.m}
 \inputminted[xleftmargin=10pt,linenos]{matlab}{cs_con_grad.m}
-\subsection{Driver}
-% \inputminted[xleftmargin=10pt,linenos]{matlab}{fminunDriv.m}
 \subsection{Automatic Differentiation Code}\label{ADcode}
+\inputminted[xleftmargin=10pt,linenos]{matlab}{SpringAutoDiff.m}
 
 \includepdf[pages=-, pagecommand={}]{HW4.pdf}
 \end{document}

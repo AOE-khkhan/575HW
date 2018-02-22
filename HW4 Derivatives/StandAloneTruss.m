@@ -13,3 +13,5 @@ w_grad_cs = cs_obj_grad(@Truss, weight, Elem(:,3))
 s_grad_fd = fd_con_grad(@Truss, stress', Elem(:,3))
 s_grad_cd = cd_con_grad(@Truss, stress, Elem(:,3))
 s_grad_cd = cs_con_grad(@Truss, stress, Elem(:,3))
+
+w_grad_fd - w_grad_cs

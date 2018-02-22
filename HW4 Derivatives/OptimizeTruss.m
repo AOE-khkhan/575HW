@@ -16,7 +16,7 @@ beq = [];
 
 % ------------Call fmincon------------
 Data
-n_loops = 2;
+n_loops = 1;
 starts = zeros(n_loops, nelem);
 opts = zeros(n_loops, nelem);
 f_opts = zeros(n_loops, 3);
@@ -24,41 +24,41 @@ time_exec = zeros(n_loops, 3);
 n_obj_calls = zeros(n_loops, 3);
 n_iterations = zeros(n_loops, 3);
 stop_crit = strings(n_loops, 3);
-[~, cs_obj_grad] = obj_cs(x0);
-[~, ~, cs_con_grad, ~] = con_cs(x0);
-
-[~, fd_obj_grad] = obj_fd(x0);
-[~, ~, fd_con_grad, ~] = con_fd(x0);
-
-[~, cd_obj_grad] = obj_cd(x0);
-[~, ~, cd_con_grad, ~] = con_cd(x0);
-
-fd_obj_grad_error = fd_obj_grad - cs_obj_grad;
-fd_con_grad_error = fd_con_grad - cs_con_grad;
-mean_fd_obj_error = mean(mean(fd_obj_grad_error));
-mean_fd_con_error = mean(mean(fd_con_grad_error));
-csvwrite('fd_obj_error.csv', fd_obj_grad_error);
-csvwrite('fd_con_error.csv', fd_con_grad_error);
-
-cd_obj_grad_error = cd_obj_grad - cs_obj_grad;
-cd_con_grad_error = cd_con_grad - cs_con_grad;
-mean_cd_obj_error = mean(mean(cd_obj_grad_error));
-mean_cd_con_error = mean(mean(cd_con_grad_error));
-csvwrite('cd_obj_error.csv', cd_obj_grad_error);
-csvwrite('cd_con_error.csv', cd_con_grad_error);
-
-mean_errors = [fd_step, mean_fd_obj_error, mean_fd_con_error;...
-    cd_step, mean_cd_obj_error, mean_cd_con_error;cs_step 0, 0];
-names = ["Forward Difference"; "Central Difference"; "Complex Step"];
-mean_error_mat = [names, mean_errors];
-
-fout = fopen(sprintf('meanerrors.csv'),'w');
-fprintf(fout, ',%s, %s, %s\r\n'...
-    ,'Step Size', 'Mean Objective Gradient Error',...
-    'Mean Constraint Gradient Error');
-fprintf(fout, '%s, %8.3e, %8.3e, %8.3e   \r\n'...
-    , mean_error_mat');
-fclose(fout);
+% [~, cs_obj_grad] = obj_cs(x0);
+% [~, ~, cs_con_grad, ~] = con_cs(x0);
+% 
+% [~, fd_obj_grad] = obj_fd(x0);
+% [~, ~, fd_con_grad, ~] = con_fd(x0);
+% 
+% [~, cd_obj_grad] = obj_cd(x0);
+% [~, ~, cd_con_grad, ~] = con_cd(x0);
+% 
+% fd_obj_grad_error = fd_obj_grad - cs_obj_grad;
+% fd_con_grad_error = fd_con_grad - cs_con_grad;
+% mean_fd_obj_error = mean(mean(fd_obj_grad_error));
+% mean_fd_con_error = mean(mean(fd_con_grad_error));
+% csvwrite('fd_obj_error.csv', fd_obj_grad_error);
+% csvwrite('fd_con_error.csv', fd_con_grad_error);
+% 
+% cd_obj_grad_error = cd_obj_grad - cs_obj_grad;
+% cd_con_grad_error = cd_con_grad - cs_con_grad;
+% mean_cd_obj_error = mean(mean(cd_obj_grad_error));
+% mean_cd_con_error = mean(mean(cd_con_grad_error));
+% csvwrite('cd_obj_error.csv', cd_obj_grad_error);
+% csvwrite('cd_con_error.csv', cd_con_grad_error);
+% 
+% mean_errors = [fd_step, mean_fd_obj_error, mean_fd_con_error;...
+%     cd_step, mean_cd_obj_error, mean_cd_con_error;cs_step 0, 0];
+% names = ["Forward Difference"; "Central Difference"; "Complex Step"];
+% mean_error_mat = [names, mean_errors];
+% 
+% fout = fopen(sprintf('meanerrors.csv'),'w');
+% fprintf(fout, ',%s, %s, %s\r\n'...
+%     ,'Step Size', 'Mean Objective Gradient Error',...
+%     'Mean Constraint Gradient Error');
+% fprintf(fout, '%s, %8.3e, %8.3e, %8.3e   \r\n'...
+%     , mean_error_mat');
+% fclose(fout);
 
 
 for jj = 1:n_loops
