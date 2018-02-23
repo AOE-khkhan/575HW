@@ -1,0 +1,5 @@
+Method, Time to Solve, Number Iterations, Optimized Value
+Interior Point, 5.316e-01, 1.900e+01, 1.593e+03   
+Sqp, 1.689e-01, 6.000e+00, 1.593e+03   
+Sqp Legacy, 1.692e-01, 6.000e+00, 1.593e+03   
+Active Set, 1.653e-01, 6.000e+00, 1.593e+03   

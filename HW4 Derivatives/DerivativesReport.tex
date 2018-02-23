@@ -49,6 +49,7 @@ As can be seen in the table the interior point method is by far the least effici
 
 
 \section{Scaling issues}
+There appear to some large variations in the gradient of the constraints, however this is due to the different values that are perturbed.  As such there is not a reasonable way to scale the stress values of the function.
 % What do you learn here
 
 \section{Derivative integration}
@@ -166,10 +167,29 @@ methods.
 \section{Automatic Differentiation}
 \subsection{Method of implementation}
 % How does the method work?
+The objective gradient of the spring function was found to be -37.5 at the values 0.03, 0.6, 4, 1.2.  The constraint gradient is shown in table \ref{tab:ad_grad}
+
+\begin{table}[h]
+	\centering
+	\caption{Constraint gradient for auto differentiation}
+	\label{tab:ad_grad}
+	\begin{tabular}{|l|l|l|l|}
+		\hline
+		4.00       & 0.00       & 0.03      & 0.00     \\\hline
+		606394.07  & -58714.92  & -4259.28  & 0.00     \\\hline
+		2315456.88 & -176144.77 & -12777.85 & 85185.66 \\\hline
+		-666.67    & 33.33      & 0.00      & 0.00     \\\hline
+		666.67     & -33.33     & 0.00      & 0.00     \\\hline
+		1.00       & 1.00       & 0.00      & 0.00     \\\hline
+		3678197.33 & -317060.59 & -25555.70 & 85185.66 \\\hline
+	\end{tabular}
+\end{table}
+
 The code for the implementation of this method can be found in Section \ref{ADcode}.  Automatic differentiation is a very simple to implement method if the class that overloads the operators is already created.  In this case the valder.m file was handed to us so the implementation was very straightforward.  The method works by overloading the operators of the mathematical functions that are used to calculate the objectives and constraints so that in addition to calculating the value they also calculate the derivatives of those values.  This requires a new class that stores both the value and the derivative as well as the overloaded functions.  Once again this class and methods were given to us so the implementation was very simple.  The only other thing that required is to initialize the starting point values as valder objects in place of ints, doubles, or floats.
 
 % How does AD differ from other methods?
 Automatic differentiation differs from other methods in that it provides exact derivatives. As a result it is the most accurate of the derivative methods examined.  It also allows you to calculate the gradients of your functions with very little modification to your source code.  In fact for the spring problem the only modification was the deletion of one line that preallocated the memory for the constraints. However because this allocated the memory for double objects it was removed to allow the constraint array to store valder objects.  Beyond that minor change, the objcon function for the spring was left unchanged.  This highlights just how versatile the automatic differentiation process is.  It should be noted that this is only possible because matlab is a weakly typed language the use of a strongly typed c++ would require more significant changes to ensure compatibility.
+
 
 
 % \begin{table}[H]
