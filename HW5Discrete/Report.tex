@@ -40,6 +40,21 @@
 \maketitle
 \section{Implementation Discussion}
 % Chosen parameters
+The final parameters that I chose to use for the inputs to the simulated annealing algorithm are shown in table \ref{tab:values}.  
+\begin{table}
+	\begin{center}
+		\caption{Chosen values for the inputs to the simulated annealing algorithm}
+		\label{tab:values}
+\begin{tabular}{ll}
+	Parameter & Value\\
+	\hline
+	$P_s$ & 0.4922 \\ 
+	$P_f$ & 0.0092 \\ 
+	Number of Iterations & 198 \\ 
+	Step size & 2.973 \\ 
+\end{tabular}
+\end{center}
+\end{table} 
 
 % Solution
 
@@ -57,7 +72,7 @@
 % path to convergence for at least three different starting points
 
 \subsection{Matlab Implementation}
-\inputminted[xleftmargin=10pt, linenos]{matlab}{simAnneal.m}
+\inputminted[xleftmargin=10pt, linenos]{matlab}{simAnnealObj.m}
 \end{document}
 %\begin{table}[t]
 %	\begin{center}

@@ -28,48 +28,55 @@ tf = -1 / log(pf);
 f = (tf/ts)^(1/(n-1));
 t = ts;
 
+a=[];
+temps=[];
+objectives=[];
 for i = 1:n
-  % randomly perturb the design
-  for j = 1:n_design + 5
-    perturb(j, 1) = x + random('unif', -max_perturb, max_perturb);
-    perturb(j, 2) = y + random('unif', -max_perturb, max_perturb);
-    out_val(j) = obj(perturb(j, 1), perturb(j, 2));
-  end
-  % grab the best design
-  [min_obj, min_idx] = min(out_val);
-
-  % if the new design is better accept it
-  if min_obj < cur_obj
-      delta_e = cur_obj - min_obj;
-      mean_delta_e = (n_steps * mean_delta_e + delta_e) / (n_steps + 1);
-      cur_obj = min_obj;
-      x = perturb(min_idx, 1);
-      y = perturb(min_idx, 2);
-      n_steps = n_steps + 1;
-      e_array(n_steps) = delta_e;
-      deltas(n_steps) = delta_e;
-  else
-  % if not better generate random number
-  rand_val = random('unif', 0, 1);
-    % compare to probability function
-  p = exp(-delta_e / (mean_delta_e * t));
-    % if random number is less accept the new design
-  if rand_val < p
-      delta_e = cur_obj - min_obj;
-      mean_delta_e = (n_steps * mean_delta_e + delta_e) / (n_steps + 1);
-      cur_obj = min_obj;
-      x = perturb(min_idx, 1);
-      y = perturb(min_idx, 2);
-      n_steps = n_steps + 1;
-      e_array(n_steps) = delta_e;
-      deltas(n_steps) = delta_e;
-  end
-  end
-  % derease the temperature
-  t = f * t;
-  a(i,:) = [x,y];
-  temps(i) = t;
-  objectives(i) = cur_obj;
+    % randomly perturb the design
+    for j = 1:n_design + 3
+        perturb(j, 1) = x + random('unif', -max_perturb, max_perturb);
+        perturb(j, 2) = y + random('unif', -max_perturb, max_perturb);
+        out_val(j) = obj(perturb(j, 1), perturb(j, 2));
+        min_obj = out_val(j);
+        min_idx = numel(out_val);
+        % grab the best design
+%         [min_obj, min_idx] = min(out_val);
+        
+        % if the new design is better accept it
+        if min_obj < cur_obj
+            delta_e = cur_obj - min_obj;
+            mean_delta_e = (n_steps * mean_delta_e + delta_e) / (n_steps + 1);
+            cur_obj = min_obj;
+            x = perturb(min_idx, 1);
+            y = perturb(min_idx, 2);
+            n_steps = n_steps + 1;
+            e_array(n_steps) = delta_e;
+            deltas(n_steps) = delta_e;
+        else
+            % if not better generate random number
+            rand_val = random('unif', 0, 1);
+            % compare to probability function
+            p = exp(-delta_e / (mean_delta_e * t));
+            % if random number is less accept the new design
+            if rand_val < p
+                delta_e = abs(cur_obj - min_obj);
+                mean_delta_e = (n_steps * mean_delta_e + delta_e) / (n_steps + 1);
+                cur_obj = min_obj;
+                x = perturb(min_idx, 1);
+                y = perturb(min_idx, 2);
+                n_steps = n_steps + 1;
+                e_array(n_steps) = delta_e;
+                deltas(n_steps) = delta_e;
+            end
+        end
+        a(end+1,:) = [x,y];
+    temps(end+1) = t;
+    objectives(end+1) = cur_obj;
+    end
+    % derease the temperature
+    
+    t = f * t;
+    
 end
 figure(1);
 % hold off
@@ -92,18 +99,18 @@ plot(a(end, 1), a(end, 2), 'bo', 'markersize', 10, 'markerfacecolor','r')
 figure(3);
 % hold off;
 temps = fliplr(temps);
-plot(temps, objectives);
+plot(1:numel(objectives), objectives);
 hold on;
 end
 
 function [ accept_change ] = checkNewVal( cur_obj, new_obj, delta_e, avg_delta_e, n_steps, temp )
-  accept_change = 0;
-  if cur_obj < new_obj
+accept_change = 0;
+if cur_obj < new_obj
     accept_change = 1;
-  else
+else
     % calculate boltzman probability
     % make comparixon
     % check random value
-  end
+end
 
 end
