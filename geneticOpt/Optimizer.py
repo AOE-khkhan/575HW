@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import copy
 
 class Optimizer:
     def __init__(self, x, fitness, n_generations=5, population_size=5, constraint=None):
@@ -30,19 +31,11 @@ class Optimizer:
         self.x_def = x
         # self.variable_types = np.zeros(self.num_x)
 
-        self.tournament_size = 2
+        self.tournament_size = 1
         self.crossover_prob = 0.7
-        self.mutation_prob = 0.7
+        self.mutation_prob = 0.2
         self.cross_eta = 0.5
-        self.mutation_beta = 0.2
-
-        # for i, var in enumerate(x):
-        #     if list(var.keys())[0].lower() == 'integer':
-        #         self.variable_types[i] = 0
-        #     elif list(var.keys())[0].lower() == 'continuous':
-        #         self.variable_types[i] = 1
-        #     else:
-        #         print("error unknown variable type")
+        self.mutation_beta = 0.01
 
         # initialize the parent array
         # stored in the form ([fitness, x1, x2, x3, ..., xn])
@@ -77,15 +70,15 @@ class Optimizer:
         return parents
 
 
-    def find_min(self):
+    def find_max(self):
         for generation in range(self.num_generations):
             # select reproducing parents
             parents = self.select_parents()
             children = np.zeros_like(parents)
             # for each set of parents
             for idx in range(0, parents.shape[0], 2):
-                child1 = parents[idx, 1:]
-                child2 = parents[idx+1, 1:]
+                child1 = copy.deepcopy(parents[idx, 1:])
+                child2 = copy.deepcopy(parents[idx+1, 1:])
                 for x_idx in range(len(child1)):
                     crossover = np.random.random()
                     mutate1 = np.random.random()
@@ -99,8 +92,10 @@ class Optimizer:
                             a = 1 - ((2 - 2 * r)**(1/self.cross_eta)) / 2
                         child1_val = child1[x_idx]
                         child2_val = child2[x_idx]
-                        child1[x_idx] = a * child1_val + (1-a) * child2_val
-                        child2[x_idx] = (1-a) * child1_val + a * child2_val
+                        y1 = a * child1_val + (1-a) * child2_val
+                        y2 = (1-a) * child1_val + a * child2_val
+                        child1[x_idx] = y1
+                        child2[x_idx] = y2
                         # truncate the values if needed
                         if self.x_def[x_idx]['type'] == 'integer':
                             child1[x_idx] = np.round(child1[x_idx])
@@ -122,9 +117,9 @@ class Optimizer:
                 children[idx+1, 1:] = child2
             # perform elitism
             population_pool = np.append(parents, children, axis=0)
-            population_pool = sort_array_by_col(population_pool, 0)
-            self.population = population_pool[0:self.num_population]
-            print(generation)
+            sorted_pool = sort_array_by_col(population_pool, 0)
+            self.population = sorted_pool[self.num_population:]
+            # print(generation)
 
     def mutate(self, child, idx, bounds, type, generation):
         min = bounds[0]
@@ -141,8 +136,13 @@ class Optimizer:
 
 
 def fitt(x):
-    ret = x[0]**2 + x[1]
-    return ret
+    if x[1] > 5:
+        ret = x[0]**2 - x[1] - x[2]
+    else:
+        ret = x[0]**3 + x[1] - x[2]
+    ret_val = abs(ret) ** np.random.random()
+    # ret = x[1]
+    return ret_val
 
 
 def sort_array_by_col(array, sort_col=0):
@@ -150,9 +150,20 @@ def sort_array_by_col(array, sort_col=0):
     new_array = array[np.argsort(array[:, sort_col])]
     return new_array
 
+def hw5(x):
+    f = 2 + 0.2 * x[0] ** 2 + 0.2 * x[1]**2 - np.cos(np.pi * x[0]) - np.cos(np.pi * x[1])
+    return -f
+
 
 if __name__ == "__main__":
-    z = [{'type': 'integer', 'bounds': (2, 7)}, {'type': 'continuous', 'bounds': (1, 11)}]
+    # z = [{'type': 'integer', 'bounds': (2, 7)},
+    #      {'type': 'continuous', 'bounds': (1, 11)},
+    #      {'type': 'continuous', 'bounds': (1, 9)}]
+    hw_types = [{'type': 'continuous', 'bounds': (-5, 5)},
+                {'type': 'continuous', 'bounds': (-5, 5)}]
 
-    opt = Optimizer(z, fitt, n_generations=100, population_size=20)
-    opt.find_min()
+    opt = Optimizer(hw_types, hw5, n_generations=5, population_size=10)
+    opt.find_max()
+    sorted_pop = sort_array_by_col(opt.population)
+    print(opt.population)
+    print(sorted_pop[-1])
