@@ -1,5 +1,5 @@
 import numpy as np
-import pandas as pd
+import matplotlib.pyplot as plt
 import copy
 
 class Optimizer:
@@ -71,6 +71,7 @@ class Optimizer:
 
 
     def find_max(self):
+        generations = []
         for generation in range(self.num_generations):
             # select reproducing parents
             parents = self.select_parents()
@@ -119,7 +120,9 @@ class Optimizer:
             population_pool = np.append(parents, children, axis=0)
             sorted_pool = sort_array_by_col(population_pool, 0)
             self.population = sorted_pool[self.num_population:]
-            # print(generation)
+            generations.append(copy.deepcopy(self.population))
+        return generations
+
 
     def mutate(self, child, idx, bounds, type, generation):
         min = bounds[0]
@@ -162,8 +165,26 @@ if __name__ == "__main__":
     hw_types = [{'type': 'continuous', 'bounds': (-5, 5)},
                 {'type': 'continuous', 'bounds': (-5, 5)}]
 
-    opt = Optimizer(hw_types, hw5, n_generations=5, population_size=10)
-    opt.find_max()
+    opt = Optimizer(hw_types, hw5, n_generations=10, population_size=10)
+    generations = opt.find_max()
     sorted_pop = sort_array_by_col(opt.population)
     print(opt.population)
     print(sorted_pop[-1])
+    x = np.linspace(-5, 5, 500)
+    y = np.linspace(-5, 5, 500)
+
+    xx, yy = np.meshgrid(x, y)
+    zz = hw5([xx, yy])
+    plt.contour(xx, yy, zz, 20)
+
+    colors = ['bo', 'go', 'ro', 'co', 'mo']
+    labels = ['generation 1', 'generation 2', 'generation 3', 'generation 4', 'generation 5']
+    for color, generation, label in zip(colors, (generations[0::2]), labels):
+        fitness = generation[:, 0]
+        mean_fitness = np.average(fitness)
+        max_fitness = np.max(fitness)
+        x_vals = generation[:, 1]
+        y_vals = generation[:, 2]
+        plt.plot(x_vals, y_vals, color, label=label + '\nAvg. Fit: ' + str(mean_fitness)[0:5] + '\nMax Fit: ' + str(max_fitness)[0:5], alpha=0.7)
+    plt.legend()
+    plt.show()
