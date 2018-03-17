@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import copy
 
 class MultiObjectiveOptimizer:
-    def __init__(self, x, fitness, n_generations=5, population_size=5, n_objectives = 2, constraint=None):
+    def __init__(self, x, fitness, n_generations=5, population_size=5, n_objectives=2, constraint=None, generation_func=None):
         """Initialize the optimizer
         x: list that contains a series of dictionaries that define the x values for the optimizer where
         type is either continuous or integer. and min and max are the minimum and maximum values of the variable this
@@ -32,6 +32,7 @@ class MultiObjectiveOptimizer:
         self.constraint_func = constraint
         self.x_def = x
         self.num_objectives = n_objectives
+        self.generation_call = generation_func
         # self.variable_types = np.zeros(self.num_x)
 
         self.tournament_size = 4
@@ -153,7 +154,10 @@ class MultiObjectiveOptimizer:
             population_pool = self.apply_constraints(population_pool)
             sorted_pool = sort_array_by_col(population_pool, 0)
             self.population = sorted_pool[0:self.num_population]
-            generations.append(copy.deepcopy(self.population))
+            # generations.append(copy.deepcopy(self.population))
+            print(generation)
+            if self.generation_call is not None:
+                self.generation_call(self.population)
         return generations
 
     def mutate(self, child, idx, bounds, type, generation):
@@ -187,6 +191,26 @@ def calc_fitness(x):
     # weight = saturate(weight, max_weight)/max_weight
     return [deflection, weight]
 
+def calc_fitness2(x):
+    width = x[0]
+    height = x[1]
+
+    length = 20
+    force = 10
+    modulus = 39000000
+    density = 4.65 / 16
+
+    max_weight = 200
+    max_defl = 2
+
+    deflection = (force * length**3) / (3 * modulus * (width * height**3)/12)
+    # deflection = saturate(deflection, max_defl)/max_defl
+    weight = length * width * height * density
+    # weight = saturate(weight, max_weight)/max_weight
+    return [deflection]
+
+
+
 def calc_constraints(x):
     width = x[0]
     height = x[1]
@@ -197,7 +221,7 @@ def calc_constraints(x):
     density = 4.65 / 16
 
     max_deflection = 0.04
-    max_weight = 1
+    max_weight = 10
     max_stress = 36000
 
     moment = length * force
@@ -221,8 +245,8 @@ def saturate(val, max_val):
 if __name__ == "__main__":
     z = [{'type': 'continuous', 'bounds': (0, 2)},
          {'type': 'continuous', 'bounds': (0, 2)}]
-    n_gen = 50
-    opt = MultiObjectiveOptimizer(z, calc_fitness, n_objectives=2, population_size=100, n_generations=n_gen,
+    n_gen = 100
+    opt = MultiObjectiveOptimizer(z, calc_fitness2, n_objectives=1, population_size=10, n_generations=n_gen,
                                   constraint=calc_constraints)
     # opt.calc_maximin(opt.population)
     generations = opt.find_min()
@@ -247,17 +271,17 @@ if __name__ == "__main__":
     # plt.legend()
     # plt.show()
 
-    plt.ion()
-    for i, generation in enumerate(generations):
-        # if i > 5:
-        #     points.clear()
-        points = plt.plot(generation[:, 1], generation[:, 2], 'o')
-        plt.xlim((0, 0.05))
-        plt.ylim((0, 3))
-        plt.xlabel('deflection')
-        plt.ylabel('weight')
-        plt.title('weight vs. deflection pareto front')
-        # plt.xlim((0, 1))
-        # plt.ylim((0, 1))
-        plt.pause(0.5)
+    # plt.ion()
+    # for i, generation in enumerate(generations):
+    #     # if i > 5:
+    #     #     points.clear()
+    #     points = plt.plot(generation[:, 1], generation[:, 2], 'o')
+    #     plt.xlim((0, 0.05))
+    #     plt.ylim((0, 3))
+    #     plt.xlabel('deflection')
+    #     plt.ylabel('weight')
+    #     plt.title('weight vs. deflection pareto front')
+    #     # plt.xlim((0, 1))
+    #     # plt.ylim((0, 1))
+    #     plt.pause(0.5)
 
