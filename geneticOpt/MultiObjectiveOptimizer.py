@@ -50,8 +50,8 @@ class MultiObjectiveOptimizer:
         self.constraint_func_input = constraint_func_input
 
         self.tournament_size = 3
-        self.crossover_prob = 0.7
-        self.mutation_prob = 0.3
+        self.crossover_prob = 0.5
+        self.mutation_prob = 0.13
         self.cross_eta = 0.5
         self.mutation_beta = 0.13
 
@@ -204,7 +204,7 @@ class MultiObjectiveOptimizer:
         min = bounds[0]
         max = bounds[1]
         r = np.random.uniform(min, max)
-        alpha = (1 - (generation - 1) / self.num_generations) ** self.mutation_beta
+        alpha = (1 - (generation) / self.num_generations) ** self.mutation_beta
         if r <= child[idx]:
             child[idx] = min + (r - min) ** alpha * (child[idx] - min) ** (1 - alpha)
         else:
