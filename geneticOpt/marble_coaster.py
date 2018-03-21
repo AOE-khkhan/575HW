@@ -34,10 +34,11 @@ def calc_length(design):
             # GET LOCATION ID OF PIECE
             piece_number = int(i / gene_per_section) + 1
 
-            inlet, outlet = inlet_outlet(design, piece_number)
+            inlet, outlet, location = inlet_outlet(design, piece_number)
 
             if outlet is not None and outlet > 0:
-                length = traverse_length(design, piece_number)
+                path_history = []
+                length = traverse_length(design, piece_number, path_history)
 
         if length > max_path:
             max_path = length
@@ -85,6 +86,7 @@ def inlet_outlet(design, piece_number):
 
     # GET ROW AND COLUMN ID OF PIECE
     row, col, floor = locate_piece(piece_number)
+    location = (row, col, floor)
 
     out_neighbor = None
     in_neighbor = None
@@ -252,19 +254,20 @@ def inlet_outlet(design, piece_number):
 
             out_neighbor = None
 
-    return in_neighbor, out_neighbor
+    return in_neighbor, out_neighbor, location
 
 
-def traverse_length(design, piece_number):
+def traverse_length(design, piece_number, path_history):
 
     piece_gene_index = (piece_number - 1) * gene_per_section
     piece_type = parts[design[piece_gene_index] - 1]
     length = piece_type['length']
 
-    in_neighbor, out_neighbor = inlet_outlet(design, piece_number)
+    in_neighbor, out_neighbor, location = inlet_outlet(design, piece_number)
 
-    if in_neighbor is not None and in_neighbor > 0:
-        length += traverse_length(design, in_neighbor)
+    if in_neighbor is not None and in_neighbor > 0 and location not in path_history:
+        path_history.append(location)
+        length += traverse_length(design, in_neighbor, path_history)
 
     return length
 
@@ -283,6 +286,7 @@ def calc_cost(design):
 
 if __name__ == '__main__':
 
+
     gene_per_section = 2
 
     num_div_x = 3
@@ -292,20 +296,26 @@ if __name__ == '__main__':
     maximum_length = 0
     corresponding_cost = 0
 
-    for i in range(100000):
+    for i in range(1000000):
         if i % 10000 == 0:
             print(i)
 
         gen_design = [random.randrange(0, 5, 1) for r in range(num_div_x*num_div_y*num_div_z*gene_per_section)]
 
-        try:
-            length_of_track = calc_length(gen_design)
-        except:
-            length_of_track = 0
+        # try:
+        #     length_of_track = calc_length(gen_design)
+        # except:
+        #     length_of_track = 0
+
+        length_of_track = calc_length(gen_design)
 
         if length_of_track >= maximum_length:
             maximum_length = length_of_track
             corresponding_cost = calc_cost(gen_design)
+    # bad_design = [4, 4, 1, 4, 1, 1, 1, 1, 4, 1, 4, 4, 0, 3, 4, 2, 4, 3, 4, 0, 4, 2, 0, 4, 3, 1, 2, 2, 0, 2, 1, 4, 2,
+    #               3, 0, 3, 0, 1, 2, 2, 4, 4, 1, 0, 3, 4, 3, 0, 0, 1, 1, 4, 4, 3]
+    #
+    # len = calc_length(bad_design)
 
     print(corresponding_cost)
     print(maximum_length)
