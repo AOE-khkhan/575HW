@@ -5,18 +5,18 @@ import sys
 sys.setrecursionlimit(200)
 gene_per_section = 2
 
-num_div_x = 3
-num_div_y = 3
-num_div_z = 3
+num_div_x = 10
+num_div_y = 10
+num_div_z = 10
 
 maximum_length = 0
 corresponding_cost = 0
 
 parts = [{'cost': 1., 'length': 10., 'cool': 90, 'in': 'top', 'out': 'bottom'},
-         {'cost': 3., 'length': 75., 'cool': 50, 'in': 'top', 'out': 1},
-         {'cost': 5., 'length': 30., 'cool': 70, 'in': 1, 'out': 3},
-         {'cost': 3., 'length': 75., 'cool': 50, 'in': 1, 'out': 4},
-         {'cost': 3., 'length': 75., 'cool': 50, 'in': 1, 'out': 'bottom'}]
+         {'cost': 3., 'length': 7.5, 'cool': 50, 'in': 'top', 'out': 1},
+         {'cost': 1., 'length': 10., 'cool': 70, 'in': 1, 'out': 3},
+         {'cost': 3., 'length': 7.5, 'cool': 50, 'in': 1, 'out': 4},
+         {'cost': 3., 'length': 7.5, 'cool': 50, 'in': 1, 'out': 'bottom'}]
 
 
 def calc_length(design):

@@ -49,7 +49,7 @@ class MultiObjectiveOptimizer:
         self.generation_call = generation_func
         self.constraint_func_input = constraint_func_input
 
-        self.tournament_size = 3
+        self.tournament_size = 2
         self.crossover_prob = 0.5
         self.mutation_prob = 0.13
         self.cross_eta = 0.5
