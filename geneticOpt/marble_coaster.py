@@ -13,9 +13,10 @@ maximum_length = 0
 corresponding_cost = 0
 
 parts = [{'cost': 1., 'length': 10., 'cool': 90, 'in': 'top', 'out': 'bottom'},
-         {'cost': 3., 'length': 75., 'cool': 10, 'in': 'top', 'out': 1},
+         {'cost': 3., 'length': 75., 'cool': 50, 'in': 'top', 'out': 1},
          {'cost': 5., 'length': 30., 'cool': 70, 'in': 1, 'out': 3},
-         {'cost': 6., 'length': 100., 'cool': 50, 'in': 1, 'out': 4}]
+         {'cost': 3., 'length': 75., 'cool': 50, 'in': 1, 'out': 4},
+         {'cost': 3., 'length': 75., 'cool': 50, 'in': 1, 'out': 'bottom'}]
 
 
 def calc_length(design):

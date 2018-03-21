@@ -5,10 +5,7 @@ import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
 import sys
-sys.setrecursionlimit(100)
-import threading
-threading.stack_size(67108864)
-sys.setrecursionlimit(2 ** 20)
+sys.setrecursionlimit(200)
 
 plt.ion()
 fig = plt.figure(1)
@@ -21,11 +18,12 @@ plt.show()
 
 def plot_front(generation):
     plt.ion()
-    if len(ax.lines) > 9:
+    if len(ax.lines) > 4:
         del ax.lines[0]
     ax.plot(generation[:, 1], generation[:, 2], 'o')
-    plt.xlabel('length')
-    plt.ylabel('cost')
+    plt.xlabel('Length')
+    plt.ylabel('Cost')
+    plt.title('Marble Coaster Pareto Front')
     ax.relim()
     plt.pause(0.01)
     plt.show()
@@ -39,32 +37,23 @@ def check_design(design):
 
     # try:
     design = design.astype(int)
-    try:
-        length = -calc_length(design)
-        cost = calc_cost(design)
-    except:
-        length = 0
-        cost = 999999
-    return [length, cost]
+    length = -calc_length(design)
+    cost = calc_cost(design)
 
-def opt_coaster():
-    design_space = []
-    for i in range(81):
-        design_space.append({'type': 'integer', 'bounds': (0, 4)})
-        design_space.append({'type': 'integer', 'bounds': (0, 4)})
-    optimizer = MultiObjectiveOptimizer(design_space, check_design, n_generations=1000, population_size=30,
-                                        n_objectives=2, generation_func=plot_front)
-    optimizer.find_min()
+    return [length, cost]
 
 
 
 if __name__ == "__main__":
-    thread = threading.Thread(target=opt_coaster)
-    thread.start()
-    # design_space = []
-    # for i in range(81):
-    #     design_space.append({'type': 'integer', 'bounds': (0, 4)})
-    #     design_space.append({'type': 'integer', 'bounds': (0, 4)})
-    # optimizer = MultiObjectiveOptimizer(design_space, check_design, n_generations=1000, population_size=30,
-    #                                     n_objectives=2, generation_func=plot_front)
-    # optimizer.find_min()
+    # thread = threading.Thread(target=opt_coaster)
+    # thread.start()
+    design_space = []
+    for i in range(81):
+        design_space.append({'type': 'integer', 'bounds': (0, 5)})
+        design_space.append({'type': 'integer', 'bounds': (0, 4)})
+    optimizer = MultiObjectiveOptimizer(design_space, check_design, n_generations=10, population_size=30,
+                                        n_objectives=2, generation_func=plot_front)
+    opts = optimizer.find_min()
+
+    np.savetxt('optmimum_coasters.csv', opts, delimiter=',')
+    plt.savefig("pareto_front.pdf")
