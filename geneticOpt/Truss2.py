@@ -1,5 +1,6 @@
 from MultiObjectiveOptimizer import MultiObjectiveOptimizer
 import numpy as np
+import matplotlib
 import matplotlib.pyplot as plt
 import pandas as pd
 import math
@@ -32,6 +33,7 @@ def plot_gen(generation):
     ax.relim()
     plt.pause(0.01)
     plt.show()
+
 
 def truss_const(x):
     avg_defl = x[1]
@@ -160,7 +162,8 @@ def calc_length(start, end):
     length = math.sqrt((end[0] - start[0])**2 + (end[1] - start[1])**2)
     return length
 
-
+def arreq_in_list(myarr, list_arrays):
+    return next((True for elem in list_arrays if np.array_equal(elem, myarr)), False)
 
 if __name__ == "__main__":
     # input = []
@@ -199,10 +202,14 @@ if __name__ == "__main__":
     opt_vals.append({'type': 'continuous', 'bounds': (250, 470)})
     opt_vals.append({'type': 'continuous', 'bounds': (10, 230)})
 
-    gen_opt = MultiObjectiveOptimizer(opt_vals, solve_truss, n_generations=50, population_size=100, n_objectives=2,
+    gen_opt = MultiObjectiveOptimizer(opt_vals, solve_truss, n_generations=10, population_size=50, n_objectives=2,
                                       generation_func=plot_gen, constraint=truss_const, constraint_func_input='full')
     opts = gen_opt.find_min()
 
+
+    unique_designs = []
     plt.ioff()
-    for opt_des in opts[0:20, 3:]:
-        plot_truss(opt_des)
+    for opt_des in opts[:, 3:]:
+        if not arreq_in_list(opt_des, unique_designs):
+            plot_truss(opt_des)
+            unique_designs.append(opt_des)

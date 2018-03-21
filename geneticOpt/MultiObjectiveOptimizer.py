@@ -188,8 +188,8 @@ class MultiObjectiveOptimizer:
         child2[x_idx] = y2
         # truncate the values if needed
         if self.x_def[x_idx]['type'] == 'integer':
-            child1[x_idx] = np.round(child1[x_idx])
-            child2[x_idx] = np.round(child2[x_idx])
+            child1[x_idx] = int(np.round(child1[x_idx]))
+            child2[x_idx] = int(np.round(child2[x_idx]))
 
     def mutate(self, child, idx, bounds, type, generation):
         """
@@ -288,14 +288,14 @@ if __name__ == "__main__":
     # opt.calc_maximin(opt.population)
     generations = opt.find_min()
 
-    x_start = generations[0][:, 1]
-    y_start = generations[0][:, 2]
-
-    x_middle = generations[int(n_gen/2)-1][:, 1]
-    y_middle = generations[int(n_gen/2)-1][:, 2]
-
-    x_end = generations[-1][:, 1]
-    y_end = generations[-1][:, 2]
+    # x_start = generations[0][:, 1]
+    # y_start = generations[0][:, 2]
+    #
+    # x_middle = generations[int(n_gen/2)-1][:, 1]
+    # y_middle = generations[int(n_gen/2)-1][:, 2]
+    #
+    # x_end = generations[-1][:, 1]
+    # y_end = generations[-1][:, 2]
 
     # plt.plot(x_start, y_start, 'o', label='1st generation')
     # plt.plot(x_middle, y_middle, 'o', label='middle generation', alpha=0.5)
@@ -308,17 +308,17 @@ if __name__ == "__main__":
     # plt.legend()
     # plt.show()
 
-    # plt.ion()
-    # for i, generation in enumerate(generations):
-    #     # if i > 5:
-    #     #     points.clear()
-    #     points = plt.plot(generation[:, 1], generation[:, 2], 'o')
-    #     plt.xlim((0, 0.05))
-    #     plt.ylim((0, 3))
-    #     plt.xlabel('deflection')
-    #     plt.ylabel('weight')
-    #     plt.title('weight vs. deflection pareto front')
-    #     # plt.xlim((0, 1))
-    #     # plt.ylim((0, 1))
-    #     plt.pause(0.5)
+    plt.ion()
+    for i, generation in enumerate(generations):
+        # if i > 5:
+        #     points.clear()
+        points = plt.plot(generation[:, 1], generation[:, 2], 'o')
+        plt.xlim((0, 0.05))
+        plt.ylim((0, 3))
+        plt.xlabel('deflection')
+        plt.ylabel('weight')
+        plt.title('weight vs. deflection pareto front')
+        # plt.xlim((0, 1))
+        # plt.ylim((0, 1))
+        plt.pause(0.5)
 
