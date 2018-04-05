@@ -1,0 +1,639 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{hw6}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \section{Problem 1}\label{problem-1}
+
+Solve the following problem using KKT conditions
+\[Min~~f = 4x_1 - 3x_2 + 2x_1^2 - 3x_1x_2 + 4x_2^2\]
+\[g_1(x):~~2x_1 - 1.5x_2 = 5\]
+
+    The KKT conditions can be written as:
+
+\begin{align}
+\frac{\partial f}{\partial x_1} - \lambda \frac{\partial g_1}{\partial x_1} = 0\\
+\frac{\partial f}{\partial x_2} - \lambda \frac{\partial g_1}{\partial x_2} = 0\\
+g_1(x) - b_1 = 0
+\end{align}
+
+which evaluates to:
+
+\begin{align}
+4x_1 - 3x_2 - 2\lambda = -4\\
+-3x_1 + 8x_2 + 1.5\lambda = 3\\
+2x_1 - 1.5x_2 - 5 = 0
+\end{align}
+
+This can be solved using a system of linear equations
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}115}]:} \PY{n}{A} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{4} \PY{o}{\PYZhy{}}\PY{l+m+mi}{3} \PY{o}{\PYZhy{}}\PY{l+m+mi}{2}\PY{p}{;} \PY{o}{\PYZhy{}}\PY{l+m+mi}{3} \PY{l+m+mi}{8} \PY{l+m+mf}{1.5}\PY{p}{;} \PY{l+m+mi}{2} \PY{o}{\PYZhy{}}\PY{l+m+mf}{1.5} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{;}
+          \PY{n}{b} \PY{o}{=} \PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{4}\PY{p}{;} \PY{l+m+mi}{3}\PY{p}{;} \PY{l+m+mi}{5}\PY{p}{]}\PY{p}{;}
+          \PY{n}{c} \PY{o}{=} \PY{n}{A}\PY{o}{\PYZbs{}}\PY{n}{b}
+          \PY{n}{println}\PY{p}{(}\PY{n}{c}\PY{p}{)}
+          
+          \PY{n}{fun}\PY{p}{(}\PY{n}{x1}\PY{p}{,} \PY{n}{x2}\PY{p}{)} \PY{o}{=} \PY{l+m+mi}{4}\PY{n}{x1} \PY{o}{\PYZhy{}}\PY{l+m+mi}{3}\PY{n}{x2} \PY{o}{+} \PY{l+m+mi}{2}\PY{o}{*}\PY{n}{x1}\PY{o}{\PYZca{}}\PY{l+m+mi}{2} \PY{o}{\PYZhy{}} \PY{l+m+mi}{3}\PY{n}{x1}\PY{o}{*}\PY{n}{x2} \PY{o}{+} \PY{l+m+mi}{4} \PY{o}{*} \PY{n}{x2}\PY{o}{\PYZca{}}\PY{l+m+mi}{2}
+          \PY{n}{opt} \PY{o}{=} \PY{n}{fun}\PY{p}{(}\PY{n}{c}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{c}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{)}
+          \PY{n}{println}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{O}\PY{l+s}{p}\PY{l+s}{t}\PY{l+s}{i}\PY{l+s}{m}\PY{l+s}{u}\PY{l+s}{m}\PY{l+s}{:}\PY{l+s}{ }\PY{l+s}{\PYZdq{}}\PY{p}{,} \PY{n}{opt}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+[2.5, 0.0, 7.0]
+Optimum: 22.5
+
+    \end{Verbatim}
+
+    The Values then are:
+
+\begin{align}
+x_1 = 2.5\\
+x_2 = 0\\
+\lambda = 7
+\end{align}
+
+which gives the objective \[ f = 22.5\]
+
+    \subsubsection{(b) Change the constraint to
+be:}\label{b-change-the-constraint-to-be}
+
+\[g_1(x) = 2x_1 - 1.5x_2 = 5.1\] because the change in the constraint is
+0.1 we expect that the change in the objective will be
+\(0.1 * \lambda = 0.7\)
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}116}]:} \PY{n}{A} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{4} \PY{o}{\PYZhy{}}\PY{l+m+mi}{3} \PY{o}{\PYZhy{}}\PY{l+m+mi}{2}\PY{p}{;} \PY{o}{\PYZhy{}}\PY{l+m+mi}{3} \PY{l+m+mi}{8} \PY{l+m+mf}{1.5}\PY{p}{;} \PY{l+m+mi}{2} \PY{o}{\PYZhy{}}\PY{l+m+mf}{1.5} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{;}
+          \PY{n}{b2} \PY{o}{=} \PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{4}\PY{p}{;} \PY{l+m+mi}{3}\PY{p}{;} \PY{l+m+mf}{5.1}\PY{p}{]}\PY{p}{;}
+          \PY{n}{c2} \PY{o}{=} \PY{n}{A}\PY{o}{\PYZbs{}}\PY{n}{b2}
+          \PY{n}{print}\PY{p}{(}\PY{n}{c2}\PY{p}{)}
+          
+          \PY{n}{fun}\PY{p}{(}\PY{n}{x1}\PY{p}{,} \PY{n}{x2}\PY{p}{)} \PY{o}{=} \PY{l+m+mi}{4}\PY{n}{x1} \PY{o}{\PYZhy{}}\PY{l+m+mi}{3}\PY{n}{x2} \PY{o}{+} \PY{l+m+mi}{2}\PY{o}{*}\PY{n}{x1}\PY{o}{\PYZca{}}\PY{l+m+mi}{2} \PY{o}{\PYZhy{}} \PY{l+m+mi}{3}\PY{n}{x1}\PY{o}{*}\PY{n}{x2} \PY{o}{+} \PY{l+m+mi}{4} \PY{o}{*} \PY{n}{x2}\PY{o}{\PYZca{}}\PY{l+m+mi}{2}
+          \PY{n}{opt2} \PY{o}{=} \PY{n}{fun}\PY{p}{(}\PY{n}{c2}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{c2}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{)}
+          \PY{n}{println}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s}{N}\PY{l+s}{e}\PY{l+s}{w}\PY{l+s}{ }\PY{l+s}{o}\PY{l+s}{p}\PY{l+s}{t}\PY{l+s}{i}\PY{l+s}{m}\PY{l+s}{u}\PY{l+s}{m}\PY{l+s}{:}\PY{l+s}{ }\PY{l+s}{\PYZdq{}}\PY{p}{,} \PY{n}{opt}\PY{p}{)}
+          \PY{n}{delta\PYZus{}opt} \PY{o}{=} \PY{n}{opt2} \PY{o}{\PYZhy{}} \PY{n}{opt}
+          \PY{n}{println}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{C}\PY{l+s}{h}\PY{l+s}{a}\PY{l+s}{n}\PY{l+s}{g}\PY{l+s}{e}\PY{l+s}{ }\PY{l+s}{i}\PY{l+s}{n}\PY{l+s}{ }\PY{l+s}{o}\PY{l+s}{p}\PY{l+s}{t}\PY{l+s}{i}\PY{l+s}{m}\PY{l+s}{u}\PY{l+s}{m}\PY{l+s}{:}\PY{l+s}{ }\PY{l+s}{\PYZdq{}}\PY{p}{,} \PY{n}{delta\PYZus{}opt}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+[2.55, 0.0, 7.1]
+New optimum: 22.5
+Change in optimum: 0.7049999999999983
+
+    \end{Verbatim}
+
+    As we can see the change in the optimum value was 0.705 which is very
+close to the predicted value of 0.7. This shows that the \(\lambda\)
+value accurately predicts the change in the optimum.
+
+    \subsubsection{(c) Are the KKT equations for a problem with quadratic
+objective and a linear equality constraint always linear? Is this true
+for a problem with a quadratic objective and a linear inequality
+constraint?}\label{c-are-the-kkt-equations-for-a-problem-with-quadratic-objective-and-a-linear-equality-constraint-always-linear-is-this-true-for-a-problem-with-a-quadratic-objective-and-a-linear-inequality-constraint}
+
+    If the problem has a quadratic objective and a linear equality constrant
+then the KKT equations will be linear, if a linear inequality constraint
+is present than the problem will also be linear.
+
+    \subsection{Problem 3: Solve the following problem using KKT
+conditions}\label{problem-3-solve-the-following-problem-using-kkt-conditions}
+
+\[Min~f(x) = x_1^2 + 2x_2^2 + 3x_3^2\] \[g_1(x): x_1 + 5x_2 = 12\]
+\[g_2(x): -2x_1-x_2 - 4x_3 \leq -18\]
+
+    First we must formulate the problem to match the required format. We
+change \(g_2\) to be: \[g_2(x): 2x_1 - x_2 + 4x_3 - 18 \leq 0\] which in
+turn formulates the system of linear equations representing the KKT
+Conditions:
+
+\begin{align}
+\begin{bmatrix}
+ 2&  0&  0&  -1& 2\\ 
+ 0&  4&  0&  -5& -1\\ 
+ 0&  0&  6&  0& 4\\ 
+ 2&  -1&  4&  0& 0\\ 
+ 1&  5&  0&  0& 0
+\end{bmatrix} * 
+\begin{bmatrix}
+x_1 \\
+x_2 \\
+x_3 \\
+\lambda_2 \\
+\lambda_1 
+\end{bmatrix} = 
+\begin{bmatrix}
+0\\0\\0\\18\\12
+\end{bmatrix}
+\end{align}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}124}]:} \PY{n}{A} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{2} \PY{l+m+mi}{0} \PY{l+m+mi}{0} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1} \PY{l+m+mi}{2}
+               \PY{l+m+mi}{0} \PY{l+m+mi}{4} \PY{l+m+mi}{0} \PY{o}{\PYZhy{}}\PY{l+m+mi}{5} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}
+               \PY{l+m+mi}{0} \PY{l+m+mi}{0} \PY{l+m+mi}{6} \PY{l+m+mi}{0} \PY{l+m+mi}{4}
+               \PY{l+m+mi}{2} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1} \PY{l+m+mi}{4} \PY{l+m+mi}{0} \PY{l+m+mi}{0}
+               \PY{l+m+mi}{1} \PY{l+m+mi}{5} \PY{l+m+mi}{0} \PY{l+m+mi}{0} \PY{l+m+mi}{0}\PY{p}{]}
+          \PY{n}{b} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{0}
+               \PY{l+m+mi}{0}
+               \PY{l+m+mi}{0}
+               \PY{l+m+mi}{18}
+               \PY{l+m+mi}{12}\PY{p}{]}
+          \PY{n}{x} \PY{o}{=} \PY{n}{A}\PY{o}{\PYZbs{}}\PY{n}{b}
+          \PY{n}{println}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{T}\PY{l+s}{h}\PY{l+s}{e}\PY{l+s}{ }\PY{l+s}{v}\PY{l+s}{a}\PY{l+s}{l}\PY{l+s}{u}\PY{l+s}{e}\PY{l+s}{s}\PY{l+s}{ }\PY{l+s}{o}\PY{l+s}{f}\PY{l+s}{ }\PY{l+s}{t}\PY{l+s}{h}\PY{l+s}{e}\PY{l+s}{ }\PY{l+s}{x}\PY{l+s}{ }\PY{l+s}{v}\PY{l+s}{e}\PY{l+s}{c}\PY{l+s}{t}\PY{l+s}{o}\PY{l+s}{r}\PY{l+s}{ }\PY{l+s}{a}\PY{l+s}{r}\PY{l+s}{e}\PY{l+s}{:}\PY{l+s}{ }\PY{l+s+si}{\PYZdl{}x}\PY{l+s}{\PYZdq{}}\PY{p}{)}
+          \PY{n}{g2}\PY{p}{(}\PY{n}{x1}\PY{p}{,} \PY{n}{x2}\PY{p}{,} \PY{n}{x3}\PY{p}{)} \PY{o}{=} \PY{l+m+mi}{2}\PY{o}{*}\PY{n}{x1} \PY{o}{\PYZhy{}} \PY{n}{x2} \PY{o}{+} \PY{l+m+mi}{4}\PY{n}{x3} \PY{o}{\PYZhy{}} \PY{l+m+mi}{18}
+          \PY{n}{g1}\PY{p}{(}\PY{n}{x1}\PY{p}{,} \PY{n}{x2}\PY{p}{)} \PY{o}{=} \PY{n}{x1} \PY{o}{+} \PY{l+m+mi}{5}\PY{n}{x2} \PY{o}{\PYZhy{}} \PY{l+m+mi}{12}
+          \PY{n}{g1\PYZus{}x} \PY{o}{=} \PY{n}{g1}\PY{p}{(}\PY{n}{x}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{x}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{)}
+          \PY{n}{g2\PYZus{}x} \PY{o}{=} \PY{n}{g2}\PY{p}{(}\PY{n}{x}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{x}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{,} \PY{n}{x}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}\PY{p}{)}
+          \PY{n}{println}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{g}\PY{l+s}{1}\PY{l+s}{ }\PY{l+s}{e}\PY{l+s}{v}\PY{l+s}{a}\PY{l+s}{l}\PY{l+s}{u}\PY{l+s}{a}\PY{l+s}{t}\PY{l+s}{e}\PY{l+s}{s}\PY{l+s}{ }\PY{l+s}{t}\PY{l+s}{o}\PY{l+s}{:}\PY{l+s}{ }\PY{l+s+si}{\PYZdl{}g1\PYZus{}x}\PY{l+s}{\PYZdq{}}\PY{p}{)}
+          \PY{n}{println}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{g}\PY{l+s}{2}\PY{l+s}{ }\PY{l+s}{e}\PY{l+s}{v}\PY{l+s}{a}\PY{l+s}{l}\PY{l+s}{u}\PY{l+s}{a}\PY{l+s}{t}\PY{l+s}{e}\PY{l+s}{s}\PY{l+s}{ }\PY{l+s}{t}\PY{l+s}{o}\PY{l+s}{:}\PY{l+s}{ }\PY{l+s+si}{\PYZdl{}g2\PYZus{}x}\PY{l+s}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+The values of the x vector are: [4.71698, 1.4566, 2.50566, 1.91698, -3.75849]
+g1 evaluates to: 3.907985046680551e-14
+g2 evaluates to: 3.552713678800501e-15
+
+    \end{Verbatim}
+
+    Here we can see that: \[x_1 = 4.717\\
+x_2 = 1.457\\
+x_3 = 2.506\\
+\lambda_1 = -3.7585\\
+\lambda_2 = 1.9170\] We also note from the code that both of the
+constraints are binding. This satisfies the neccessary conditions for an
+optimum
+
+To check the sufficient conditions we must check that
+\(\nabla_x^2L(\textbf{x}^*, \lambda^*)\) is positive definite
+
+\[\nabla_x^2L(\textbf{x}^*, \lambda^*) = \begin{bmatrix} 1&0&0\\ 0&4&0\\ 0&0&6 \end{bmatrix}
+ - \lambda_1 \begin{bmatrix} 0&0&0\\0&0&0\\0&0&0\end{bmatrix} 
+ - \lambda_2 \begin{bmatrix} 0&0&0\\0&0&0\\0&0&0\end{bmatrix} = \begin{bmatrix} 1&0&0\\ 0&4&0\\ 0&0&6 \end{bmatrix}\]
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}126}]:} \PY{n}{L} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{1} \PY{l+m+mi}{0} \PY{l+m+mi}{0}
+              \PY{l+m+mi}{0} \PY{l+m+mi}{4} \PY{l+m+mi}{0}
+              \PY{l+m+mi}{0} \PY{l+m+mi}{0} \PY{l+m+mi}{6}\PY{p}{]}
+          \PY{n}{isOpt} \PY{o}{=} \PY{n}{isposdef}\PY{p}{(}\PY{n}{L}\PY{p}{)}
+          \PY{k}{if} \PY{n}{isOpt}
+              \PY{n}{println}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{T}\PY{l+s}{h}\PY{l+s}{e}\PY{l+s}{ }\PY{l+s}{v}\PY{l+s}{a}\PY{l+s}{l}\PY{l+s}{u}\PY{l+s}{e}\PY{l+s}{s}\PY{l+s}{ }\PY{l+s}{c}\PY{l+s}{o}\PY{l+s}{r}\PY{l+s}{r}\PY{l+s}{e}\PY{l+s}{s}\PY{l+s}{p}\PY{l+s}{o}\PY{l+s}{n}\PY{l+s}{d}\PY{l+s}{ }\PY{l+s}{t}\PY{l+s}{o}\PY{l+s}{ }\PY{l+s}{a}\PY{l+s}{ }\PY{l+s}{c}\PY{l+s}{o}\PY{l+s}{n}\PY{l+s}{s}\PY{l+s}{t}\PY{l+s}{r}\PY{l+s}{a}\PY{l+s}{i}\PY{l+s}{n}\PY{l+s}{e}\PY{l+s}{d}\PY{l+s}{ }\PY{l+s}{o}\PY{l+s}{p}\PY{l+s}{t}\PY{l+s}{i}\PY{l+s}{m}\PY{l+s}{u}\PY{l+s}{m}\PY{l+s}{\PYZdq{}}\PY{p}{)}
+          \PY{k}{end}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+The values correspond to a constrained optimum
+
+    \end{Verbatim}
+
+    because the hessian of the lagrangian function is postive definite then
+we can conclude that the point is a constrained minimum.
+
+    \subsection{Problem 4}\label{problem-4}
+
+\[Min~f(x) = x_1^2 + x_2^2\\
+g_1(x)=x_1^2+x_2^2 - 9 = 0\\
+g_2(x)=x_1+x_2^2-1\leq 0\\
+g_3(x)=x_1+x_2-1\leq 0\] Once again the inequality constraints must be
+reformatted \[g_2(x)=-x_1-x_2^2+1\geq 0\\
+g_3(x)=-x_1-x_2+1\geq 0\]
+
+    \subsubsection{(a) Verify that {[}-2.3723, -1.8364{]} is a local
+optimum}\label{a-verify-that--2.3723--1.8364-is-a-local-optimum}
+
+Check which constraints are binding
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}119}]:} \PY{n}{x} \PY{o}{=} \PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mf}{2.3723} \PY{o}{\PYZhy{}}\PY{l+m+mf}{1.8364}\PY{p}{]}
+          \PY{n}{g1}\PY{p}{(}\PY{n}{x}\PY{p}{)} \PY{o}{=} \PY{n}{x}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{\PYZca{}}\PY{l+m+mi}{2} \PY{o}{+} \PY{n}{x}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{o}{\PYZca{}}\PY{l+m+mi}{2} \PY{o}{\PYZhy{}} \PY{l+m+mi}{9}
+          \PY{n}{g2}\PY{p}{(}\PY{n}{x}\PY{p}{)} \PY{o}{=} \PY{n}{x}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{+} \PY{n}{x}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{o}{\PYZca{}}\PY{l+m+mi}{2} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}
+          \PY{n}{g3}\PY{p}{(}\PY{n}{x}\PY{p}{)} \PY{o}{=} \PY{n}{x}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{+} \PY{n}{x}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}
+          \PY{n}{g1x} \PY{o}{=} \PY{n}{g1}\PY{p}{(}\PY{n}{x}\PY{p}{)}
+          \PY{n}{g2x} \PY{o}{=} \PY{n}{g2}\PY{p}{(}\PY{n}{x}\PY{p}{)}
+          \PY{n}{g3x} \PY{o}{=} \PY{n}{g3}\PY{p}{(}\PY{n}{x}\PY{p}{)}
+          \PY{n}{println}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{g}\PY{l+s}{1}\PY{l+s}{ }\PY{l+s}{=}\PY{l+s}{ }\PY{l+s+si}{\PYZdl{}g1x}\PY{l+s}{\PYZdq{}}\PY{p}{)}
+          \PY{n}{println}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{g}\PY{l+s}{2}\PY{l+s}{ }\PY{l+s}{=}\PY{l+s}{ }\PY{l+s+si}{\PYZdl{}g2x}\PY{l+s}{\PYZdq{}}\PY{p}{)}
+          \PY{n}{println}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{g}\PY{l+s}{3}\PY{l+s}{ }\PY{l+s}{=}\PY{l+s}{ }\PY{l+s+si}{\PYZdl{}g3x}\PY{l+s}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+g1 = 0.00017225000000031798
+g2 = 6.49600000000028e-5
+g3 = -5.2087
+
+    \end{Verbatim}
+
+    within acceptable roundoff g1 and g2 are binding constraints. We must
+now check if the KKT conditions are satisfied.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}128}]:} \PY{k}{using} \PY{n}{NLsolve}
+          \PY{k}{function} \PY{n}{f!}\PY{p}{(}\PY{n}{F}\PY{p}{,} \PY{n}{x}\PY{p}{)}
+              \PY{n}{F}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{=} \PY{l+m+mi}{2}\PY{o}{*}\PY{n}{x}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{\PYZhy{}} \PY{n}{x}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]} \PY{o}{*} \PY{l+m+mf}{2.0} \PY{o}{*} \PY{n}{x}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{+} \PY{n}{x}\PY{p}{[}\PY{l+m+mi}{4}\PY{p}{]}
+              \PY{n}{F}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]} \PY{o}{=} \PY{l+m+mf}{1.0} \PY{o}{\PYZhy{}} \PY{n}{x}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]} \PY{o}{*} \PY{l+m+mf}{2.0} \PY{o}{*} \PY{n}{x}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]} \PY{o}{\PYZhy{}} \PY{n}{x}\PY{p}{[}\PY{l+m+mi}{4}\PY{p}{]} \PY{o}{*} \PY{o}{\PYZhy{}}\PY{l+m+mi}{2} \PY{o}{*} \PY{n}{x}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}
+              \PY{n}{F}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]} \PY{o}{=} \PY{n}{x}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{\PYZca{}}\PY{l+m+mf}{2.0} \PY{o}{+} \PY{n}{x}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{o}{\PYZca{}}\PY{l+m+mf}{2.0} \PY{o}{\PYZhy{}} \PY{l+m+mf}{9.0}
+              \PY{n}{F}\PY{p}{[}\PY{l+m+mi}{4}\PY{p}{]} \PY{o}{=} \PY{o}{\PYZhy{}}\PY{n}{x}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{\PYZhy{}} \PY{n}{x}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{o}{\PYZca{}}\PY{l+m+mf}{2.0} \PY{o}{+} \PY{l+m+mf}{1.0}
+          \PY{k}{end}
+          
+          \PY{n}{x0} \PY{o}{=} \PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mf}{2.37}\PY{p}{;} \PY{o}{\PYZhy{}}\PY{l+m+mf}{1.836}\PY{p}{;} \PY{o}{\PYZhy{}}\PY{l+m+mf}{1.0}\PY{p}{;} \PY{o}{\PYZhy{}}\PY{l+m+mf}{1.0}\PY{p}{]}
+          \PY{n}{sol} \PY{o}{=} \PY{n}{nlsolve}\PY{p}{(}\PY{n}{f!}\PY{p}{,} \PY{n}{x0}\PY{p}{)}
+          \PY{n}{λ₁} \PY{o}{=} \PY{n}{sol}\PY{o}{.}\PY{n}{zero}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}
+          \PY{n}{λ₂} \PY{o}{=} \PY{n}{sol}\PY{o}{.}\PY{n}{zero}\PY{p}{[}\PY{l+m+mi}{4}\PY{p}{]}
+          \PY{n}{println}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{λ}\PY{l+s}{₁}\PY{l+s}{ }\PY{l+s}{=}\PY{l+s}{ }\PY{l+s+si}{\PYZdl{}λ₁}\PY{l+s}{\PYZdq{}}\PY{p}{)}
+          \PY{n}{println}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{λ}\PY{l+s}{₂}\PY{l+s}{ }\PY{l+s}{=}\PY{l+s}{ }\PY{l+s+si}{\PYZdl{}λ₂}\PY{l+s}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+λ₁ = 0.7785253137160885
+λ₂ = 1.0508005262435787
+
+    \end{Verbatim}
+
+    Because both \(\lambda\) values are positive the KKT conditions are
+satisfied. We now check the sufficient conditions.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}121}]:} \PY{n}{hessf} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{2} \PY{l+m+mi}{0}\PY{p}{;} \PY{l+m+mi}{0} \PY{l+m+mi}{0}\PY{p}{]}
+          \PY{n}{hessg1} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{2} \PY{l+m+mi}{0}\PY{p}{;} \PY{l+m+mi}{0} \PY{l+m+mi}{2}\PY{p}{]}
+          \PY{n}{hessg2} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{0} \PY{l+m+mi}{0}\PY{p}{;} \PY{l+m+mi}{0} \PY{o}{\PYZhy{}}\PY{l+m+mi}{2}\PY{p}{]}
+          \PY{n}{lagrangian} \PY{o}{=} \PY{n}{hessf} \PY{o}{\PYZhy{}} \PY{n}{λ₁} \PY{o}{*} \PY{n}{hessg1} \PY{o}{\PYZhy{}} \PY{n}{λ₂} \PY{o}{*} \PY{n}{hessg2}
+          \PY{n}{println}\PY{p}{(}\PY{n}{lagrangian}\PY{p}{)}
+          
+          \PY{n}{isposdef}\PY{p}{(}\PY{n}{lagrangian}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+[0.442949 0.0; 0.0 0.54455]
+
+    \end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}121}]:} true
+\end{Verbatim}
+            
+    Because the lagrangain function is positive definite the point is a
+constrained optimum
+
+\subsubsection{Verify that {[}-2.5, -1.6583{]} is not a local
+optimum}\label{verify-that--2.5--1.6583-is-not-a-local-optimum}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}122}]:} \PY{n}{x} \PY{o}{=} \PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mf}{2.5}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mf}{1.6583}\PY{p}{]}
+          \PY{n}{g1x} \PY{o}{=} \PY{n}{g1}\PY{p}{(}\PY{n}{x}\PY{p}{)}
+          \PY{n}{g2x} \PY{o}{=} \PY{n}{g2}\PY{p}{(}\PY{n}{x}\PY{p}{)}
+          \PY{n}{g3x} \PY{o}{=} \PY{n}{g3}\PY{p}{(}\PY{n}{x}\PY{p}{)}
+          \PY{n}{println}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{g}\PY{l+s}{1}\PY{l+s}{ }\PY{l+s}{=}\PY{l+s}{ }\PY{l+s+si}{\PYZdl{}g1x}\PY{l+s}{\PYZdq{}}\PY{p}{)}
+          \PY{n}{println}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{g}\PY{l+s}{2}\PY{l+s}{ }\PY{l+s}{=}\PY{l+s}{ }\PY{l+s+si}{\PYZdl{}g2x}\PY{l+s}{\PYZdq{}}\PY{p}{)}
+          \PY{n}{println}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{g}\PY{l+s}{3}\PY{l+s}{ }\PY{l+s}{=}\PY{l+s}{ }\PY{l+s+si}{\PYZdl{}g3x}\PY{l+s}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+g1 = -4.1109999999733304e-5
+g2 = -0.7500411099999997
+g3 = -5.1583000000000006
+
+    \end{Verbatim}
+
+    The only binding constraint is g1, but all of the constraints are
+feasible. we now solve for \(\lambda_1\) \[2x_1 - \lambda_1(2x_1) = 0\\
+\lambda_1 = -2\\
+and\\
+1 - \lambda_1(2x_2) = 0\\
+\lambda_1 = 3.3\] because we cannot solve for a value of \(\lambda_1\)
+the point is not a local optimum
+
+    \subsubsection{Drop the equality constraint from the problem. Using the
+countour plot above to see where the optimum lies, solve for the optimum
+using the KKT
+conditions.}\label{drop-the-equality-constraint-from-the-problem.-using-the-countour-plot-above-to-see-where-the-optimum-lies-solve-for-the-optimum-using-the-kkt-conditions.}
+
+We see that only \(g_2\) is binding the system of equations that we need
+to solve is then \[2x_1 + \lambda_2(1) = 0\\
+1 + \lambda_2(2x_2) = 0\\
+-x_1 - x_2^2 +1 = 0\]
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}123}]:} \PY{k}{function} \PY{n}{f!}\PY{p}{(}\PY{n}{F}\PY{p}{,} \PY{n}{x}\PY{p}{)}
+              \PY{n}{F}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{=} \PY{l+m+mi}{2}\PY{o}{*}\PY{n}{x}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{+} \PY{n}{x}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}
+              \PY{n}{F}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]} \PY{o}{=} \PY{l+m+mf}{1.0} \PY{o}{\PYZhy{}} \PY{n}{x}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]} \PY{o}{*} \PY{o}{\PYZhy{}}\PY{l+m+mi}{2} \PY{o}{*} \PY{n}{x}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}
+              \PY{n}{F}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]} \PY{o}{=} \PY{o}{\PYZhy{}}\PY{n}{x}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{\PYZhy{}} \PY{n}{x}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{o}{\PYZca{}}\PY{l+m+mf}{2.0} \PY{o}{+} \PY{l+m+mf}{1.0}
+          \PY{k}{end}
+          
+          \PY{n}{x0} \PY{o}{=} \PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mf}{2.37}\PY{p}{;} \PY{o}{\PYZhy{}}\PY{l+m+mf}{1.836}\PY{p}{;} \PY{o}{\PYZhy{}}\PY{l+m+mf}{1.0}\PY{p}{]}
+          \PY{n}{sol} \PY{o}{=} \PY{n}{nlsolve}\PY{p}{(}\PY{n}{f!}\PY{p}{,} \PY{n}{x0}\PY{p}{)}
+          \PY{n}{x1} \PY{o}{=} \PY{n}{sol}\PY{o}{.}\PY{n}{zero}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}
+          \PY{n}{x2} \PY{o}{=} \PY{n}{sol}\PY{o}{.}\PY{n}{zero}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}
+          \PY{n}{λ₁} \PY{o}{=} \PY{n}{sol}\PY{o}{.}\PY{n}{zero}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}
+          \PY{n}{println}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{x}\PY{l+s}{₁}\PY{l+s}{ }\PY{l+s}{=}\PY{l+s}{ }\PY{l+s+si}{\PYZdl{}x1}\PY{l+s}{\PYZdq{}}\PY{p}{)}
+          \PY{n}{println}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{x}\PY{l+s}{₂}\PY{l+s}{ }\PY{l+s}{=}\PY{l+s}{ }\PY{l+s+si}{\PYZdl{}x2}\PY{l+s}{\PYZdq{}}\PY{p}{)}
+          \PY{n}{println}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{λ}\PY{l+s}{₁}\PY{l+s}{ }\PY{l+s}{=}\PY{l+s}{ }\PY{l+s+si}{\PYZdl{}λ₁}\PY{l+s}{\PYZdq{}}\PY{p}{)}
+          \PY{n}{println}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{T}\PY{l+s}{h}\PY{l+s}{e}\PY{l+s}{ }\PY{l+s}{p}\PY{l+s}{o}\PY{l+s}{t}\PY{l+s}{e}\PY{l+s}{n}\PY{l+s}{t}\PY{l+s}{i}\PY{l+s}{a}\PY{l+s}{l}\PY{l+s}{ }\PY{l+s}{o}\PY{l+s}{p}\PY{l+s}{t}\PY{l+s}{i}\PY{l+s}{m}\PY{l+s}{u}\PY{l+s}{m}\PY{l+s}{ }\PY{l+s}{p}\PY{l+s}{o}\PY{l+s}{i}\PY{l+s}{n}\PY{l+s}{t}\PY{l+s}{ }\PY{l+s}{i}\PY{l+s}{s}\PY{l+s}{ }\PY{l+s}{[}\PY{l+s+si}{\PYZdl{}x1}\PY{l+s}{,}\PY{l+s}{ }\PY{l+s+si}{\PYZdl{}x2}\PY{l+s}{]}\PY{l+s}{\PYZdq{}}\PY{p}{)}
+          
+          \PY{n}{lagr} \PY{o}{=} \PY{n}{hessf} \PY{o}{\PYZhy{}} \PY{n}{λ₁} \PY{o}{*} \PY{n}{hessg2}
+          \PY{n}{isOpt} \PY{o}{=} \PY{n}{isposdef}\PY{p}{(}\PY{n}{lagr}\PY{p}{)}
+          \PY{k}{if} \PY{n}{isOpt}
+              \PY{n}{println}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{T}\PY{l+s}{h}\PY{l+s}{e}\PY{l+s}{ }\PY{l+s}{l}\PY{l+s}{a}\PY{l+s}{g}\PY{l+s}{r}\PY{l+s}{a}\PY{l+s}{n}\PY{l+s}{g}\PY{l+s}{i}\PY{l+s}{a}\PY{l+s}{n}\PY{l+s}{ }\PY{l+s}{i}\PY{l+s}{s}\PY{l+s}{ }\PY{l+s}{p}\PY{l+s}{o}\PY{l+s}{s}\PY{l+s}{i}\PY{l+s}{t}\PY{l+s}{i}\PY{l+s}{v}\PY{l+s}{e}\PY{l+s}{ }\PY{l+s}{d}\PY{l+s}{e}\PY{l+s}{f}\PY{l+s}{i}\PY{l+s}{n}\PY{l+s}{i}\PY{l+s}{t}\PY{l+s}{e}\PY{l+s}{ }\PY{l+s}{t}\PY{l+s}{h}\PY{l+s}{e}\PY{l+s}{r}\PY{l+s}{e}\PY{l+s}{f}\PY{l+s}{o}\PY{l+s}{r}\PY{l+s}{e}\PY{l+s}{ }\PY{l+s}{t}\PY{l+s}{h}\PY{l+s}{e}\PY{l+s}{ }\PY{l+s}{p}\PY{l+s}{o}\PY{l+s}{t}\PY{l+s}{e}\PY{l+s}{n}\PY{l+s}{t}\PY{l+s}{i}\PY{l+s}{a}\PY{l+s}{l}\PY{l+s}{ }\PY{l+s}{o}\PY{l+s}{p}\PY{l+s}{t}\PY{l+s}{i}\PY{l+s}{m}\PY{l+s}{u}\PY{l+s}{m}\PY{l+s}{ }\PY{l+s}{i}\PY{l+s}{s}\PY{l+s}{ }\PY{l+s}{a}\PY{l+s}{ }\PY{l+s}{c}\PY{l+s}{o}\PY{l+s}{n}\PY{l+s}{s}\PY{l+s}{t}\PY{l+s}{r}\PY{l+s}{a}\PY{l+s}{i}\PY{l+s}{n}\PY{l+s}{e}\PY{l+s}{d}\PY{l+s}{ }\PY{l+s}{o}\PY{l+s}{p}\PY{l+s}{t}\PY{l+s}{i}\PY{l+s}{m}\PY{l+s}{u}\PY{l+s}{m}\PY{l+s}{\PYZdq{}}\PY{p}{)}
+          \PY{k}{end}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+x₁ = -0.2258029814778883
+x₂ = -1.1071598716887676
+λ₁ = 0.4516059629557766
+The potential optimum point is [-0.2258029814778883, -1.1071598716887676]
+The lagrangian is positive definite therefore the potential optimum is a constrained optimum
+
+    \end{Verbatim}
+
+    The point {[}-0.2258, -1.1072 is the constrained optimum for the problem
+without the equality constraint.
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
